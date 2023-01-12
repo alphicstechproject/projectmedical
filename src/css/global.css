@@ -62,3 +62,60 @@ body, html, #root {
     font-family: 'Lato';
     color: #FFFFFF;
 }
+.imageSearch {
+    display: flex;
+    padding: 0 30px;
+    align-items: center;
+}
+.header {
+    display: flex;
+    flex-direction: column;
+}
+.headerpara {
+    width: 80px;
+    margin-left: 5px;
+}
+.searchForm {
+    margin-left: auto;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+
+.searchButton, .searchInput {
+    border: none;
+    
+}
+.searchButton {
+    padding: 4px;
+}
+.searchInput{
+    padding: 5px;
+    padding-left: 8px;
+    width: 300px;
+}
+.imageButton {
+    padding: 0 20px;
+}
+.menu {
+    display: flex;
+    background: linear-gradient(90.78deg, #6345C3 84.46%, #E1D9FB 114.2%);
+    color: white;
+    gap: 20px;
+}
+.specialImage {
+    background: white;
+}
+.navItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.navMargin {
+    margin-left: 30px;
+}

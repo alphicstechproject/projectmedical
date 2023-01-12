@@ -1,0 +1,64 @@
+body, html, #root {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato';
+}
+
+
+.login {
+    background-color: #6345C3;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.inputForms {
+    width: 30vw;
+    height: 50vh;
+    margin: auto;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 3vw;
+    align-items: center;
+    border-radius: 10px;
+}
+.email, .password, .submit {
+    width: 80%;
+    margin: 10px;
+    padding: 5px;
+}
+.submit {
+    background-color: #6345C3;
+    border: none;
+    color: #FFFFFF;
+    border-radius: 5px;
+    font-size: large;
+}
+.rememberMe {
+    width: 80%;
+    padding: 20px;
+}
+.footer {
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+.screenShot {
+    margin: 20px 50px;
+}
+.logoLang {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.select {
+    margin-right: 50px;
+    background-color: #6345C3;
+    font-family: 'Lato';
+    color: #FFFFFF;
+}

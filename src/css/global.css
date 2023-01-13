@@ -119,3 +119,98 @@ body, html, #root {
 .navMargin {
     margin-left: 30px;
 }
+
+.pieChart {
+    width: 20vw;
+}
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+}
+.screeningNumber, .screeningNumber2 {
+    display: flex;
+    background-color: #364954;
+    padding: 10px;
+    flex-direction: column;
+    margin: 10px;
+    border-radius: 10px;
+    width: 20vw;
+    justify-content: space-between;
+    align-items: baseline;
+    color: #FFFFFF;
+    height: 20vh;
+}
+.screeningNumberInner {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.screeningNumberMargin, .screeningNumberMargin2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 150px;
+    gap: 5px;
+}
+.screeningNumberMargin2 {
+    margin-left: 200px;
+}
+.screeningNumber2 {
+    background-color: #6345C3;
+}
+.screeningReportSection {
+    width: 49vw;
+    margin: 10px 10px 10px 30px;
+    border: 2px solid gray;
+    padding: 10px;
+    border-radius: 10px;
+}
+.screeningReports {
+    display: flex;
+    gap: 30px;
+    align-items: flex-end;
+}
+.screeningReportSectionInner1 {
+    display: flex;
+    align-items: center;
+}
+.screeningReportSectionInner1Margin {
+    margin-right: 13vw;
+    font-size: large;
+    font-weight: bold;
+}
+.screeningReports {
+    display: flex;
+    justify-content: space-around;
+    margin: 0 20px;
+    border-bottom: 1px solid gray;
+}
+.tableSectionDashboard {
+    width: 50vw;
+}
+.tableHeadDashboard {
+    background-color: #364954;
+    border-color: #364954;
+}
+.dashboardTableHeader {
+    border-spacing: 0;
+    border-collapse: collapse;
+    padding: 5px;
+    color: #FFFFFF;
+    font-weight: normal;
+}
+table {
+    border-spacing: 0;
+    margin: 20px;
+}
+.tableItemsDash {
+    padding-left: 20px;
+    padding: 7px;
+}
+.screeningNumber3 {
+    background-color: #FFFFFF;
+    color: black;
+}
+.pieChartSection {
+    margin: 20px;
+}

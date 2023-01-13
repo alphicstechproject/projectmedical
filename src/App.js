@@ -4,11 +4,12 @@ import Header from "./complonents/Header";
 import DashBoard from "./complonents/DashBoard";
 import UserManagement from "./complonents/UserManagement";
 import CreateUser from "./complonents/CreateUser";
+import AdviseManagement from "./complonents/AdviseManagement";
 
 function App() {
   return (<>
   <Header />
-    <CreateUser />
+    <AdviseManagement />
   </>)
     
           

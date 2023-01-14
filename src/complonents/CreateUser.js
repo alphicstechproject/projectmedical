@@ -1,6 +1,6 @@
 import { useState } from "react"
 import primaryFill from "../images/Primary fill.png"
-export default function CreateUser() {
+export default function CreateUser({toggleAddUser}) {
     const [userFullName, setUserFullName] = useState("")
     const [userName, setUserName] = useState("")
     const [phoneNum, setPhoneNum] = useState("")
@@ -16,7 +16,7 @@ export default function CreateUser() {
     return (
         <section>
             <div>
-                <img src={primaryFill} />
+                <img onClick={() => toggleAddUser()} src={primaryFill} />
                 <h1>Create User</h1>
                 <button>Save</button>
             </div>

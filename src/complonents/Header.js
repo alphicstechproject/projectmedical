@@ -7,6 +7,10 @@ import dashboardImage from "../images/Dashboard.png"
 import userImage from "../images/User.png"
 import adviseImage from "../images/Advise.png"
 import screenImage from "../images/Screen.png"
+import DashBoard from "./DashBoard"
+import UserManagement from "./UserManagement"
+import AdviseManagement from "./AdviseManagement"
+import ScreeningManagement from "./ScreeningManagement"
 
 export default function Header(){
     const [menu, setMenu] = useState("Dashboard")
@@ -14,7 +18,10 @@ export default function Header(){
     function handleSubmit(){
 
     }
-    return (
+    function handleMenu(menuVal){
+        setMenu(menuVal)
+    }
+    return (<>
         <header className="header">
             <section className="imageSearch">
             <img src={screenShotRed} width="40px" height="70px"/>
@@ -30,23 +37,37 @@ export default function Header(){
             <img className="imageButton" src={logoutImage} />
             </section>
             <nav className="menu">
-                <div className="navItem navMargin">
+                <div onClick={() => handleMenu("Dashboard")} className="navItem navMargin">
                     <img className="specialImage" src={dashboardImage} />
                     <p>Dashboard</p>
                 </div>
-                <div className="navItem">
+                <div onClick={() => handleMenu("User Management")} className="navItem">
                     <img src={userImage} />
                     <p>User Management</p>
                 </div>
-                <div className="navItem">
+                <div onClick={() => handleMenu("Advise Management")} className="navItem">
                     <img src={adviseImage} />
                     <p>Advise Management</p>
                 </div>
-                <div className="navItem">
+                <div onClick={() => handleMenu("Screening Management")} className="navItem">
                     <img src={screenImage} />
                     <p>Screen Management</p>
                 </div>
             </nav>
         </header>
+        {
+            menu === "Dashboard" && <DashBoard />
+            
+        }
+        {
+            menu === "User Management" && <UserManagement />
+        }
+        {
+            menu === "Advise Management" && <AdviseManagement />
+        }
+        {
+            menu === "Screening Management" && <ScreeningManagement />
+        }
+        </>
     )
 }

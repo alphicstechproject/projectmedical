@@ -1,7 +1,10 @@
 import { useState } from "react"
 import searchImage from "../images/Combined-Shape.png"
+import AdviseDetailForm from "./AdviseDetailForm"
+import CreateNewAdvise from "./CreateNewAdvise"
 export default function AdviseManagement() {
     const [search, setSearch] = useState("")
+    const [adviseForm, setAdviseForm] = useState(false)
     const [tableData, setTableData] = useState([{
         idAdhar: "shdhb",
         nameRes: "sdgshd",
@@ -24,10 +27,18 @@ export default function AdviseManagement() {
         numOfSC: "hgjgf",
         lastUpdate: "figvc"
     }])
+    function toggleAdviseForm(){
+        setAdviseForm(prev => {
+            return !prev
+        })
+    }
     function handleSubmit(){
 
     }
     return (
+        <>
+        {
+            adviseForm ? <CreateNewAdvise toggleAdviseForm={toggleAdviseForm} /> :
         <section>
             <div>
                 <h1>Advise Management</h1>
@@ -60,7 +71,7 @@ export default function AdviseManagement() {
             </select>
             
             <button>Export</button>
-            <button>Add User</button>
+            <button onClick={() => toggleAdviseForm()}>Add User</button>
             </div>
             <div>
             <table className="tableSectionDashboard">
@@ -92,5 +103,7 @@ export default function AdviseManagement() {
         </table>
             </div>
         </section>
+        }
+        </>
     )
 }

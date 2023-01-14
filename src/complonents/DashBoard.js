@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import greenArrow from "../images/GreenArrow.png"
 import { Doughnut } from 'react-chartjs-2';
 import {Chart, ArcElement} from 'chart.js'
@@ -8,9 +8,18 @@ export default function DashBoard(){
     const [currentDate, setCurrentDate] = useState(new Date())
     const months = ["Jan","Feb","March","April","May","June","July","Aug","Sep","Oct","Nov","Dec"];
     const [numOfScreening, setNumOfScreening] = useState(0)
-    const [percentageIncrease, setPercentageIncrease] = useState(0)
+    const [percentageIncreaseScreening, setPercentageIncreaseScreening] = useState(0)
     const [percentage, setPercentage] = useState(0)
-    const [screeningReports, setScreeningReports] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54])
+    const [percentageIncrease, setPercentageIncrease] = useState(0)
+    const [sevenScreenings, setSevenScreenings] = useState([])
+    const [screeningReports14, setScreeningReports14] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54])
+    const [screeningReports30, setScreeningReports30] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 34, 20])
+    const [screeningReports1, setScreeningReports1] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56])
+    const [selectedValue, setSelectedValue] = useState("option1");
+
+    const handleRadioChange = event => {
+        setSelectedValue(event.target.value);
+    };
     
     const [tableData, setTableData] = useState([{
         idAdhar: "shdhb",
@@ -43,6 +52,82 @@ export default function DashBoard(){
             hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870']
         }]
     });
+    async function getDashboardData(){
+        // const response = await fetch("/api/detDashboardData")
+        // const resJson = await response.json()
+        const resJson = {
+            numOfScreening: 713,
+            percentageIncreaseScreening: 25,
+            percentage: 60,
+            percentageIncrease: 25,
+            sevenScreenings: [{
+                adhar: "1111-1578-8545",
+                nameRes: "Miral Tripathi",
+                village: "Madnipur",
+                status: "No Anaemia",
+                numOfScreening: 1,
+                lastUpdate: "02-8-2022"
+            },
+            {
+                adhar: "1111-1578-8545",
+                nameRes: "Miral Tripathi",
+                village: "Madnipur",
+                status: "No Anaemia",
+                numOfScreening: 1,
+                lastUpdate: "02-8-2022"
+            },
+            {
+                adhar: "1111-1578-8545",
+                nameRes: "Miral Tripathi",
+                village: "Madnipur",
+                status: "Anaemia",
+                numOfScreening: 1,
+                lastUpdate: "02-8-2022"
+            },
+            {
+                adhar: "1111-1578-8545",
+                nameRes: "Miral Tripathi",
+                village: "Madnipur",
+                status: "No Anaemia",
+                numOfScreening: 1,
+                lastUpdate: "02-8-2022"
+            },
+            {
+                adhar: "1111-1578-8545",
+                nameRes: "Miral Tripathi",
+                village: "Madnipur",
+                status: "Anaemia",
+                numOfScreening: 1,
+                lastUpdate: "02-8-2022"
+            },
+            {
+                adhar: "1111-1578-8545",
+                nameRes: "Miral Tripathi",
+                village: "Madnipur",
+                status: "No Anaemia",
+                numOfScreening: 1,
+                lastUpdate: "02-8-2022"
+            },
+            {
+                adhar: "1111-1578-8545",
+                nameRes: "Miral Tripathi",
+                village: "Madnipur",
+                status: "No Anaemia",
+                numOfScreening: 1,
+                lastUpdate: "02-8-2022"
+            }
+            ]
+        }
+        setNumOfScreening(resJson.numOfScreening)
+        setPercentageIncreaseScreening(resJson.percentageIncreaseScreening)
+        setPercentage(resJson.percentage)
+        setPercentageIncrease(resJson.percentageIncrease)
+        setSevenScreenings(resJson.sevenScreenings)
+    }
+
+    useEffect(() => {
+        getDashboardData()
+    })
     return (
         <section className="dashboard">
             <div className="screeningNumber">
@@ -74,19 +159,38 @@ export default function DashBoard(){
             <div className="screeningReportSection">
                 <div className="screeningReportSectionInner1">
                 <p className="screeningReportSectionInner1Margin">Screening Report</p>
-                <label><input type="radio" />14 days</label>
-                <label><input type="radio" />Last Month</label>
-                <label><input type="radio" />Last Year</label>
+                <div className="radioection">
+                <input
+                type="radio" value="option1" checked={selectedValue === "option1"} onChange=        {handleRadioChange} />
+            Last 14 days
+            <input type="radio" value="option2" checked={selectedValue === "option2"} onChange=     {handleRadioChange}
+            />
+            Last month
+            <input type="radio" value="option3" checked={selectedValue === "option3"} onChange=     {handleRadioChange}
+            />
+            Last Year
+            </div>
                 </div>
                 <div className="screeningReports">
                 {
-                    screeningReports.map((screeningReport, index) => {
+                    selectedValue === "option1" && screeningReports14.map((screeningReport, index) => {
                         return <div style={{ height: `${screeningReport}px`, width: '10px', backgroundColor: 'blue', margin: '0 5px' }} />
+                    })
+                }
+                {
+                    selectedValue === "option2" && screeningReports30.map((screeningReport, index) => {
+                        return <div style={{ height: `${screeningReport}px`, width: '10px', backgroundColor: 'blue', margin: '0' }} />
+                    })
+                }
+                {
+                    selectedValue === "option3" && screeningReports1.map((screeningReport, index) => {
+                        return <div style={{ height: `${screeningReport}px`, width: '10px', backgroundColor: 'blue', margin: '0' }} />
                     })
                 }
                 </div>
             </div>
             <div>
+            <h3 className="recent">Recent Screening</h3>
             <table className="tableSectionDashboard">
             <thead className="tableHeadDashboard">
                 <tr className="tableHeadDashboard">
@@ -100,13 +204,13 @@ export default function DashBoard(){
             </thead>
             <tbody>
                 {
-                    tableData.map((data, index) => {
+                    sevenScreenings.map((data, index) => {
                       return  <tr key={index}>
-                    <td className="tableItemsDash">{data.idAdhar}</td>
+                    <td className="tableItemsDash">{data.adhar}</td>
                     <td className="tableItemsDash">{data.nameRes}</td>
                     <td className="tableItemsDash">{data.village}</td>
-                    <td className="tableItemsDash">{data.status}</td>
-                    <td className="tableItemsDash">{data.numOfSC}</td>
+                    <td className={data.status === "Anaemia" ? "tableItemsDash anemiaStatusRed" : "tableItemsDash anemiaStatusGreen"}>{data.status}</td>
+                    <td className="tableItemsDash">{data.numOfScreening}</td>
                     <td className="tableItemsDash">{data.lastUpdate}</td>
                 </tr>
                     })

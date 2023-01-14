@@ -167,7 +167,7 @@ body, html, #root {
 }
 .screeningReports {
     display: flex;
-    gap: 30px;
+    justify-content: space-between;
     align-items: flex-end;
 }
 .screeningReportSectionInner1 {
@@ -199,13 +199,15 @@ body, html, #root {
     color: #FFFFFF;
     font-weight: normal;
 }
-table {
-    border-spacing: 0;
+table, .recent {
+    border-spacing: 0 15px;
     margin: 20px;
 }
 .tableItemsDash {
     padding-left: 20px;
-    padding: 7px;
+    padding: 10px;
+    font-size: medium;
+    border-radius: 5px;
 }
 .screeningNumber3 {
     background-color: #FFFFFF;
@@ -214,7 +216,20 @@ table {
 .pieChartSection {
     margin: 20px;
 }
+.anemiaStatusGreen {
+    background-color: #39B44A;
+
+}
+.anemiaStatusRed {
+    background-color: #E34C4C;
+}
 .searchForm2 {
     width: 350px;
     margin-left: 20px;
+}
+.error {
+    color: red;
+}
+.radioSection {
+    width: 100px;
 }

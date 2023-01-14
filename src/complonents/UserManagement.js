@@ -1,7 +1,9 @@
 import { useState } from "react"
 import searchImage from "../images/Combined-Shape.png"
+import CreateUser from "./CreateUser"
 export default function UserManagement(){
     const [search, setSearch] = useState("")
+    const [addUser, setAddUser] = useState(false)
     const [tableData, setTableData] = useState([{
         idAdhar: "shdhb",
         nameRes: "sdgshd",
@@ -24,10 +26,19 @@ export default function UserManagement(){
         numOfSC: "hgjgf",
         lastUpdate: "figvc"
     }])
+    function toggleAddUser(){
+        setAddUser(prev => {
+            return !prev
+        })
+    }
     function handleSubmit(){
 
     }
     return (
+        <>
+        {
+            addUser ? <CreateUser toggleAddUser={toggleAddUser} /> :
+        
         <section>
             <div>
                 <h1>User Management</h1>
@@ -62,7 +73,7 @@ export default function UserManagement(){
                 <option>Status</option>
             </select>
             <button>Export</button>
-            <button>Add User</button>
+            <button onClick={() => toggleAddUser()}>Add User</button>
             </div>
             <div>
             <table className="tableSectionDashboard">
@@ -96,5 +107,7 @@ export default function UserManagement(){
         </table>
             </div>
         </section>
+        }
+        </>
     )
 }

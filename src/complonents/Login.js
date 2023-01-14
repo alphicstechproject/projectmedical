@@ -31,7 +31,7 @@ export default function Login(){
             status: true
         }
         
-        resJson.status ? navigate("/DashBoard") : setErrorMessage(true)
+        resJson.status ? navigate("/DashBoard", { state: { userid } }) : setErrorMessage(true)
         
     }
 

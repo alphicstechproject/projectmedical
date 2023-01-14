@@ -126,7 +126,9 @@ body, html, #root {
 .dashboard {
     display: flex;
     flex-wrap: wrap;
+    background-color: #F8F8F8;
 }
+
 .screeningNumber, .screeningNumber2 {
     display: flex;
     background-color: #364954;
@@ -169,6 +171,10 @@ body, html, #root {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    
+}
+.maxh {
+    max-height: 100px;
 }
 .screeningReportSectionInner1 {
     display: flex;
@@ -212,16 +218,41 @@ table, .recent {
 .screeningNumber3 {
     background-color: #FFFFFF;
     color: black;
+    height: 70px;
 }
 .pieChartSection {
-    margin: 20px;
+    margin: 40px auto auto 100px;
 }
 .anemiaStatusGreen {
     background-color: #39B44A;
 
 }
+.doughnutContainer {
+    width: 200px;
+    height: 200px;
+    margin: 80px auto auto 50px;
+}
 .anemiaStatusRed {
     background-color: #E34C4C;
+}
+.colorSection {
+    display: flex;
+    width: 200px;
+    gap: 10px;
+    margin-top: 20px;
+}
+.anaemiaColorG, .anaemiaColorO, .anaemiaColorR{
+    width: 20px;
+    height: 20px;
+}
+.anaemiaColorG {
+    background-color: #39B44A;;
+}
+.anaemiaColorO{
+    background-color:#FB8256;
+}
+.anaemiaColorR {
+    background-color: #FF1D1D;
 }
 .searchForm2 {
     width: 350px;

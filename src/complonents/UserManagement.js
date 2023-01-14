@@ -1,30 +1,30 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import searchImage from "../images/Combined-Shape.png"
 import CreateUser from "./CreateUser"
-export default function UserManagement(){
+export default function UserManagement({userId}){
     const [search, setSearch] = useState("")
     const [addUser, setAddUser] = useState(false)
     const [tableData, setTableData] = useState([{
-        idAdhar: "shdhb",
-        nameRes: "sdgshd",
-        village: "sdhsjnfd",
-        status: "dshhfd",
-        numOfSC: "hgjgf",
-        lastUpdate: "figvc"
+        userName: "Mili Brown",
+        phoneNum: "+91- 8231-324-123",
+        userRole: "Admin",
+        status: "ACTIVE",
+        createdDate: "02-8-2022,10-21 PM",
+        Action: "figvc"
     },{
-        idAdhar: "shdhb",
-        nameRes: "sdgshd",
-        village: "sdhsjnfd",
-        status: "dshhfd",
-        numOfSC: "hgjgf",
-        lastUpdate: "figvc"
+        userName: "Mili Brown",
+        phoneNum: "+91- 8231-324-123",
+        userRole: "Manager",
+        status: "INACTIVE",
+        createdDate: "02-8-2022,10-21 PM",
+        Action: "figvc"
     }, {
-        idAdhar: "shdhb",
-        nameRes: "sdgshd",
-        village: "sdhsjnfd",
-        status: "dshhfd",
-        numOfSC: "hgjgf",
-        lastUpdate: "figvc"
+        userName: "Mili Brown",
+        phoneNum: "+91- 8231-324-123",
+        userRole: "Screening Team",
+        status: "ACTIVE",
+        createdDate: "02-8-2022,10-21 PM",
+        Action: "figvc"
     }])
     function toggleAddUser(){
         setAddUser(prev => {
@@ -34,6 +34,15 @@ export default function UserManagement(){
     function handleSubmit(){
 
     }
+    async function fetchUsersData(){
+        // fetch(`https://example.com/api?email=${userId}`, {
+        //     method: 'GET'
+        // })
+        console.log(userId);
+    }
+    useEffect(() => {
+        fetchUsersData()
+    }, [])
     return (
         <>
         {
@@ -68,9 +77,16 @@ export default function UserManagement(){
             </form>
             <select>
                 <option>Sort</option>
+                <option>User Name</option>
+                <option>Phone Number</option>
+                <option>User Role</option>
+                <option>Status</option>
+                <option>CreatedDate</option>
             </select>
             <select>
                 <option>Status</option>
+                <option>Active</option>
+                <option>Inactive</option>
             </select>
             <button>Export</button>
             <button onClick={() => toggleAddUser()}>Add User</button>
@@ -93,12 +109,12 @@ export default function UserManagement(){
                     tableData.map((data, index) => {
                       return  <tr key={index}>
                     <td className="tableItemsDash">{index + 1}</td>
-                    <td className="tableItemsDash">{data.idAdhar}</td>
-                    <td className="tableItemsDash">{data.nameRes}</td>
-                    <td className="tableItemsDash">{data.village}</td>
+                    <td className="tableItemsDash">{data.userName}</td>
+                    <td className="tableItemsDash">{data.phoneNum}</td>
+                    <td className="tableItemsDash">{data.userRole}</td>
                     <td className="tableItemsDash">{data.status}</td>
-                    <td className="tableItemsDash">{data.numOfSC}</td>
-                    <td className="tableItemsDash">{data.lastUpdate}</td>
+                    <td className="tableItemsDash">{data.createdDate}</td>
+                    <td className="tableItemsDash">{data.Action}</td>
                 </tr>
                     })
                 

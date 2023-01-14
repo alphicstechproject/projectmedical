@@ -11,8 +11,10 @@ import DashBoard from "./DashBoard"
 import UserManagement from "./UserManagement"
 import AdviseManagement from "./AdviseManagement"
 import ScreeningManagement from "./ScreeningManagement"
+import { useLocation } from "react-router-dom"
 
 export default function Header(){
+    const location = useLocation()
     const [menu, setMenu] = useState("Dashboard")
     const [search, setSearch] = useState("")
     function handleSubmit(){
@@ -60,7 +62,7 @@ export default function Header(){
             
         }
         {
-            menu === "User Management" && <UserManagement />
+            menu === "User Management" && <UserManagement userId={location.state.userid} />
         }
         {
             menu === "Advise Management" && <AdviseManagement />

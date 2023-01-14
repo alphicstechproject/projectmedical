@@ -5,6 +5,7 @@ import {Chart, ArcElement} from 'chart.js'
 Chart.register(ArcElement);
 
 export default function DashBoard(){
+    
     const [currentDate, setCurrentDate] = useState(new Date())
     const months = ["Jan","Feb","March","April","May","June","July","Aug","Sep","Oct","Nov","Dec"];
     const [numOfScreening, setNumOfScreening] = useState(0)
@@ -127,7 +128,7 @@ export default function DashBoard(){
 
     useEffect(() => {
         getDashboardData()
-    })
+    }, [])
     return (
         <section className="dashboard">
             <div className="screeningNumber">
@@ -174,17 +175,17 @@ export default function DashBoard(){
                 <div className="screeningReports">
                 {
                     selectedValue === "option1" && screeningReports14.map((screeningReport, index) => {
-                        return <div style={{ height: `${screeningReport}px`, width: '10px', backgroundColor: 'blue', margin: '0 5px' }} />
+                        return <div key={index} className="maxh" style={{ height: `${screeningReport}px`, width: '10px', backgroundColor: 'blue', margin: '0 5px' }} />
                     })
                 }
                 {
                     selectedValue === "option2" && screeningReports30.map((screeningReport, index) => {
-                        return <div style={{ height: `${screeningReport}px`, width: '10px', backgroundColor: 'blue', margin: '0' }} />
+                        return <div key={index} className="maxh" style={{ height: `${screeningReport}px`, width: '10px', backgroundColor: 'blue', margin: '0' }} />
                     })
                 }
                 {
                     selectedValue === "option3" && screeningReports1.map((screeningReport, index) => {
-                        return <div style={{ height: `${screeningReport}px`, width: '10px', backgroundColor: 'blue', margin: '0' }} />
+                        return <div key={index} className="maxh" style={{ height: `${screeningReport % 100}px`, width: '10px', backgroundColor: 'blue', margin: '0' }} />
                     })
                 }
                 </div>
@@ -219,7 +220,7 @@ export default function DashBoard(){
             </tbody>
         </table>
             </div>
-            <div className="piechartSection">
+            <div className="pieChartSection">
             <div className="screeningNumber screeningNumber3">
                 <div className="screeningNumberInner">
                 <p>Total Screening</p>
@@ -233,9 +234,24 @@ export default function DashBoard(){
                     </div>
                 </div>
             </div>
+            <div className="doughnutContainer">
             <Doughnut data={data} />
-        </div>
-            <div>
+            <div className="colorSection">
+                <div>
+                <div className="anaemiaColorG"></div>
+                <p>No Anaemia</p>
+                </div>
+                <div>
+                <div className="anaemiaColorO"></div>
+                <p>Anaemia</p>
+                </div>
+                <div>
+                <div className="anaemiaColorR"></div>
+                <p>Severe Anaemia</p>
+                </div>
+            </div>
+            </div>
+            
         </div>
         </section>
     )

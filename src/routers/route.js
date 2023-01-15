@@ -55,6 +55,13 @@ router.get('/api/blood-transfusion/:bloodTranferId', getBloodTranferDataById)
 // router.delete('/api/blood-transfusion/:bloodTranferId', deleteBloodTranfer)
 
 
+// -------------------------------- Sample ------------------------------------
+// router.post('/api/sample', createSample); // Responsible for create an record.
+// router.get('/api/sample', getAllSample); // listing of all data wrt collection 
+// router.get('/api/sample/:_id', getSample); // individual sample
+// router.put('/api/sample/:_id', updateSample)
+// router.delete('/api/sample/:_id', deleteSample)
+
 
 
 router.all("/*", function (req, res) {

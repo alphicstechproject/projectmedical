@@ -1,6 +1,5 @@
 const respondentModel = require("../models/respondentModel");
-
-
+const mongoose = require('mongoose');
 
 
 
@@ -18,6 +17,22 @@ const createRespondent = async function (req, res) {
     }
 };
 
+const getRespondent = async (req, res) => {
+    try {
+        const respondentId = req.params.respondentId;
+        if (!mongoose.Types.ObjectId.isValid(respondentId)) {
+            return res.status(400).send({ status: false, message: " PLEASE ENTER CORRECT RESPONDENT ID" })
+        }
+        const findRespondentIdInDb = await respondentModel.findById(respondentId)
+        if (!findRespondentIdInDb) {
+            return res.status(400).send({ status: false, message: "THIS RESPONDENT IS NOT PRESENT IN THE DATABASE" })
+        }
+        return res.status(200).send({ status: true, message: "RESPONDENT PROFILE DETAILS", data: findRespondentIdInDb })
+    } catch (error) {
+        return res.status(500).send({ msg: error.message, status: false })
+    }
+};
 
 
-module.exports = { createRespondent }
+
+module.exports = { createRespondent, getRespondent }

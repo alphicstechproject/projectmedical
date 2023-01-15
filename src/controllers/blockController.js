@@ -1,6 +1,5 @@
 const blockModel = require("../models/blockModel");
-
-
+const mongoose = require('mongoose');
 
 
 
@@ -18,6 +17,22 @@ const createBlock = async function (req, res) {
     }
 };
 
+const getBlock = async (req, res) => {
+    try {
+        const blockId = req.params.blockId;
+        if (!mongoose.Types.ObjectId.isValid(blockId)) {
+            return res.status(400).send({ status: false, message: " PLEASE ENTER CORRECT BLOCK ID" })
+        }
+        const findBlockIdInDb = await blockModel.findById(blockId)
+        if (!findBlockIdInDb) {
+            return res.status(400).send({ status: false, message: "THIS BLOCK IS NOT PRESENT IN THE DATABASE" })
+        }
+        return res.status(200).send({ status: true, message: "BLOCK PROFILE DETAILS", data: findBlockIdInDb })
+    } catch (error) {
+        return res.status(500).send({ msg: error.message, status: false })
+    }
+};
 
 
-module.exports = { createBlock }
+
+module.exports = { createBlock, getBlock }

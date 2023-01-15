@@ -1,7 +1,5 @@
 const subCenterModel = require("../models/subCenterModel");
-
-
-
+const mongoose = require('mongoose');
 
 
 const createSubCenter = async function (req, res) {
@@ -18,6 +16,22 @@ const createSubCenter = async function (req, res) {
     }
 };
 
+const getSubCenter = async (req, res) => {
+    try {
+        const subCenterId = req.params.subCenterId;
+        if (!mongoose.Types.ObjectId.isValid(subCenterId)) {
+            return res.status(400).send({ status: false, message: " PLEASE ENTER CORRECT SUBCENTER ID" })
+        }
+        const findSubCenterIdInDb = await subCenterModel.findById(subCenterId)
+        if (!findSubCenterIdInDb) {
+            return res.status(400).send({ status: false, message: "THIS SUBCENTER IS NOT PRESENT IN THE DATABASE" })
+        }
+        return res.status(200).send({ status: true, message: "SUBCENTER PROFILE DETAILS", data: findSubCenterIdInDb })
+    } catch (error) {
+        return res.status(500).send({ msg: error.message, status: false })
+    }
+};
 
 
-module.exports = { createSubCenter }
+
+module.exports = { createSubCenter, getSubCenter }

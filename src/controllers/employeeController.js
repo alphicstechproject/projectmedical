@@ -9,9 +9,8 @@ const createEmployee = async function (req, res) {
     try {
 
         const data = req.body
-        const file = req.files
 
-        if (Object.keys(data).length == 0 && typeof (file) == 'undefined') return res.status(400).send({ status: false, message: "Please Enter data to Create the User" })
+        if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "Please Enter data to Create the User" })
         const { employee_name, full_name, email, mobile, district, block_name, password, role, village_name, anganwadi_center, sub_center } = data;
 
         if (!isPresent(employee_name)) return res.status(400).send({ status: false, message: "fname is mandatory" })
@@ -25,7 +24,6 @@ const createEmployee = async function (req, res) {
 
         if (await employeeModel.findOne({ email })) return res.status(400).send({ status: false, message: "This email is already Registered Please give another Email" })
 
-        if (!isPresent(file)) return res.status(400).send({ status: false, message: "profile Image can't be empty" })
 
 
         if (!isPresent(mobile)) return res.status(400).send({ status: false, message: "Mobile no. is mandatory" })
@@ -36,12 +34,6 @@ const createEmployee = async function (req, res) {
         if (!isPresent(password)) return res.status(400).send({ status: false, message: "Password is mandatory" })
         if (!isValidPassword(password)) return res.status(400).send({ status: false, message: "password must have one capital one small one number and one special character[#?!@$%^&*-]" })
 
-        if (file && file.length > 0) {
-            data.profileImage = await uploadFile(file[0])
-        }
-        else {
-            return res.status(400).send({ status: false, message: "PROFILE IMAGE FILE IS REQUIRED" })
-        }
         data.password = await bcrypt.hash(password, 10)
 
         let createdata = await employeeModel.create(data)
@@ -51,7 +43,7 @@ const createEmployee = async function (req, res) {
     }
 }
 
-const getUser = async function (req, res) {
+const getEmployee = async function (req, res) {
     try {
 
         let userId = req.params.userId
@@ -72,15 +64,10 @@ const getUser = async function (req, res) {
 
 }
 
-const updateUser = async function (req, res) {
+const updateEmployee = async function (req, res) {
     try {
         let data = req.body
-        let file = req.files
-        if (Object.keys(data).length == 0 && typeof (file) == 'undefined') return res.status(400).send({ status: false, message: "Please Enter data to update the User" })
-
-        if (file && file.length > 0) {
-            data.profileImage = await uploadFile(file[0])
-        }
+        if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "Please Enter data to update the User" })
 
         if (data["address.billing.street"] == "") { return res.status(400).send({ status: false, message: "you can't update billing street as a empty string" }) }
 
@@ -156,4 +143,4 @@ const updateUser = async function (req, res) {
     }
 }
 
-module.exports = { createEmployee, getUser, updateUser }
+module.exports = { createEmployee, getEmployee, updateEmployee }

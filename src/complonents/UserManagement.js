@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import searchImage from "../images/Combined-Shape.png"
 import CreateUser from "./CreateUser"
-export default function UserManagement({userId}){
+export default function UserManagement({userId, currentUserRole, updateUserRole}){
     const [search, setSearch] = useState("")
     const [addUser, setAddUser] = useState(false)
     const [tableData, setTableData] = useState([{
@@ -34,8 +34,21 @@ export default function UserManagement({userId}){
     function handleSubmit(){
 
     }
+    async function deleteUser(phoneNumber){
+        // const response = await fetch("/deleteUser", {
+        //     method: 'DELETE',
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //         phoneNumber: phoneNumber,
+        //         userId: userId
+        //     }),
+        // })
+        
+    }
     async function fetchUsersData(){
-        // fetch(`https://example.com/api?email=${userId}`, {
+        // const response = await fetch(`getUserManagementDetails?userId=${userId}`, {
         //     method: 'GET'
         // })
         console.log(userId);
@@ -46,7 +59,7 @@ export default function UserManagement({userId}){
     return (
         <>
         {
-            addUser ? <CreateUser toggleAddUser={toggleAddUser} /> :
+            addUser ? <CreateUser toggleAddUser={toggleAddUser} userId={userId} /> :
         
         <section>
             <div>
@@ -114,7 +127,7 @@ export default function UserManagement({userId}){
                     <td className="tableItemsDash">{data.userRole}</td>
                     <td className="tableItemsDash">{data.status}</td>
                     <td className="tableItemsDash">{data.createdDate}</td>
-                    <td className="tableItemsDash">{data.Action}</td>
+                    <td onClick={() => {deleteUser(data.phoneNum)}} className="tableItemsDash">{data.Action}</td>
                 </tr>
                     })
                 

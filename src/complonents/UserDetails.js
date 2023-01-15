@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export default function UserDetails({toggleUserDetail, adharNumProp}){
+export default function UserDetails({userId, toggleUserDetail, adharNumProp}){
     const [dateInput, setDateInput] = useState("")
     const [referInput, setReferInput] = useState("")
     const [hospitalInput, setHospitalInput] = useState("")
@@ -30,6 +30,29 @@ export default function UserDetails({toggleUserDetail, adharNumProp}){
     const [gestAge, setGestAge] = useState("")
     const [anmName, setAnmName] = useState("")
     const [malariaAffected, setMalariaAffected] = useState("")
+    async function getAllDetails(){
+        const response = await fetch(`getAdviseManagementDetails?userId=${userId}&screeningId=${adharNumProp}`, {
+            method: 'GET'
+        })
+        console.log(userId);
+    }
+    async function sendHospitalInput(){
+        const response = await fetch("enterHospitalData", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                dateInput,
+                bloodInput,
+                hospitalInput,
+                referInput
+            }),
+        })
+    }
+    useEffect(() => {
+        getAllDetails()
+    }, [])
     return (
         <section>
             <button onClick={() => toggleUserDetail()}>exit</button>
@@ -115,11 +138,18 @@ export default function UserDetails({toggleUserDetail, adharNumProp}){
             
             </tbody>
         </table>
-        <form>
-        <input value={dateInput} onChange={(e) => setDateInput(e.target.value)} type="text" placeholder="Enter date" required />
+        <form onSubmit={(e) => {
+            e.preventDefault()
+            sendHospitalInput()
+        }}>
+        <input value={dateInput} onChange={(e) => setDateInput(e.target.value)} type="date" placeholder="Enter date" required />
+
         <input value={referInput} onChange={(e) => setReferInput(e.target.value)} type="text" placeholder="Enter refer by" required />
+
         <input value={hospitalInput} onChange={(e) => setHospitalInput(e.target.value)} type="text" placeholder="Enter hospital" required />
+
         <input value={bloodInput} onChange={(e) => setBloodInput(e.target.value)} type="text" placeholder="Enter unit" required />
+
         <input type="submit" value="Save" />
         </form>
         <p>More Advise</p>

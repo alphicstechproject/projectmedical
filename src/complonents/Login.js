@@ -17,7 +17,7 @@ export default function Login(){
     }
 
     async function handleLogin(){
-        // const response = await fetch("/api/loginUser", {
+        // const response = await fetch("/loginUser", {
         //     method: "POST",
         //     headers: {
         //         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export default function Login(){
                 <h1>Welcome Back</h1>
                 <p>Please enter your details to get sign in to your account</p>
 
-                <input className="email" value={userid} onChange={(e) => setUserId(e.target.value)} type="email" placeholder="User ID" required />
+                <input className="email" value={userid} onChange={(e) => setUserId(e.target.value)} type="text" placeholder="User ID" required />
 
                 <input className="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" required />
 

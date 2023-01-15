@@ -1,59 +1,57 @@
 import { useState } from "react"
 import primaryFill from "../images/Primary fill.png"
-export default function CreateNewAdvise({toggleAdviseForm}){
+import AdviseDetailForm from "./AdviseDetailForm";
+export default function CreateNewAdvise({toggleAdviseForm, userId}){
     const [resName, setResName] = useState("")
-    const [advisedCount, setAdvisedCount] = useState([1])
-    const [adviseDetails, setAdviseDetails] = useState([{
-        anemiaStage: "",
-        description: ""
-    }])
-    const [anemiaArray, setAnemiaArray] = useState([""])
+    
+    const [anaemiaStageArray, setAnaemiaStageArray] = useState(["Severe Anemia"])
     const [descriptionArray, setDescriptionArray] = useState([""])
-
-    function increment(){
-        setAdvisedCount((prev) => {
-            return [...prev, 1]
+    async function handleSubmit(){
+        const response = await fetch("/createAdvise", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                resName,
+                anaemiaStageArray,
+                descriptionArray,
+                userId
+            }),
         })
-       
-        setAnemiaArray((prev) => {
-            prev.push("")
-            return prev
-        })
-        setDescriptionArray((prev) => {
-            prev.push("")
-            return prev
-        }) 
+        const resJson = await response.json()
+        console.log(resName);
     }
-    function handleDescription(index, des){
-        setAdviseDetails((prev) => {
-            prev[index].description = des
-            return prev
-        })
-    }
+    
     return (
         <section>
             <div>
                 <img onClick={() => toggleAdviseForm()} src={primaryFill} />
                 <h1>Create New Advised Report</h1>
-                <button>Save</button>
             </div>
-            <form>
+            
+            <form onSubmit={(e) => {
+                e.preventDefault()
+                handleSubmit()
+            }}>
+                <input type="submit" value="Save"></input>
             <label>Respondent name<input value={resName} onChange={(e) => setResName(e.target.value)} type="text" placeholder="Enter User Full Name" required /></label>
             <h1>Advised Details</h1>
-            {
-                advisedCount.map((advise, index) => {
-                    return (
-                        <div key={index}>
-                            <label>Anemia stage<input  /></label>
-
-                            <label>Description<textarea></textarea></label>
-                        </div>
-                    )
-                })
-            }
-
+           {
+            anaemiaStageArray.map((c, index) => {
+                return <AdviseDetailForm index={index} setAnaemiaStageArray={setAnaemiaStageArray} setDescriptionArray={setDescriptionArray} />
+            })
+           }
+            
             </form>
-            <button onClick={increment}>Add field</button>
+        <button onClick={() => {
+            setAnaemiaStageArray((prev) => {
+                return [...prev, "Severe Anemia"]
+            })
+            setDescriptionArray((prev) => {
+                return [...prev, ""]
+            })
+        }}>Add</button>
         </section>
     )
 }

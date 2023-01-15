@@ -1,31 +1,23 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import searchImage from "../images/Combined-Shape.png"
 import AdviseDetailForm from "./AdviseDetailForm"
 import CreateNewAdvise from "./CreateNewAdvise"
-export default function AdviseManagement() {
+export default function AdviseManagement({userId}) {
     const [search, setSearch] = useState("")
     const [adviseForm, setAdviseForm] = useState(false)
     const [tableData, setTableData] = useState([{
-        idAdhar: "shdhb",
-        nameRes: "sdgshd",
-        village: "sdhsjnfd",
-        status: "dshhfd",
-        numOfSC: "hgjgf",
-        lastUpdate: "figvc"
+        RespondentName: "shdhb",
+        Description: "sdgshd",
+        Action: "sdhsjnfd",
+        
     },{
-        idAdhar: "shdhb",
-        nameRes: "sdgshd",
-        village: "sdhsjnfd",
-        status: "dshhfd",
-        numOfSC: "hgjgf",
-        lastUpdate: "figvc"
+        RespondentName: "shdhb",
+        Description: "sdgshd",
+        Action: "sdhsjnfd",
     }, {
-        idAdhar: "shdhb",
-        nameRes: "sdgshd",
-        village: "sdhsjnfd",
-        status: "dshhfd",
-        numOfSC: "hgjgf",
-        lastUpdate: "figvc"
+        RespondentName: "shdhb",
+        Description: "sdgshd",
+        Action: "sdhsjnfd",
     }])
     function toggleAdviseForm(){
         setAdviseForm(prev => {
@@ -35,28 +27,36 @@ export default function AdviseManagement() {
     function handleSubmit(){
 
     }
+    async function deleteAdvise(respondentName){
+        const response = await fetch("deleteAdvise", {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                respondentName : respondentName,
+                userId: userId
+            }),
+        })
+        
+    }
+    async function fetchAdviseData(){
+        const response = await fetch(`getAdviseManagementDetails?userId=${userId}`, {
+            method: 'GET'
+        })
+        console.log(userId);
+    }
+    useEffect(() => {
+        fetchAdviseData()
+    }, [])
     return (
         <>
         {
-            adviseForm ? <CreateNewAdvise toggleAdviseForm={toggleAdviseForm} /> :
+            adviseForm ? <CreateNewAdvise toggleAdviseForm={toggleAdviseForm} userId={userId} /> :
         <section>
             <div>
                 <h1>Advise Management</h1>
-                <select name="Month" id="cars">
-                    <option value="Month">Month</option>
-                    <option value="volvo">January</option>
-                    <option value="saab">February</option>
-                    <option value="mercedes">March</option>
-                    <option value="audi">April</option>
-                    <option value="volvo">May</option>
-                    <option value="saab">June</option>
-                    <option value="mercedes">July</option>
-                    <option value="audi">August</option>
-                    <option value="volvo">September</option>
-                    <option value="saab">October</option>
-                    <option value="mercedes">November</option>
-                    <option value="audi">December</option>
-                </select>
+                
             </div>
             <div>
             <form className="searchForm searchForm2" onSubmit={(e) => {
@@ -90,9 +90,9 @@ export default function AdviseManagement() {
                     tableData.map((data, index) => {
                       return  <tr key={index}>
                     <td className="tableItemsDash">{index + 1}</td>
-                    <td className="tableItemsDash">{data.idAdhar}</td>
-                    <td className="tableItemsDash">{data.nameRes}</td>
-                    <td className="tableItemsDash">{data.village}</td>
+                    <td className="tableItemsDash">{data.RespondentName}</td>
+                    <td className="tableItemsDash">{data.Description}</td>
+                    <td onClick={() => {deleteAdvise(data.RespondentName)}} className="tableItemsDash">{data.Action}</td>
                    
                     
                 </tr>

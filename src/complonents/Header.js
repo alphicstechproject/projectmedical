@@ -17,12 +17,25 @@ export default function Header(){
     const location = useLocation()
     const [menu, setMenu] = useState("Dashboard")
     const [search, setSearch] = useState("")
+    const [blocks, setBlocks] = useState([])
+    const [villages, setVillages] = useState([])
+    const [currentUserRole, setCurrentUserRole] = useState("")
     function handleSubmit(){
 
     }
     function handleMenu(menuVal){
         setMenu(menuVal)
     }
+    function updateUserRole(role){
+        setCurrentUserRole(role)
+    }
+    async function getDistrictsBlocks(){
+        //const response = await fetch(`/getDistrictsBlocks?userId=${userId}`)
+
+    }
+    useState(() => {
+        getDistrictsBlocks()
+    }, [])
     return (<>
         <header className="header">
             <section className="imageSearch">
@@ -43,14 +56,14 @@ export default function Header(){
                     <img className="specialImage" src={dashboardImage} />
                     <p>Dashboard</p>
                 </div>
-                <div onClick={() => handleMenu("User Management")} className="navItem">
+               {currentUserRole === "Admin" && <div onClick={() => handleMenu("User Management")} className="navItem">
                     <img src={userImage} />
                     <p>User Management</p>
-                </div>
-                <div onClick={() => handleMenu("Advise Management")} className="navItem">
+                </div>}
+                { currentUserRole === "Admin" && <div onClick={() => handleMenu("Advise Management")} className="navItem">
                     <img src={adviseImage} />
                     <p>Advise Management</p>
-                </div>
+                </div>}
                 <div onClick={() => handleMenu("Screening Management")} className="navItem">
                     <img src={screenImage} />
                     <p>Screen Management</p>
@@ -58,17 +71,17 @@ export default function Header(){
             </nav>
         </header>
         {
-            menu === "Dashboard" && <DashBoard />
+            menu === "Dashboard" && <DashBoard userId={location.state.userid} currentUserRole={currentUserRole} updateUserRole={updateUserRole}/>
             
         }
         {
-            menu === "User Management" && <UserManagement userId={location.state.userid} />
+            menu === "User Management" && <UserManagement userId={location.state.userid} currentUserRole={currentUserRole} updateUserRole={updateUserRole} blocks={blocks} villages={villages} />
         }
         {
-            menu === "Advise Management" && <AdviseManagement />
+            menu === "Advise Management" && <AdviseManagement userId={location.state.userid} />
         }
         {
-            menu === "Screening Management" && <ScreeningManagement />
+            menu === "Screening Management" && <ScreeningManagement userId={location.state.userid} blocks={blocks} villages={villages} />
         }
         </>
     )

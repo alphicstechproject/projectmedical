@@ -246,7 +246,7 @@ table, .recent {
     height: 20px;
 }
 .anaemiaColorG {
-    background-color: #39B44A;;
+    background-color: #39B44A;
 }
 .anaemiaColorO{
     background-color:#FB8256;
@@ -260,7 +260,4 @@ table, .recent {
 }
 .error {
     color: red;
-}
-.radioSection {
-    width: 100px;
 }

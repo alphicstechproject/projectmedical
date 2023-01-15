@@ -2,10 +2,11 @@ import { useEffect, useState } from "react"
 import greenArrow from "../images/GreenArrow.png"
 import { Doughnut } from 'react-chartjs-2';
 import {Chart, ArcElement} from 'chart.js'
+import { useLocation } from "react-router-dom"
 Chart.register(ArcElement);
 
-export default function DashBoard(){
-    
+export default function DashBoard({userId, currentUserRole, updateUserRole}){
+    const location = useLocation()
     const [currentDate, setCurrentDate] = useState(new Date())
     const months = ["Jan","Feb","March","April","May","June","July","Aug","Sep","Oct","Nov","Dec"];
     const [numOfScreening, setNumOfScreening] = useState(0)
@@ -49,18 +50,25 @@ export default function DashBoard(){
         labels: ['Option 1', 'Option 2', 'Option 3'],
         datasets: [{
             data: [50, 25, 25],
-            backgroundColor: ['#F7464A', '#46BFBD', '#FDB45C'],
+            backgroundColor: ['#39B44A', '#FB8256', '#FF1D1D'],
             hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870']
         }]
     });
     async function getDashboardData(){
-        // const response = await fetch("/api/detDashboardData")
+        // const response = await fetch(`/getDashboardData?userId=${userId}`)
         // const resJson = await response.json()
         const resJson = {
             numOfScreening: 713,
             percentageIncreaseScreening: 25,
             percentage: 60,
-            percentageIncrease: 25,
+            percentageIncreaseAnaemia: 25,
+        
+            screeningReports14:[50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54],
+        
+             screeningReports30 : [50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 34, 20],
+        
+             screeningReports1 : [50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56],
+        
             sevenScreenings: [{
                 adhar: "1111-1578-8545",
                 nameRes: "Miral Tripathi",
@@ -124,6 +132,7 @@ export default function DashBoard(){
         setPercentage(resJson.percentage)
         setPercentageIncrease(resJson.percentageIncrease)
         setSevenScreenings(resJson.sevenScreenings)
+        updateUserRole("Admin")
     }
 
     useEffect(() => {
@@ -160,7 +169,7 @@ export default function DashBoard(){
             <div className="screeningReportSection">
                 <div className="screeningReportSectionInner1">
                 <p className="screeningReportSectionInner1Margin">Screening Report</p>
-                <div className="radioection">
+                <div className="radioSection">
                 <input
                 type="radio" value="option1" checked={selectedValue === "option1"} onChange=        {handleRadioChange} />
             Last 14 days

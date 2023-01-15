@@ -17,7 +17,7 @@ const createBloodTranfer = async function (req, res) {
     }
 };
 
-const getBloodTranferData = async (req, res) => {
+const getBloodTranferDataById = async (req, res) => {
     try {
         const bloodTranferId = req.params.bloodTranferId;
         if (!mongoose.Types.ObjectId.isValid(bloodTranferId)) {
@@ -35,4 +35,4 @@ const getBloodTranferData = async (req, res) => {
 
 
 
-module.exports = { createBloodTranfer, getBloodTranferData }
+module.exports = { createBloodTranfer, getBloodTranferDataById }

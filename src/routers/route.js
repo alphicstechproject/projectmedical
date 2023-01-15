@@ -1,47 +1,58 @@
 const express = require('express');
 const router = express.Router();
-const { createEmployee, updateEmployee, getEmployee, deleteEmployee } = require('../controllers/employeeController');
-const { getAnganwadi } = require('../controllers/anganwadiController');
-const { getSubCenter } = require('../controllers/subCenterController');
-const { getBlock } = require('../controllers/blockController');
-const { createScreening, updateScreening, getScreeningData, deleteScreening } = require('../controllers/screeningController');
-const { createAdvice, updateAdvice, getAdvice, deleteAdvice } = require('../controllers/adviceController');
-const { createRespondent, updateRespondent, getRespondent, deleteRespondent } = require('../controllers/respondentController');
-const { createBloodTranfer, updateBloodTranfer, getBloodTranferData, deleteBloodTranfer } = require('../controllers/bloodTranferController');
+const { createEmployee, employeeLogin, getEmployeeById, updateEmployee, deleteEmployee } = require('../controllers/employeeController');
+const { authentication, authorization } = require('../middlewares/auth')
+const { getAnganwadiById } = require('../controllers/anganwadiController');
+const { getSubCenterById } = require('../controllers/subCenterController');
+const { getBlockById } = require('../controllers/blockController');
+const { createScreening, getScreeningDataById, updateScreening, deleteScreening } = require('../controllers/screeningController');
+const { createAdvice, getAdviceById, updateAdvice, deleteAdvice } = require('../controllers/adviceController');
+const { createRespondent, getRespondentById, updateRespondent, deleteRespondent } = require('../controllers/respondentController');
+const { createBloodTranfer, getBloodTranferDataById, updateBloodTranfer, deleteBloodTranfer } = require('../controllers/bloodTranferController');
 
 /** anganwadi * subcenter * block*/
 
+// -------------------------------- Login ----------------------------------------
+router.post('/api/login', employeeLogin)
 // -------------------------------- Employee ----------------------------------------
-router.post('/api/employee_registration', createEmployee)
-router.get('/api/getEmployee', getEmployee)
-router.put('/api/updateEmployee', updateEmployee)
-// router.delete('/api/deleteEmployee', deleteEmployee)
+router.post('/api/employee', createEmployee)
+// router.get('/api/employee', getEmployee)
+router.get('/api/employee/:employeeId', authentication, authorization, getEmployeeById)
+router.put('/api/employee/:employeeId', authentication, authorization, updateEmployee)
+// router.delete('/api/employee/:employeeId', authentication, authorization, deleteEmployee)
 // -------------------------------- Anganwadi ---------------------------------------
-router.get('/api/getAnganwadi', getAnganwadi)
+// router.get('/api/anganwadi', getAnganwadi)
+router.get('/api/anganwadi/:anganwadiId', getAnganwadiById)
 // -------------------------------- SubCenter ---------------------------------------
-router.get('/api/getSubCenter', getSubCenter)
+// router.get('/api/subCenter', getSubCenter)
+router.get('/api/subCenter/:subCenterId', getSubCenterById)
 // -------------------------------- Block -------------------------------------------
-router.get('/api/getBlock', getBlock)
+// router.get('/api/block', getBlock)
+router.get('/api/block/:blockId', getBlockById)
 // -------------------------------- Screening ---------------------------------------
 router.post('/api/screening', createScreening)
-router.get('/api/getScreeningData', getScreeningData)
-// router.put('/api/updateScreening', updateScreening)
-// router.delete('/api/deleteScreening', deleteScreening)
+// router.get('/api/screening', getScreeningData)
+router.get('/api/screening/:screeningId', getScreeningDataById)
+// router.put('/api/screening/:screeningId', updateScreening)
+// router.delete('/api/screening/:screeningId', deleteScreening)
 // -------------------------------- Advice ------------------------------------------
-router.post('/api/createAdvice', createAdvice)
-router.get('/api/getAdvice', getAdvice)
-// router.put('/api/updateAdvice', updateAdvice)
-// router.delete('/api/deleteAdvice', deleteAdvice)
+router.post('/api/advice', createAdvice)
+// router.get('/api/advice', getAdvice)
+router.get('/api/advice/:adviceId', getAdviceById)
+// router.put('/api/advice/:adviceId', updateAdvice)
+// router.delete('/api/advice/:adviceId', deleteAdvice)
 // -------------------------------- Respondent --------------------------------------
 router.post('/api/respondent', createRespondent)
-router.get('/api/getRespondent', getRespondent)
-// router.put('/api/updateRespondent', updateRespondent)
-// router.delete('/api/deleteRespondent', deleteRespondent)
+// router.get('/api/respondent', getRespondent)
+router.get('/api/respondent/:respondentId', getRespondentById)
+// router.put('/api/respondent/:respondentId', updateRespondent)
+// router.delete('/api/respondent/:respondentId', deleteRespondent)
 // -------------------------------- BloodTranfer ------------------------------------
-router.post('/api/BloodTranfer', createBloodTranfer)
-router.get('/api/getBloodTranfer', getBloodTranferData)
-// router.put('/api/updateBloodTranfer', updateBloodTranfer)
-// router.delete('/api/deleteBloodTranfer', deleteBloodTranfer)
+router.post('/api/blood-transfusion', createBloodTranfer)
+// router.get('/api/blood-transfusion', getBloodTranferData)
+router.get('/api/blood-transfusion/:bloodTranferId', getBloodTranferDataById)
+// router.put('/api/blood-transfusion/:bloodTranferId', updateBloodTranfer)
+// router.delete('/api/blood-transfusion/:bloodTranferId', deleteBloodTranfer)
 
 
 

@@ -17,7 +17,7 @@ const createAnganwadi = async function (req, res) {
     }
 };
 
-const getAnganwadi = async (req, res) => {
+const getAnganwadiById = async (req, res) => {
     try {
         const anganwadiId = req.params.anganwadiId;
         if (!mongoose.Types.ObjectId.isValid(anganwadiId)) {
@@ -35,4 +35,4 @@ const getAnganwadi = async (req, res) => {
 
 
 
-module.exports = { createAnganwadi, getAnganwadi }
+module.exports = { createAnganwadi, getAnganwadiById }

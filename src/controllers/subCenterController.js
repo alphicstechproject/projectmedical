@@ -16,7 +16,7 @@ const createSubCenter = async function (req, res) {
     }
 };
 
-const getSubCenter = async (req, res) => {
+const getSubCenterById = async (req, res) => {
     try {
         const subCenterId = req.params.subCenterId;
         if (!mongoose.Types.ObjectId.isValid(subCenterId)) {
@@ -34,4 +34,4 @@ const getSubCenter = async (req, res) => {
 
 
 
-module.exports = { createSubCenter, getSubCenter }
+module.exports = { createSubCenter, getSubCenterById }

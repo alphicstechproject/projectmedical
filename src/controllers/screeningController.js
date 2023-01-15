@@ -44,7 +44,7 @@ const createScreening = async function (req, res) {
     }
 };
 
-const getScreeningData = async (req, res) => {
+const getScreeningDataById = async (req, res) => {
     try {
         const screeningId = req.params.screeningId;
         if (!mongoose.Types.ObjectId.isValid(screeningId)) {
@@ -62,4 +62,4 @@ const getScreeningData = async (req, res) => {
 
 
 
-module.exports = { createScreening, getScreeningData }
+module.exports = { createScreening, getScreeningDataById }

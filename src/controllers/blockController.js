@@ -17,7 +17,7 @@ const createBlock = async function (req, res) {
     }
 };
 
-const getBlock = async (req, res) => {
+const getBlockById = async (req, res) => {
     try {
         const blockId = req.params.blockId;
         if (!mongoose.Types.ObjectId.isValid(blockId)) {
@@ -35,4 +35,4 @@ const getBlock = async (req, res) => {
 
 
 
-module.exports = { createBlock, getBlock }
+module.exports = { createBlock, getBlockById }

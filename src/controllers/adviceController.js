@@ -17,7 +17,7 @@ const createAdvice = async function (req, res) {
     }
 };
 
-const getAdvice = async (req, res) => {
+const getAdviceById = async (req, res) => {
     try {
         const adviceId = req.params.adviceId;
         if (!mongoose.Types.ObjectId.isValid(adviceId)) {
@@ -35,4 +35,4 @@ const getAdvice = async (req, res) => {
 
 
 
-module.exports = { createAdvice, getAdvice }
+module.exports = { createAdvice, getAdviceById }

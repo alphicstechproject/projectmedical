@@ -17,7 +17,7 @@ const createRespondent = async function (req, res) {
     }
 };
 
-const getRespondent = async (req, res) => {
+const getRespondentById = async (req, res) => {
     try {
         const respondentId = req.params.respondentId;
         if (!mongoose.Types.ObjectId.isValid(respondentId)) {
@@ -35,4 +35,4 @@ const getRespondent = async (req, res) => {
 
 
 
-module.exports = { createRespondent, getRespondent }
+module.exports = { createRespondent, getRespondentById }

@@ -17,6 +17,16 @@ const createRespondent = async function (req, res) {
     }
 };
 
+const getRespondent = async (req, res) => {
+    try {
+        let filter = { isDeleted: false }
+        let allData = await respondentModel.find(filter)
+        return res.status(200).send({ status: true, message: "RESPONDENT DETAILS", data: allData })
+    } catch (error) {
+        return res.status(500).send({ msg: error.message, status: false })
+    }
+};
+
 const getRespondentById = async (req, res) => {
     try {
         const respondentId = req.params.respondentId;
@@ -35,4 +45,4 @@ const getRespondentById = async (req, res) => {
 
 
 
-module.exports = { createRespondent, getRespondentById }
+module.exports = { createRespondent, getRespondent, getRespondentById }

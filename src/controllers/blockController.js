@@ -1,6 +1,5 @@
+const blocks_ScModel = require("../models/blocksAndScModel");
 const blockModel = require("../models/blockModel");
-const mongoose = require('mongoose');
-
 
 
 const createBlock = async function (req, res) {
@@ -17,17 +16,16 @@ const createBlock = async function (req, res) {
     }
 };
 
-const getBlockById = async (req, res) => {
+const getBlock = async (req, res) => {
     try {
-        const blockId = req.params.blockId;
-        if (!mongoose.Types.ObjectId.isValid(blockId)) {
-            return res.status(400).send({ status: false, message: " PLEASE ENTER CORRECT BLOCK ID" })
-        }
-        const findBlockIdInDb = await blockModel.findById(blockId)
-        if (!findBlockIdInDb) {
+        //id - 63c462f2261e4e5d59514f9c
+        const blockId = "63c462f2261e4e5d59514f9c";
+        const findblockInDb = await blocks_ScModel.findById(blockId)
+        const data = findblockInDb.allBlocks;
+        if (!data) {
             return res.status(400).send({ status: false, message: "THIS BLOCK IS NOT PRESENT IN THE DATABASE" })
         }
-        return res.status(200).send({ status: true, message: "BLOCK PROFILE DETAILS", data: findBlockIdInDb })
+        return res.status(200).send({ status: true, message: "SUBCENTER PROFILE DETAILS", data: data })
     } catch (error) {
         return res.status(500).send({ msg: error.message, status: false })
     }
@@ -35,4 +33,4 @@ const getBlockById = async (req, res) => {
 
 
 
-module.exports = { createBlock, getBlockById }
+module.exports = { createBlock, getBlock }

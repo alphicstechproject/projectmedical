@@ -1,5 +1,5 @@
+const blocks_ScModel = require("../models/blocksAndScModel");
 const subCenterModel = require("../models/subCenterModel");
-const mongoose = require('mongoose');
 
 
 const createSubCenter = async function (req, res) {
@@ -16,17 +16,17 @@ const createSubCenter = async function (req, res) {
     }
 };
 
-const getSubCenterById = async (req, res) => {
+const getSubCenter = async (req, res) => {
     try {
-        const subCenterId = req.params.subCenterId;
-        if (!mongoose.Types.ObjectId.isValid(subCenterId)) {
-            return res.status(400).send({ status: false, message: " PLEASE ENTER CORRECT SUBCENTER ID" })
+        //id - 63c462f2261e4e5d59514f9c
+        const blockId = "63c462f2261e4e5d59514f9c";
+        const block = req.query.block;
+        const findblockInDb = await blocks_ScModel.findById(blockId)
+        const data = findblockInDb.blockSc[block];
+        if (!data) {
+            return res.status(400).send({ status: false, message: "THIS BLOCK IS NOT PRESENT IN THE DATABASE" })
         }
-        const findSubCenterIdInDb = await subCenterModel.findById(subCenterId)
-        if (!findSubCenterIdInDb) {
-            return res.status(400).send({ status: false, message: "THIS SUBCENTER IS NOT PRESENT IN THE DATABASE" })
-        }
-        return res.status(200).send({ status: true, message: "SUBCENTER PROFILE DETAILS", data: findSubCenterIdInDb })
+        return res.status(200).send({ status: true, message: "SUBCENTER PROFILE DETAILS", data: data })
     } catch (error) {
         return res.status(500).send({ msg: error.message, status: false })
     }
@@ -34,4 +34,4 @@ const getSubCenterById = async (req, res) => {
 
 
 
-module.exports = { createSubCenter, getSubCenterById }
+module.exports = { createSubCenter, getSubCenter }

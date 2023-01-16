@@ -7,7 +7,7 @@ const { getSubCenter } = require('../controllers/subCenterController');
 const { getBlock } = require('../controllers/blockController');
 const { createScreening, getScreeningData, getScreeningDataById, updateScreening, deleteScreening } = require('../controllers/screeningController');
 const { createAdvice, getAdviceById, updateAdvice, deleteAdvice } = require('../controllers/adviceController');
-const { createRespondent, getRespondentById, updateRespondent, deleteRespondent } = require('../controllers/respondentController');
+const { createRespondent, getRespondent, getRespondentById, updateRespondent, deleteRespondent } = require('../controllers/respondentController');
 const { createBloodTranfer, getBloodTranferDataById, updateBloodTranfer, deleteBloodTranfer } = require('../controllers/bloodTranferController');
 
 /** anganwadi * subcenter * block*/
@@ -36,7 +36,7 @@ router.get('/api/block', getBlock)
 router.post('/api/screening', createScreening)
 router.get('/api/screening', getScreeningData)
 router.get('/api/screening/:screeningId', getScreeningDataById)
-// router.put('/api/screening/:screeningId', updateScreening)
+router.put('/api/screening/:screeningId', updateScreening)
 // router.delete('/api/screening/:screeningId', deleteScreening)
 
 // -------------------------------- Advice ------------------------------------------
@@ -48,16 +48,16 @@ router.get('/api/advice/:adviceId', getAdviceById)
 
 // -------------------------------- Respondent --------------------------------------
 router.post('/api/respondent', createRespondent)
-// router.get('/api/respondent', getRespondent)
+router.get('/api/respondent', getRespondent)
 router.get('/api/respondent/:respondentId', getRespondentById)
-// router.put('/api/respondent/:respondentId', updateRespondent)
+router.put('/api/respondent/:respondentId', updateRespondent)
 // router.delete('/api/respondent/:respondentId', deleteRespondent)
 
 // -------------------------------- BloodTranfer ------------------------------------
 router.post('/api/blood-transfusion', createBloodTranfer)
 // router.get('/api/blood-transfusion', getBloodTranferData)
 router.get('/api/blood-transfusion/:bloodTranferId', getBloodTranferDataById)
-// router.put('/api/blood-transfusion/:bloodTranferId', updateBloodTranfer)
+router.put('/api/blood-transfusion/:bloodTranferId', updateBloodTranfer)
 // router.delete('/api/blood-transfusion/:bloodTranferId', deleteBloodTranfer)
 
 // -------------------------------- Blocks_Sc ------------------------------------

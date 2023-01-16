@@ -1,5 +1,6 @@
 const respondentModel = require("../models/respondentModel");
 const mongoose = require('mongoose');
+const {isValidMobile} = require("../validations/validation");
 
 
 
@@ -43,6 +44,34 @@ const getRespondentById = async (req, res) => {
     }
 };
 
+const updateRespondent = async function (req, res) {
+    try {
+        let data = req.body
+        if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "Please Enter data to update the Respondent" })
+        const { aadhar_no, creation_date, respondent_name, mobile } = data;
+
+        if (aadhar_no === "") return res.status(400).send({ status: false, message: "you can't update aadhar no with empty data" })
+        if (creation_date === "") return res.status(400).send({ status: false, message: "you can't update creation date with empty data" })
+        if (respondent_name === "") return res.status(400).send({ status: false, message: "you can't update respondent_name with empty data" })
+        if (mobile === "") return res.status(400).send({ status: false, message: "you can't update mobile with empty data" })
+
+        if (mobile) {
+            if (!isValidMobile(mobile)) return res.status(400).send({ status: false, message: "please provide Valid mobile Number with 10 digits starts with 6||7||8||9" })
+
+            if (await respondentModel.findOne({ mobile })) return res.status(400).send({ status: false, message: "This mobile no. is already Registered Please give another mobile no." })
+        }
+
+        let updatedata = await respondentModel.findByIdAndUpdate(
+            { _id: req.params.respondentId },
+            { $set: data },
+            { new: true }
+        )
+        return res.status(200).send({ status: true, message: "data updated successfully", data: updatedata })
+    } catch (error) {
+        return res.status(500).send({ msg: error.message, status: false })
+    }
+}
 
 
-module.exports = { createRespondent, getRespondent, getRespondentById }
+
+module.exports = { createRespondent, getRespondent, getRespondentById, updateRespondent }

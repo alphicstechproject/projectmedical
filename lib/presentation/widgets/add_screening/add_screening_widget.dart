@@ -1,9 +1,34 @@
 import 'package:application_1/presentation/widgets/common/radio_button.dart';
 import 'package:application_1/utils/responsive/responsiveness.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 class AddScreeningWidget extends StatelessWidget {
-  const AddScreeningWidget({Key? key}) : super(key: key);
+  final Function({
+    required String date,
+  }) dateSelect;
+  final TextEditingController aadharcardField;
+  final Function({
+    required String aadharcard,
+  }) aadharcardFieldChnage;
+  final TextEditingController mobileNoField;
+  final Function({
+    required String mobileNo,
+  }) mobileNoFieldChnage;
+  final TextEditingController respondentField;
+  final Function({
+    required String respondent,
+  }) respondentFieldChnage;
+  const AddScreeningWidget({
+    Key? key,
+    required this.dateSelect,
+    required this.aadharcardField,
+    required this.aadharcardFieldChnage,
+    required this.mobileNoField,
+    required this.mobileNoFieldChnage,
+    required this.respondentField,
+    required this.respondentFieldChnage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +57,23 @@ class AddScreeningWidget extends StatelessWidget {
                     fontFamily: 'Lato-Thin',
                   ),
                 ),
+                SizedBox(height: 5.h),
+                DateTimePicker(
+                  type: DateTimePickerType.date,
+                  dateMask: 'dd-MM-yyyy',
+                  decoration: const InputDecoration(
+                    suffixIcon: Icon(
+                      Icons.calendar_today,
+                      color: Colors.black,
+                    ),
+                  ),
+                  initialValue: DateTime.now().toString(),
+                  firstDate: DateTime(1800),
+                  lastDate: DateTime(3000),
+                  onChanged: (val) => dateSelect(
+                    date: val,
+                  ),
+                ),
                 SizedBox(height: 10.h),
                 Text(
                   'Aadhar Card',
@@ -45,7 +87,7 @@ class AddScreeningWidget extends StatelessWidget {
                 Container(
                   height: 48.h,
                   child: TextFormField(
-                    //controller: mobileController,
+                    controller: aadharcardField,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -84,6 +126,8 @@ class AddScreeningWidget extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                     cursorColor: const Color(0xFF616568),
+                    onChanged: (value) =>
+                        aadharcardFieldChnage(aadharcard: value),
                     // onChanged: (String? value) {
                     //   // This optional block of code can be used to run
                     //   // code when the user saves the form.
@@ -109,7 +153,7 @@ class AddScreeningWidget extends StatelessWidget {
                 Container(
                   height: 48.h,
                   child: TextFormField(
-                    //controller: mobileController,
+                    controller: mobileNoField,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -148,6 +192,7 @@ class AddScreeningWidget extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                     cursorColor: const Color(0xFF616568),
+                    onChanged: (value) => mobileNoFieldChnage(mobileNo: value),
                     // onChanged: (String? value) {
                     //   // This optional block of code can be used to run
                     //   // code when the user saves the form.
@@ -182,7 +227,7 @@ class AddScreeningWidget extends StatelessWidget {
                 Container(
                   height: 48.h,
                   child: TextFormField(
-                    //controller: mobileController,
+                    controller: respondentField,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -221,6 +266,8 @@ class AddScreeningWidget extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                     cursorColor: const Color(0xFF616568),
+                    onChanged: (value) =>
+                        respondentFieldChnage(respondent: value),
                     // onChanged: (String? value) {
                     //   // This optional block of code can be used to run
                     //   // code when the user saves the form.

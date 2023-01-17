@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:application_1/cubit/login/login_cubit.dart';
 import 'package:application_1/presentation/screens/login/login_screen.dart';
 import 'package:application_1/presentation/widgets/add_screening/advised_widget.dart';
 import 'package:application_1/presentation/widgets/add_screening/five_screening_widget.dart';
@@ -7,6 +8,7 @@ import 'package:application_1/presentation/widgets/add_screening/four_screening_
 import 'package:application_1/utils/responsive/responsiveness.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'presentation/widgets/add_screening/third_screening_widget.dart';
 
@@ -31,44 +33,53 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Lato', focusColor: const Color(0xFFC9CCCF),
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              width: 1.w,
-              color: const Color(0xFFC9CCCF),
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              width: 1.w,
-              color: const Color(0xFFC9CCCF),
-            ),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              width: 1.w,
-              color: const Color(0xFFC9CCCF),
-            ),
-          ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => LoginCubit(
+              // repository: context.read<AuthRepository>(),
+              ),
         ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Lato', focusColor: const Color(0xFFC9CCCF),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 1.w,
+                color: const Color(0xFFC9CCCF),
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 1.w,
+                color: const Color(0xFFC9CCCF),
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 1.w,
+                color: const Color(0xFFC9CCCF),
+              ),
+            ),
+          ),
 
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        // primarySwatch: const Color(0xFFC9CCCF),
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          // primarySwatch: const Color(0xFFC9CCCF),
+        ),
+        home: const LoginScreen(),
       ),
-      home: const LoginScreen(),
     );
   }
 }

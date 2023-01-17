@@ -1,9 +1,18 @@
+import 'package:application_1/model/screening/screening_model.dart';
 import 'package:application_1/presentation/screens/add_screening/add_screening.dart';
+import 'package:application_1/presentation/widgets/common/loader.dart';
 import 'package:application_1/utils/responsive/responsiveness.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HomeWidget extends StatelessWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+  final bool isLoading;
+  final List<ScreeningModel> screeningData;
+  const HomeWidget({
+    Key? key,
+    this.isLoading = false,
+    required this.screeningData,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -215,10 +224,11 @@ class HomeWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 ListView.builder(
-                    itemCount: 5,
+                    itemCount: screeningData.length,
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
+                      final data = screeningData[index];
                       return Container(
                         height: 142.h,
                         margin: EdgeInsets.only(bottom: 10.vs),
@@ -254,7 +264,7 @@ class HomeWidget extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  ' : 1111-0110-151-0000',
+                                  ' : ${data.sId}',
                                   style: TextStyle(
                                     color: const Color(0xFF202223),
                                     fontSize: 14.f,
@@ -281,7 +291,7 @@ class HomeWidget extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      'T',
+                                      data.respondentName![0],
                                       style: TextStyle(
                                         color: const Color(0xFF6345C3),
                                         fontSize: 22.5.f,
@@ -304,7 +314,7 @@ class HomeWidget extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Tulshi Sharma',
+                                            data.respondentName!,
                                             style: TextStyle(
                                               color: const Color(0xFF202223),
                                               fontSize: 16.f,
@@ -314,7 +324,7 @@ class HomeWidget extends StatelessWidget {
                                           ),
                                           SizedBox(height: 5.h),
                                           Text(
-                                            'Village : Dashpur',
+                                            'Village : ${data.village}',
                                             style: TextStyle(
                                               color: const Color(0xFF616568),
                                               fontSize: 12.f,
@@ -415,7 +425,9 @@ class HomeWidget extends StatelessWidget {
                                       width: 5.w,
                                     ),
                                     Text(
-                                      '02-13-2023',
+                                      DateFormat('dd-MM-yyy').format(
+                                        DateTime.parse(data.updatedAt!),
+                                      ),
                                       style: TextStyle(
                                         color: const Color(0xFF202223),
                                         fontSize: 12.f,
@@ -441,7 +453,7 @@ class HomeWidget extends StatelessWidget {
                                       width: 5.w,
                                     ),
                                     Text(
-                                      '2',
+                                      data.screeningNo!,
                                       style: TextStyle(
                                         color: const Color(0xFF202223),
                                         fontSize: 12.f,
@@ -510,7 +522,18 @@ class HomeWidget extends StatelessWidget {
               },
             ),
           ),
-        )
+        ),
+        if (isLoading)
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Colors.black.withOpacity(0.7),
+            child: Center(
+              child: Loader(
+                size: 75.s,
+              ),
+            ),
+          ),
       ],
     );
   }

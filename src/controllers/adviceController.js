@@ -33,6 +33,28 @@ const getAdviceById = async (req, res) => {
     }
 };
 
+const updateAdvice = async function (req, res) {
+    try {
+        let data = req.body
+        if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "Please Enter data to update the Advice" })
+        const { respondent_title, anemia_stage, description } = data;
+
+        if (respondent_title === "") return res.status(400).send({ status: false, message: "you can't update respondent title with empty data" })
+        if (anemia_stage === "") return res.status(400).send({ status: false, message: "you can't update anemia stage with empty data" })
+        if (description === "") return res.status(400).send({ status: false, message: "you can't update description with empty data" })
+        
+
+        let updatedata = await adviceModel.findByIdAndUpdate(
+            { _id: req.params.adviceId },
+            { $set: data },
+            { new: true }
+        )
+        return res.status(200).send({ status: true, message: "data updated successfully", data: updatedata })
+    } catch (error) {
+        return res.status(500).send({ msg: error.message, status: false })
+    }
+}
 
 
-module.exports = { createAdvice, getAdviceById }
+
+module.exports = { createAdvice, getAdviceById, updateAdvice }

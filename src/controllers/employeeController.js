@@ -72,6 +72,15 @@ const employeeLogin = async function (req, res) {
         return res.status(500).send({ msg: error.message, status: false })
     }
 }
+const getEmployee = async (req, res) => {
+    try {
+        let filter = { isDeleted: false }
+        let allData = await employeeModel.find(filter)
+        return res.status(200).send({ status: true, message: "EMPLOYEE DETAILS", data: allData })
+    } catch (error) {
+        return res.status(500).send({ msg: error.message, status: false })
+    }
+};
 
 const getEmployeeById = async function (req, res) {
     try {
@@ -139,4 +148,4 @@ const updateEmployee = async function (req, res) {
     }
 }
 
-module.exports = { createEmployee, employeeLogin, getEmployeeById, updateEmployee }
+module.exports = { createEmployee, employeeLogin, getEmployee, getEmployeeById, updateEmployee }

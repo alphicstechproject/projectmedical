@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createEmployee, employeeLogin, getEmployeeById, updateEmployee, deleteEmployee } = require('../controllers/employeeController');
+const { createEmployee, employeeLogin, getEmployee, getEmployeeById, updateEmployee, deleteEmployee } = require('../controllers/employeeController');
 const { authentication, authorization } = require('../middlewares/auth')
 const { getAnganwadiById } = require('../controllers/anganwadiController');
 const { getSubCenter } = require('../controllers/subCenterController');
@@ -17,7 +17,7 @@ router.post('/api/login', employeeLogin)
 
 // -------------------------------- Employee ----------------------------------------
 router.post('/api/employee', createEmployee)
-// router.get('/api/employee', getEmployee)
+router.get('/api/employee', getEmployee)
 router.get('/api/employee/:employeeId', authentication, authorization, getEmployeeById)
 router.put('/api/employee/:employeeId', authentication, authorization, updateEmployee)
 // router.delete('/api/employee/:employeeId', authentication, authorization, deleteEmployee)
@@ -43,7 +43,7 @@ router.put('/api/screening/:screeningId', updateScreening)
 router.post('/api/advice', createAdvice)
 // router.get('/api/advice', getAdvice)
 router.get('/api/advice/:adviceId', getAdviceById)
-// router.put('/api/advice/:adviceId', updateAdvice)
+router.put('/api/advice/:adviceId', updateAdvice)
 // router.delete('/api/advice/:adviceId', deleteAdvice)
 
 // -------------------------------- Respondent --------------------------------------

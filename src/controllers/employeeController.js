@@ -14,8 +14,7 @@ const createEmployee = async function (req, res) {
         const { employee_name, full_name, email, mobile, district, block_name, password, role, village_name, anganwadi_center, sub_center } = data;
 
         if (!isPresent(employee_name)) return res.status(400).send({ status: false, message: "employee_name is mandatory" })
-        if (!isValidName(employee_name)) return res.status(400).send({ status: false, message: "Please Provide the valid employee_name" })
-
+        
         if (!isPresent(full_name)) return res.status(400).send({ status: false, message: "full_name is mandatory" })
         if (!isValidName(full_name)) return res.status(400).send({ status: false, message: "Please Provide the valid full_name" })
 
@@ -54,9 +53,7 @@ const employeeLogin = async function (req, res) {
         }
         if (!isPresent(password)) {
             return res.status(400).send({ status: false, message: "Please enter Password" })
-        }
-        if (!isValidName(employee_name)) return res.status(400).send({ status: false, message: "Please Provide the valid employee_name" })
-        if (!isValidPassword(password)) {
+        }if (!isValidPassword(password)) {
             return res.status(400).send({ status: false, message: "password must have one capital one small one number and one special character[#?!@$%^&*-]" })
         }
         let data = await employeeModel.findOne({ employee_name: employee_name })

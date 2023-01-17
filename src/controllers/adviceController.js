@@ -17,6 +17,16 @@ const createAdvice = async function (req, res) {
     }
 };
 
+const getAdvice = async (req, res) => {
+    try {
+        let filter = { isDeleted: false }
+        let allData = await adviceModel.find(filter)
+        return res.status(200).send({ status: true, message: "ADVICE DETAILS", data: allData })
+    } catch (error) {
+        return res.status(500).send({ msg: error.message, status: false })
+    }
+};
+
 const getAdviceById = async (req, res) => {
     try {
         const adviceId = req.params.adviceId;
@@ -57,4 +67,4 @@ const updateAdvice = async function (req, res) {
 
 
 
-module.exports = { createAdvice, getAdviceById, updateAdvice }
+module.exports = { createAdvice, getAdvice, getAdviceById, updateAdvice }

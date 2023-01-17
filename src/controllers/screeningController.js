@@ -1,5 +1,6 @@
 const screeningModel = require("../models/screeningModel");
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 
 const createScreening = async function (req, res) {
@@ -15,41 +16,55 @@ const createScreening = async function (req, res) {
 
 const getScreeningData = async (req, res) => {
     try {
+        let { block, village, status_question_two, type_of_respondent } = req.query;
         let filter = { isDeleted: false }
+        
+        if (block) {
+            filter = { isDeleted: false, block: block }
+        }
+        if (village) {
+            filter = { isDeleted: false, village: village }
+        }
+        if (status_question_two) {
+            filter = { isDeleted: false, status_question_two: status_question_two }
+        }
+        if (type_of_respondent) {
+            filter = { isDeleted: false, type_of_respondent: type_of_respondent }
+        }
+        if (block && village) {
+            filter = { isDeleted: false, block: block, village: village }
+        }
+        if (block && status_question_two) {
+            filter = { isDeleted: false, block: block, status_question_two: status_question_two }
+        }
+        if (block && type_of_respondent) {
+            filter = { isDeleted: false, block: block, type_of_respondent: type_of_respondent }
+        }
+        if (village && status_question_two) {
+            filter = { isDeleted: false, village: village, status_question_two: status_question_two }
+        }
+        if (village && type_of_respondent) {
+            filter = { isDeleted: false, village: village, type_of_respondent: type_of_respondent }
+        }
+        if (status_question_two && type_of_respondent) {
+            filter = { isDeleted: false, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
+        }
+        if (block && village && status_question_two) {
+            filter = { isDeleted: false, block: block, village: village, status_question_two: status_question_two }
+        }
+        if (block && village && type_of_respondent) {
+            filter = { isDeleted: false, block: block, village: village, type_of_respondent: type_of_respondent }
+        }
+        if (block && status_question_two && type_of_respondent) {
+            filter = { isDeleted: false, block: block, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
+        }
+        if (village && status_question_two && type_of_respondent) {
+            filter = { isDeleted: false, village: village, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
+        }
+        if (block && village && status_question_two && type_of_respondent) {
+            filter = { isDeleted: false, block: block, village: village, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
+        }
         let allData = await screeningModel.find(filter)
-
-        let totalScreening = screeningModel.length;
-        let notAnemia = (await screeningModel.find({ isDeleted: false, status_question_two: 'No Anemia' })).length;
-        let anemiaRate = Math.round(((totalScreening - notAnemia) / totalScreening) * 100);
-        console.log('anemiaRate:', anemiaRate, typeof (anemiaRate))
-        let last14Days = [];
-        if (last14Days.length < 14) {
-            last14Days.push()
-        } else {
-            last14Days.shift();
-            last14Days.push()
-        }
-        let lastMonth = [];
-        if (lastMonth.length < 30) {
-            lastMonth.push()
-        } else {
-            lastMonth.shift();
-            lastMonth.push()
-        }
-        let lastYear = [];
-        if (lastYear.length < 365) {
-            lastYear.push()
-        } else {
-            lastYear.shift();
-            lastYear.push()
-        }
-        let recentScreening = [];
-        // if (recentScreening.length < 7) {
-        //     recentScreening.push(createdata)
-        // } else {
-        //     recentScreening.shift();
-        //     recentScreening.push(createdata)
-        // }
 
         return res.status(200).send({ status: true, message: "SCREENING DETAILS", data: allData })
     } catch (error) {
@@ -125,6 +140,45 @@ const updateScreening = async function (req, res) {
         return res.status(200).send({ status: true, message: "data updated successfully", data: updatedata })
     } catch (error) {
         return res.status(500).send({ msg: error.message, status: false })
+    }
+}
+
+const dashboard = async (req, res) => {
+    try {
+        let totalScreening = screeningModel.length;
+        let notAnemia = (await screeningModel.find({ isDeleted: false, status_question_two: 'No Anemia' })).length;
+        let anemiaRate = Math.round(((totalScreening - notAnemia) / totalScreening) * 100);
+        console.log('anemiaRate:', anemiaRate, typeof (anemiaRate))
+        let last14Days = [];
+        if (last14Days.length < 14) {
+            last14Days.push()
+        } else {
+            last14Days.shift();
+            last14Days.push()
+        }
+        let lastMonth = [];
+        if (lastMonth.length < 30) {
+            lastMonth.push()
+        } else {
+            lastMonth.shift();
+            lastMonth.push()
+        }
+        let lastYear = [];
+        if (lastYear.length < 365) {
+            lastYear.push()
+        } else {
+            lastYear.shift();
+            lastYear.push()
+        }
+        let recentScreening = [];
+        // if (recentScreening.length < 7) {
+        //     recentScreening.push(createdata)
+        // } else {
+        //     recentScreening.shift();
+        //     recentScreening.push(createdata)
+        // }
+    } catch {
+
     }
 }
 

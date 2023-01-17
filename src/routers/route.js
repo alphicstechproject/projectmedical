@@ -6,7 +6,7 @@ const { getAnganwadiById } = require('../controllers/anganwadiController');
 const { getSubCenter } = require('../controllers/subCenterController');
 const { getBlock } = require('../controllers/blockController');
 const { createScreening, getScreeningData, getScreeningDataById, updateScreening, deleteScreening } = require('../controllers/screeningController');
-const { createAdvice, getAdviceById, updateAdvice, deleteAdvice } = require('../controllers/adviceController');
+const { createAdvice, getAdvice, getAdviceById, updateAdvice, deleteAdvice } = require('../controllers/adviceController');
 const { createRespondent, getRespondent, getRespondentById, updateRespondent, deleteRespondent } = require('../controllers/respondentController');
 const { createBloodTranfer, getBloodTranferDataById, updateBloodTranfer, deleteBloodTranfer } = require('../controllers/bloodTranferController');
 
@@ -41,7 +41,7 @@ router.put('/api/screening/:screeningId', updateScreening)
 
 // -------------------------------- Advice ------------------------------------------
 router.post('/api/advice', createAdvice)
-// router.get('/api/advice', getAdvice)
+router.get('/api/advice', getAdvice)
 router.get('/api/advice/:adviceId', getAdviceById)
 router.put('/api/advice/:adviceId', updateAdvice)
 // router.delete('/api/advice/:adviceId', deleteAdvice)

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
 const Objectid = mongoose.Types.ObjectId.isValid
-const { isPresent, isValidName, isValidEmail, isValidMobile, isValidPassword } = require('../validations/validation')
+const { isPresent, isValidName, isValidMobile, isValidPassword } = require('../validations/validation')
 
 
 const createEmployee = async function (req, res) {
@@ -11,19 +11,12 @@ const createEmployee = async function (req, res) {
         const data = req.body
 
         if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "Please Enter data to Create the Employee" })
-        const { employee_name, full_name, email, mobile, district, block_name, password, role, village_name, anganwadi_center, sub_center } = data;
+        const { employee_name, full_name, mobile, district, block_name, password, role, village_name, anganwadi_center, sub_center } = data;
 
         if (!isPresent(employee_name)) return res.status(400).send({ status: false, message: "employee_name is mandatory" })
-        
+
         if (!isPresent(full_name)) return res.status(400).send({ status: false, message: "full_name is mandatory" })
         if (!isValidName(full_name)) return res.status(400).send({ status: false, message: "Please Provide the valid full_name" })
-
-        if (!isPresent(email)) return res.status(400).send({ status: false, message: "email is mandatory" })
-        if (!isValidEmail(email)) return res.status(400).send({ status: false, message: "email should be in  valid format eg:- name@gmail.com" })
-
-        if (await employeeModel.findOne({ email })) return res.status(400).send({ status: false, message: "This email is already Registered Please give another Email" })
-
-        
 
         if (!isPresent(mobile)) return res.status(400).send({ status: false, message: "Mobile no. is mandatory" })
         if (!isValidMobile(mobile)) return res.status(400).send({ status: false, message: "please provide Valid mobile Number with 10 digits starts with 6||7||8||9" })
@@ -53,7 +46,7 @@ const employeeLogin = async function (req, res) {
         }
         if (!isPresent(password)) {
             return res.status(400).send({ status: false, message: "Please enter Password" })
-        }if (!isValidPassword(password)) {
+        } if (!isValidPassword(password)) {
             return res.status(400).send({ status: false, message: "password must have one capital one small one number and one special character[#?!@$%^&*-]" })
         }
         let data = await employeeModel.findOne({ employee_name: employee_name })
@@ -62,6 +55,8 @@ const employeeLogin = async function (req, res) {
         }
         let checkpassword = await bcrypt.compare(password, data.password);
         if (!checkpassword) return res.status(400).send({ status: false, message: "login failed this password not matches with employee_name" })
+
+        await employeeModel.findOneAndUpdate({ employee_name: employee_name }, { status: 'ACTIVE' })
 
         const token = jwt.sign({
             id: data._id.toString(),
@@ -76,6 +71,7 @@ const getEmployee = async (req, res) => {
     try {
         let filter = { isDeleted: false }
         let allData = await employeeModel.find(filter)
+        console.log(employeeModel)
         return res.status(200).send({ status: true, message: "EMPLOYEE DETAILS", data: allData })
     } catch (error) {
         return res.status(500).send({ msg: error.message, status: false })
@@ -107,12 +103,11 @@ const updateEmployee = async function (req, res) {
     try {
         let data = req.body
         if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "Please Enter data to update the Employee" })
-        const { employee_name, full_name, email, mobile, district, block_name, password, role, village_name, anganwadi_center, sub_center } = data;
+        const { employee_name, full_name, mobile, district, block_name, password, role, village_name, anganwadi_center, sub_center } = data;
 
         if (employee_name === "") return res.status(400).send({ status: false, message: "you can't update employee_name as a empty string" })
         if (full_name === "") return res.status(400).send({ status: false, message: "you can't update full_name as a empty string" })
         if (mobile === "") return res.status(400).send({ status: false, message: "you can't update mobile as a empty string" })
-        if (email === "") return res.status(400).send({ status: false, message: "you can't update email as a empty string" })
         if (password === "") return res.status(400).send({ status: false, message: "you can't update password as a empty string" })
 
         if (typeof (employee_name) !== "undefined") {
@@ -120,11 +115,6 @@ const updateEmployee = async function (req, res) {
         }
         if (full_name) {
             if (!isValidName(full_name)) return res.status(400).send({ status: false, message: "Please Provide the valid full_name,enter only alphabates" })
-        }
-        if (email) {
-            if (!isValidEmail(email)) return res.status(400).send({ status: false, message: "email should be in  valid format eg:- name@gmail.com" })
-
-            if (await employeeModel.findOne({ email })) return res.status(400).send({ status: false, message: "This email is already Registered Please give another Email" })
         }
 
         if (mobile) {

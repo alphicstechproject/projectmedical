@@ -2,16 +2,32 @@ import 'package:application_1/utils/responsive/responsiveness.dart';
 import 'package:flutter/material.dart';
 
 class SecondScreeningWidget extends StatelessWidget {
-  const SecondScreeningWidget({Key? key}) : super(key: key);
+  final TextEditingController weightField;
+  final Function({
+    required String weight,
+  }) weightFieldChnage;
+  final TextEditingController heightField;
+  final Function({
+    required String height,
+  }) heightFieldChnage;
+  final double bmi;
+  const SecondScreeningWidget({
+    Key? key,
+    required this.heightField,
+    required this.heightFieldChnage,
+    required this.weightField,
+    required this.weightFieldChnage,
+    required this.bmi,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10.hs, vertical: 10.vs),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: 35.h),
           Text(
             '2. Anthropometry',
             style: TextStyle(
@@ -33,7 +49,7 @@ class SecondScreeningWidget extends StatelessWidget {
           Container(
             height: 48.h,
             child: TextFormField(
-              //controller: mobileController,
+              controller: weightField,
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -72,16 +88,7 @@ class SecondScreeningWidget extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
               cursorColor: const Color(0xFF616568),
-              // onChanged: (String? value) {
-              //   // This optional block of code can be used to run
-              //   // code when the user saves the form.
-              //   setState(() {});
-              // },
-              // validator: (String? value) {
-              //   return (value != null && value.contains('@'))
-              //       ? 'Do not use the @ char.'
-              //       : null;
-              // },
+              onChanged: (value) => weightFieldChnage(weight: value),
             ),
           ),
           SizedBox(height: 10.h),
@@ -97,7 +104,7 @@ class SecondScreeningWidget extends StatelessWidget {
           Container(
             height: 48.h,
             child: TextFormField(
-              //controller: mobileController,
+              controller: heightField,
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -136,16 +143,7 @@ class SecondScreeningWidget extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
               cursorColor: const Color(0xFF616568),
-              // onChanged: (String? value) {
-              //   // This optional block of code can be used to run
-              //   // code when the user saves the form.
-              //   setState(() {});
-              // },
-              // validator: (String? value) {
-              //   return (value != null && value.contains('@'))
-              //       ? 'Do not use the @ char.'
-              //       : null;
-              // },
+              onChanged: (value) => heightFieldChnage(height: value),
             ),
           ),
           SizedBox(height: 10.h),
@@ -160,56 +158,24 @@ class SecondScreeningWidget extends StatelessWidget {
           SizedBox(height: 5.h),
           Container(
             height: 48.h,
-            child: TextFormField(
-              //controller: mobileController,
-              decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1.w,
-                    color: const Color(0xFFC9CCCF),
-                  ),
-                ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1.w,
-                    color: const Color(0xFFC9CCCF),
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1.w,
-                    color: const Color(0xFFC9CCCF),
-                  ),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1.w,
-                    color: const Color(0xFFC9CCCF),
-                  ),
-                ),
-                hintText: 'Enter BMI',
-                hintStyle: TextStyle(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: const Color(0xFFC9CCCF),
+              ),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 10.hs),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                bmi != 0.0 ? bmi.toString() : 'Enter BMI',
+                style: TextStyle(
                   color: const Color(0xFF616568),
                   fontSize: 14.f,
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              style: TextStyle(
-                color: const Color(0xFF616568),
-                fontSize: 14.f,
-                fontWeight: FontWeight.w400,
-              ),
-              cursorColor: const Color(0xFF616568),
-              // onChanged: (String? value) {
-              //   // This optional block of code can be used to run
-              //   // code when the user saves the form.
-              //   setState(() {});
-              // },
-              // validator: (String? value) {
-              //   return (value != null && value.contains('@'))
-              //       ? 'Do not use the @ char.'
-              //       : null;
-              // },
             ),
           ),
           SizedBox(height: 10.h),
@@ -224,56 +190,32 @@ class SecondScreeningWidget extends StatelessWidget {
           SizedBox(height: 5.h),
           Container(
             height: 48.h,
-            child: TextFormField(
-              //controller: mobileController,
-              decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1.w,
-                    color: const Color(0xFFC9CCCF),
-                  ),
-                ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1.w,
-                    color: const Color(0xFFC9CCCF),
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1.w,
-                    color: const Color(0xFFC9CCCF),
-                  ),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1.w,
-                    color: const Color(0xFFC9CCCF),
-                  ),
-                ),
-                hintText: '-AUTO-',
-                hintStyle: TextStyle(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: const Color(0xFFC9CCCF),
+              ),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 10.hs),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                bmi < 18.5
+                    ? 'Underweight'
+                    : (bmi > 18.5 && bmi < 25)
+                        ? 'Healthy Weight'
+                        : (bmi > 25 && bmi < 30)
+                            ? 'Overweight'
+                            : bmi > 30
+                                ? 'Obesity'
+                                : '-AUTO-',
+                style: TextStyle(
                   color: const Color(0xFF616568),
                   fontSize: 14.f,
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              style: TextStyle(
-                color: const Color(0xFF616568),
-                fontSize: 14.f,
-                fontWeight: FontWeight.w400,
-              ),
-              cursorColor: const Color(0xFF616568),
-              // onChanged: (String? value) {
-              //   // This optional block of code can be used to run
-              //   // code when the user saves the form.
-              //   setState(() {});
-              // },
-              // validator: (String? value) {
-              //   return (value != null && value.contains('@'))
-              //       ? 'Do not use the @ char.'
-              //       : null;
-              // },
             ),
           ),
         ],

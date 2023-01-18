@@ -14,14 +14,14 @@ class DrawCircle extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (isSelected) {
-      canvas.drawCircle(const Offset(10.0, 10.0), 14.0, paint1);
-      canvas.drawCircle(const Offset(10.0, 10.0), 5.0, paint2);
+      canvas.drawCircle(const Offset(15.0, 10.0), 14.0, paint1);
+      canvas.drawCircle(const Offset(15.0, 10.0), 8.0, paint2);
     } else if (unSelectedBorderActive) {
-      canvas.drawCircle(const Offset(10.0, 10.0), 14.0, paint3);
-      canvas.drawCircle(const Offset(10.0, 10.0), 12.0, paint2);
+      canvas.drawCircle(const Offset(15.0, 10.0), 10.0, paint3);
+      canvas.drawCircle(const Offset(15.0, 10.0), 8.0, paint2);
     } else {
-      canvas.drawCircle(const Offset(10.0, 10.0), 14.0, paint3);
-      canvas.drawCircle(const Offset(10.0, 10.0), 12.0, paint2);
+      canvas.drawCircle(const Offset(15.0, 10.0), 10.0, paint3);
+      canvas.drawCircle(const Offset(15.0, 10.0), 8.0, paint2);
     }
   }
 

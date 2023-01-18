@@ -30,6 +30,14 @@ class AddScreeningState with _$AddScreeningState {
     required String weight,
     required String height,
     required double bmi,
+    required List<Map<String, dynamic>> ifa,
+    required List<Map<String, dynamic>> ancCheckup,
+    required String serviceDiscontinue,
+    required String hb,
+    required String selectedRespondantType,
+    required List<Map<String, dynamic>> malaria,
+    required List<Map<String, dynamic>> sickelCell,
+    required SaveData saveData,
   }) = _AddScreeningState;
 
   factory AddScreeningState.initial() => AddScreeningState(
@@ -88,6 +96,58 @@ class AddScreeningState with _$AddScreeningState {
         height: '',
         weight: '',
         bmi: 0.0,
+        ifa: [
+          {
+            'type': 'Yes',
+            'selected': false,
+          },
+          {
+            'type': 'No',
+            'selected': false,
+          },
+        ],
+        ancCheckup: [
+          {
+            'type': 'Yes',
+            'selected': false,
+          },
+          {
+            'type': 'No',
+            'selected': false,
+          },
+        ],
+        serviceDiscontinue: '',
+        hb: '',
+        selectedRespondantType: '',
+        malaria: [
+          {
+            'type': 'Yes',
+            'selected': false,
+          },
+          {
+            'type': 'No',
+            'selected': false,
+          },
+          {
+            'type': 'Do not Know',
+            'selected': false,
+          },
+        ],
+        sickelCell: [
+          {
+            'type': 'Yes',
+            'selected': false,
+          },
+          {
+            'type': 'No',
+            'selected': false,
+          },
+          {
+            'type': 'Do not Know',
+            'selected': false,
+          },
+        ],
+        saveData: const SaveData.initial(),
       );
 }
 
@@ -125,4 +185,16 @@ class GetAnm with _$GetAnm {
   const factory GetAnm.failed({
     required String failed,
   }) = _GetAnmFailed;
+}
+
+@freezed
+class SaveData with _$SaveData {
+  const factory SaveData.initial() = _SaveDataInitial;
+  const factory SaveData.inProgress() = _SaveDatainProgress;
+  const factory SaveData.success({
+    required String success,
+  }) = _SaveDataSuccess;
+  const factory SaveData.failed({
+    required String failed,
+  }) = _SaveDataFailed;
 }

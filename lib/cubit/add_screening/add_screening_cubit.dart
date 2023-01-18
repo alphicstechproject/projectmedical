@@ -149,6 +149,7 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
     emit(
       state.copyWith(
         respondentType: data,
+        selectedRespondantType: selctedData,
         gestAgeShow: selctedData == 'Pregnant Women',
       ),
     );
@@ -322,43 +323,163 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
     );
   }
 
-  void pageChange() async {
-    if (state.pageNo == 1) {
-      /// ADD ANM worker
-      // if (state.dateScreening.isNotEmpty &&
-      //     state.aadharcard.isNotEmpty &&
-      //     state.mobileNo.isNotEmpty &&
-      //     state.respondent.isNotEmpty &&
-      //     state.father.isNotEmpty &&
-      //     state.age.isNotEmpty &&
-      //     state.cast.where((element) => element['selected']).isNotEmpty &&
-      //     state.respondentType
-      //         .where((element) => element['selected'])
-      //         .isNotEmpty &&
-      //     state.education.isNotEmpty &&
-      //     state.selectedBlock.isNotEmpty &&
-      //     state.selectedCenter.isNotEmpty &&
-      //     state.anganwadiCenter.isNotEmpty &&
-      //     state.village.isNotEmpty &&
-      //     state.ashaWorker.isNotEmpty) {
-      //   if (state.respondentType
-      //           .where((element) => element['selected'])
-      //           .first['type'] ==
-      //       'Pregnant Women') {
-      //     if (state.gestAge.isNotEmpty) {
-      //       // true
-      //     } else {
-      //       // false
-      //     }
-      //   }
-      //   // true
+  //   if (state.pageNo == 1) {
+  //   /// ADD ANM worker
+  //   // if (state.dateScreening.isNotEmpty &&
+  //   //     state.aadharcard.isNotEmpty &&
+  //   //     state.mobileNo.isNotEmpty &&
+  //   //     state.respondent.isNotEmpty &&
+  //   //     state.father.isNotEmpty &&
+  //   //     state.age.isNotEmpty &&
+  //   //     state.cast.where((element) => element['selected']).isNotEmpty &&
+  //   //     state.respondentType
+  //   //         .where((element) => element['selected'])
+  //   //         .isNotEmpty &&
+  //   //     state.education.isNotEmpty &&
+  //   //     state.selectedBlock.isNotEmpty &&
+  //   //     state.selectedCenter.isNotEmpty &&
+  //   //     state.anganwadiCenter.isNotEmpty &&
+  //   //     state.village.isNotEmpty &&
+  //   //     state.ashaWorker.isNotEmpty) {
+  //   //   if (state.respondentType
+  //   //           .where((element) => element['selected'])
+  //   //           .first['type'] ==
+  //   //       'Pregnant Women') {
+  //   //     if (state.gestAge.isNotEmpty) {
+  //   //       // true
+  //   //     } else {
+  //   //       // false
+  //   //     }
+  //   //   }
+  //   //   // true
 
-    } else {}
+  // } else {}
+
+  void pageChange() async {
     emit(
       state.copyWith(
         pageNo: state.pageNo + 1,
       ),
     );
+    if (state.pageNo == 5) {
+      try {
+        emit(
+          state.copyWith(
+            saveData: const SaveData.inProgress(),
+          ),
+        );
+        final response = await http.post(
+          Uri.parse("https://projectmedical.onrender.com/api/respondent"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(
+            {
+              "aadhar_no": state.aadharcard,
+              "creation_date": state.dateScreening,
+              "respondent_name": state.respondent,
+              "mobile": state.mobileNo,
+            },
+          ),
+        );
+
+        final result = jsonDecode(response.body);
+
+        final response2 = await http.post(
+          Uri.parse("https://projectmedical.onrender.com/api/screening"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(
+            {
+              "respondent_name": state.respondent,
+              "screening_date": state.dateScreening,
+              "type_of_respondent": state.selectedRespondantType,
+              //////
+              "support_person_type": 'Father',
+              //////
+              "support_person_name": state.father,
+              "age": state.age,
+              "caste": state.cast
+                  .where((element) => element['selected'])
+                  .first['cast'],
+              "gest_age": state.gestAge,
+              //////
+              "school_status": "High School",
+              "type_of_school": "Govt",
+              "school_name": "Town High School",
+              //////
+              "block": state.selectedBlock,
+              "village": state.village,
+              "anganwadi_center": state.anganwadiCenter,
+              "sub_center": state.selectedCenter,
+              "asha_name": state.ashaWorker,
+              "anm_name": state.selectedAnm,
+              "weight": state.weight,
+              "height": state.height,
+
+              "bmi": state.bmi,
+              "service_question_one": state.ifa
+                  .where((element) => element['selected'])
+                  .first['type'],
+              "service_question_two": state.serviceDiscontinue,
+              "service_question_three": state.ancCheckup
+                  .where((element) => element['selected'])
+                  .first['type'],
+              //////
+              "service_question_four": 'Yes',
+              //////
+              "status_question_one": state.hb,
+              //////
+              "status_hblevel": "no animia",
+              //////
+              "status_question_three": state.malaria
+                  .where((element) => element['selected'])
+                  .first['type'],
+              "status_question_four": state.sickelCell
+                  .where((element) => element['selected'])
+                  .first['type'],
+              //////
+              "advices_description": '',
+              "blood_transfusion_center": "",
+              "blood_transfusion_date": '',
+              "screening_person_name": '',
+              "screening_person_desgination": "",
+              "screening_no": '',
+              "extra_note": '',
+              //////
+            },
+          ),
+        );
+
+        final result2 = jsonDecode(response2.body);
+        if (result2['status']) {
+          emit(
+            state.copyWith(
+              saveData: SaveData.success(
+                success: result2['message'],
+              ),
+            ),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              saveData: SaveData.failed(
+                failed: result2['message'],
+              ),
+            ),
+          );
+        }
+      } catch (e) {
+        emit(
+          state.copyWith(
+            saveData: const SaveData.failed(
+              failed: 'Error',
+            ),
+          ),
+        );
+      }
+    }
   }
 
   //--------------------------------- 2 -----------------------//
@@ -398,6 +519,105 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
     emit(
       state.copyWith(
         bmi: bmi,
+      ),
+    );
+  }
+//--------------------------------- 3 -----------------------//
+
+  void ifaOnchange({
+    required int selectedIndex,
+  }) async {
+    List<Map<String, dynamic>> data = [];
+    final selctedData = state.ifa[selectedIndex]['type'];
+    for (dynamic ifaModel in state.ifa) {
+      data.add({
+        'type': ifaModel['type'],
+        'selected': selctedData == ifaModel['type'] ? true : false,
+      });
+    }
+
+    emit(
+      state.copyWith(
+        ifa: data,
+      ),
+    );
+  }
+
+  void ancCheckupOnChange({
+    required int selectedIndex,
+  }) async {
+    List<Map<String, dynamic>> data = [];
+    final selctedData = state.ancCheckup[selectedIndex]['type'];
+    for (dynamic ancModel in state.ancCheckup) {
+      data.add({
+        'type': ancModel['type'],
+        'selected': selctedData == ancModel['type'] ? true : false,
+      });
+    }
+
+    emit(
+      state.copyWith(
+        ancCheckup: data,
+      ),
+    );
+  }
+
+  void serviceDiscontinueOnchange({
+    required String serviceDiscontinue,
+  }) async {
+    emit(
+      state.copyWith(
+        serviceDiscontinue: serviceDiscontinue,
+      ),
+    );
+  }
+
+  //--------------------------------- 4 -----------------------//
+
+  void hbOnchange({
+    required String hb,
+  }) async {
+    emit(
+      state.copyWith(
+        ashaWorker: hb,
+      ),
+    );
+  }
+
+  void sickelCellOnChange({
+    required int selectedIndex,
+  }) async {
+    List<Map<String, dynamic>> data = [];
+    final selctedData = state.sickelCell[selectedIndex]['type'];
+    for (dynamic sickelCellModel in state.sickelCell) {
+      data.add({
+        'type': sickelCellModel['type'],
+        'selected': selctedData == sickelCellModel['type'] ? true : false,
+      });
+    }
+
+    emit(
+      state.copyWith(
+        sickelCell: data,
+      ),
+    );
+  }
+
+  void malariaOnChange({
+    required int selectedIndex,
+  }) async {
+    List<Map<String, dynamic>> data = [];
+    final selctedData = state.malaria[selectedIndex]['type'];
+    for (dynamic malariaModel in state.malaria) {
+      data.add({
+        'type': malariaModel['type'],
+        'selected': selctedData == malariaModel['type'] ? true : false,
+      });
+    }
+
+    emit(
+      state.copyWith(
+        malaria: data,
       ),
     );
   }

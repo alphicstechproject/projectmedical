@@ -44,6 +44,16 @@ mixin _$AddScreeningState {
   String get weight => throw _privateConstructorUsedError;
   String get height => throw _privateConstructorUsedError;
   double get bmi => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>> get ifa => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>> get ancCheckup =>
+      throw _privateConstructorUsedError;
+  String get serviceDiscontinue => throw _privateConstructorUsedError;
+  String get hb => throw _privateConstructorUsedError;
+  String get selectedRespondantType => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>> get malaria => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>> get sickelCell =>
+      throw _privateConstructorUsedError;
+  SaveData get saveData => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddScreeningStateCopyWith<AddScreeningState> get copyWith =>
@@ -83,11 +93,20 @@ abstract class $AddScreeningStateCopyWith<$Res> {
       String selectedAnm,
       String weight,
       String height,
-      double bmi});
+      double bmi,
+      List<Map<String, dynamic>> ifa,
+      List<Map<String, dynamic>> ancCheckup,
+      String serviceDiscontinue,
+      String hb,
+      String selectedRespondantType,
+      List<Map<String, dynamic>> malaria,
+      List<Map<String, dynamic>> sickelCell,
+      SaveData saveData});
 
   $GetBlockCopyWith<$Res> get getBlock;
   $GetCenterCopyWith<$Res> get getCenter;
   $GetAnmCopyWith<$Res> get getAnm;
+  $SaveDataCopyWith<$Res> get saveData;
 }
 
 /// @nodoc
@@ -130,6 +149,14 @@ class _$AddScreeningStateCopyWithImpl<$Res, $Val extends AddScreeningState>
     Object? weight = null,
     Object? height = null,
     Object? bmi = null,
+    Object? ifa = null,
+    Object? ancCheckup = null,
+    Object? serviceDiscontinue = null,
+    Object? hb = null,
+    Object? selectedRespondantType = null,
+    Object? malaria = null,
+    Object? sickelCell = null,
+    Object? saveData = null,
   }) {
     return _then(_value.copyWith(
       dateScreening: null == dateScreening
@@ -240,6 +267,38 @@ class _$AddScreeningStateCopyWithImpl<$Res, $Val extends AddScreeningState>
           ? _value.bmi
           : bmi // ignore: cast_nullable_to_non_nullable
               as double,
+      ifa: null == ifa
+          ? _value.ifa
+          : ifa // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      ancCheckup: null == ancCheckup
+          ? _value.ancCheckup
+          : ancCheckup // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      serviceDiscontinue: null == serviceDiscontinue
+          ? _value.serviceDiscontinue
+          : serviceDiscontinue // ignore: cast_nullable_to_non_nullable
+              as String,
+      hb: null == hb
+          ? _value.hb
+          : hb // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedRespondantType: null == selectedRespondantType
+          ? _value.selectedRespondantType
+          : selectedRespondantType // ignore: cast_nullable_to_non_nullable
+              as String,
+      malaria: null == malaria
+          ? _value.malaria
+          : malaria // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      sickelCell: null == sickelCell
+          ? _value.sickelCell
+          : sickelCell // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      saveData: null == saveData
+          ? _value.saveData
+          : saveData // ignore: cast_nullable_to_non_nullable
+              as SaveData,
     ) as $Val);
   }
 
@@ -264,6 +323,14 @@ class _$AddScreeningStateCopyWithImpl<$Res, $Val extends AddScreeningState>
   $GetAnmCopyWith<$Res> get getAnm {
     return $GetAnmCopyWith<$Res>(_value.getAnm, (value) {
       return _then(_value.copyWith(getAnm: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SaveDataCopyWith<$Res> get saveData {
+    return $SaveDataCopyWith<$Res>(_value.saveData, (value) {
+      return _then(_value.copyWith(saveData: value) as $Val);
     });
   }
 }
@@ -303,7 +370,15 @@ abstract class _$$_AddScreeningStateCopyWith<$Res>
       String selectedAnm,
       String weight,
       String height,
-      double bmi});
+      double bmi,
+      List<Map<String, dynamic>> ifa,
+      List<Map<String, dynamic>> ancCheckup,
+      String serviceDiscontinue,
+      String hb,
+      String selectedRespondantType,
+      List<Map<String, dynamic>> malaria,
+      List<Map<String, dynamic>> sickelCell,
+      SaveData saveData});
 
   @override
   $GetBlockCopyWith<$Res> get getBlock;
@@ -311,6 +386,8 @@ abstract class _$$_AddScreeningStateCopyWith<$Res>
   $GetCenterCopyWith<$Res> get getCenter;
   @override
   $GetAnmCopyWith<$Res> get getAnm;
+  @override
+  $SaveDataCopyWith<$Res> get saveData;
 }
 
 /// @nodoc
@@ -351,6 +428,14 @@ class __$$_AddScreeningStateCopyWithImpl<$Res>
     Object? weight = null,
     Object? height = null,
     Object? bmi = null,
+    Object? ifa = null,
+    Object? ancCheckup = null,
+    Object? serviceDiscontinue = null,
+    Object? hb = null,
+    Object? selectedRespondantType = null,
+    Object? malaria = null,
+    Object? sickelCell = null,
+    Object? saveData = null,
   }) {
     return _then(_$_AddScreeningState(
       dateScreening: null == dateScreening
@@ -461,6 +546,38 @@ class __$$_AddScreeningStateCopyWithImpl<$Res>
           ? _value.bmi
           : bmi // ignore: cast_nullable_to_non_nullable
               as double,
+      ifa: null == ifa
+          ? _value._ifa
+          : ifa // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      ancCheckup: null == ancCheckup
+          ? _value._ancCheckup
+          : ancCheckup // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      serviceDiscontinue: null == serviceDiscontinue
+          ? _value.serviceDiscontinue
+          : serviceDiscontinue // ignore: cast_nullable_to_non_nullable
+              as String,
+      hb: null == hb
+          ? _value.hb
+          : hb // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedRespondantType: null == selectedRespondantType
+          ? _value.selectedRespondantType
+          : selectedRespondantType // ignore: cast_nullable_to_non_nullable
+              as String,
+      malaria: null == malaria
+          ? _value._malaria
+          : malaria // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      sickelCell: null == sickelCell
+          ? _value._sickelCell
+          : sickelCell // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      saveData: null == saveData
+          ? _value.saveData
+          : saveData // ignore: cast_nullable_to_non_nullable
+              as SaveData,
     ));
   }
 }
@@ -495,12 +612,24 @@ class _$_AddScreeningState implements _AddScreeningState {
       required this.selectedAnm,
       required this.weight,
       required this.height,
-      required this.bmi})
+      required this.bmi,
+      required final List<Map<String, dynamic>> ifa,
+      required final List<Map<String, dynamic>> ancCheckup,
+      required this.serviceDiscontinue,
+      required this.hb,
+      required this.selectedRespondantType,
+      required final List<Map<String, dynamic>> malaria,
+      required final List<Map<String, dynamic>> sickelCell,
+      required this.saveData})
       : _cast = cast,
         _respondentType = respondentType,
         _block = block,
         _center = center,
-        _employeeData = employeeData;
+        _employeeData = employeeData,
+        _ifa = ifa,
+        _ancCheckup = ancCheckup,
+        _malaria = malaria,
+        _sickelCell = sickelCell;
 
   @override
   final String dateScreening;
@@ -586,10 +715,50 @@ class _$_AddScreeningState implements _AddScreeningState {
   final String height;
   @override
   final double bmi;
+  final List<Map<String, dynamic>> _ifa;
+  @override
+  List<Map<String, dynamic>> get ifa {
+    if (_ifa is EqualUnmodifiableListView) return _ifa;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_ifa);
+  }
+
+  final List<Map<String, dynamic>> _ancCheckup;
+  @override
+  List<Map<String, dynamic>> get ancCheckup {
+    if (_ancCheckup is EqualUnmodifiableListView) return _ancCheckup;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_ancCheckup);
+  }
+
+  @override
+  final String serviceDiscontinue;
+  @override
+  final String hb;
+  @override
+  final String selectedRespondantType;
+  final List<Map<String, dynamic>> _malaria;
+  @override
+  List<Map<String, dynamic>> get malaria {
+    if (_malaria is EqualUnmodifiableListView) return _malaria;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_malaria);
+  }
+
+  final List<Map<String, dynamic>> _sickelCell;
+  @override
+  List<Map<String, dynamic>> get sickelCell {
+    if (_sickelCell is EqualUnmodifiableListView) return _sickelCell;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_sickelCell);
+  }
+
+  @override
+  final SaveData saveData;
 
   @override
   String toString() {
-    return 'AddScreeningState(dateScreening: $dateScreening, aadharcard: $aadharcard, mobileNo: $mobileNo, respondent: $respondent, father: $father, age: $age, cast: $cast, respondentType: $respondentType, gestAge: $gestAge, gestAgeShow: $gestAgeShow, getBlock: $getBlock, block: $block, education: $education, selectedBlock: $selectedBlock, getCenter: $getCenter, center: $center, selectedCenter: $selectedCenter, anganwadiCenter: $anganwadiCenter, village: $village, ashaWorker: $ashaWorker, pageNo: $pageNo, getAnm: $getAnm, employeeData: $employeeData, selectedAnm: $selectedAnm, weight: $weight, height: $height, bmi: $bmi)';
+    return 'AddScreeningState(dateScreening: $dateScreening, aadharcard: $aadharcard, mobileNo: $mobileNo, respondent: $respondent, father: $father, age: $age, cast: $cast, respondentType: $respondentType, gestAge: $gestAge, gestAgeShow: $gestAgeShow, getBlock: $getBlock, block: $block, education: $education, selectedBlock: $selectedBlock, getCenter: $getCenter, center: $center, selectedCenter: $selectedCenter, anganwadiCenter: $anganwadiCenter, village: $village, ashaWorker: $ashaWorker, pageNo: $pageNo, getAnm: $getAnm, employeeData: $employeeData, selectedAnm: $selectedAnm, weight: $weight, height: $height, bmi: $bmi, ifa: $ifa, ancCheckup: $ancCheckup, serviceDiscontinue: $serviceDiscontinue, hb: $hb, selectedRespondantType: $selectedRespondantType, malaria: $malaria, sickelCell: $sickelCell, saveData: $saveData)';
   }
 
   @override
@@ -638,7 +807,20 @@ class _$_AddScreeningState implements _AddScreeningState {
                 other.selectedAnm == selectedAnm) &&
             (identical(other.weight, weight) || other.weight == weight) &&
             (identical(other.height, height) || other.height == height) &&
-            (identical(other.bmi, bmi) || other.bmi == bmi));
+            (identical(other.bmi, bmi) || other.bmi == bmi) &&
+            const DeepCollectionEquality().equals(other._ifa, _ifa) &&
+            const DeepCollectionEquality()
+                .equals(other._ancCheckup, _ancCheckup) &&
+            (identical(other.serviceDiscontinue, serviceDiscontinue) ||
+                other.serviceDiscontinue == serviceDiscontinue) &&
+            (identical(other.hb, hb) || other.hb == hb) &&
+            (identical(other.selectedRespondantType, selectedRespondantType) ||
+                other.selectedRespondantType == selectedRespondantType) &&
+            const DeepCollectionEquality().equals(other._malaria, _malaria) &&
+            const DeepCollectionEquality()
+                .equals(other._sickelCell, _sickelCell) &&
+            (identical(other.saveData, saveData) ||
+                other.saveData == saveData));
   }
 
   @override
@@ -670,7 +852,15 @@ class _$_AddScreeningState implements _AddScreeningState {
         selectedAnm,
         weight,
         height,
-        bmi
+        bmi,
+        const DeepCollectionEquality().hash(_ifa),
+        const DeepCollectionEquality().hash(_ancCheckup),
+        serviceDiscontinue,
+        hb,
+        selectedRespondantType,
+        const DeepCollectionEquality().hash(_malaria),
+        const DeepCollectionEquality().hash(_sickelCell),
+        saveData
       ]);
 
   @JsonKey(ignore: true)
@@ -709,7 +899,15 @@ abstract class _AddScreeningState implements AddScreeningState {
       required final String selectedAnm,
       required final String weight,
       required final String height,
-      required final double bmi}) = _$_AddScreeningState;
+      required final double bmi,
+      required final List<Map<String, dynamic>> ifa,
+      required final List<Map<String, dynamic>> ancCheckup,
+      required final String serviceDiscontinue,
+      required final String hb,
+      required final String selectedRespondantType,
+      required final List<Map<String, dynamic>> malaria,
+      required final List<Map<String, dynamic>> sickelCell,
+      required final SaveData saveData}) = _$_AddScreeningState;
 
   @override
   String get dateScreening;
@@ -765,6 +963,22 @@ abstract class _AddScreeningState implements AddScreeningState {
   String get height;
   @override
   double get bmi;
+  @override
+  List<Map<String, dynamic>> get ifa;
+  @override
+  List<Map<String, dynamic>> get ancCheckup;
+  @override
+  String get serviceDiscontinue;
+  @override
+  String get hb;
+  @override
+  String get selectedRespondantType;
+  @override
+  List<Map<String, dynamic>> get malaria;
+  @override
+  List<Map<String, dynamic>> get sickelCell;
+  @override
+  SaveData get saveData;
   @override
   @JsonKey(ignore: true)
   _$$_AddScreeningStateCopyWith<_$_AddScreeningState> get copyWith =>
@@ -2540,5 +2754,596 @@ abstract class _GetAnmFailed implements GetAnm {
   String get failed;
   @JsonKey(ignore: true)
   _$$_GetAnmFailedCopyWith<_$_GetAnmFailed> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$SaveData {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() inProgress,
+    required TResult Function(String success) success,
+    required TResult Function(String failed) failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function(String success)? success,
+    TResult? Function(String failed)? failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? inProgress,
+    TResult Function(String success)? success,
+    TResult Function(String failed)? failed,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SaveDataInitial value) initial,
+    required TResult Function(_SaveDatainProgress value) inProgress,
+    required TResult Function(_SaveDataSuccess value) success,
+    required TResult Function(_SaveDataFailed value) failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SaveDataInitial value)? initial,
+    TResult? Function(_SaveDatainProgress value)? inProgress,
+    TResult? Function(_SaveDataSuccess value)? success,
+    TResult? Function(_SaveDataFailed value)? failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SaveDataInitial value)? initial,
+    TResult Function(_SaveDatainProgress value)? inProgress,
+    TResult Function(_SaveDataSuccess value)? success,
+    TResult Function(_SaveDataFailed value)? failed,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SaveDataCopyWith<$Res> {
+  factory $SaveDataCopyWith(SaveData value, $Res Function(SaveData) then) =
+      _$SaveDataCopyWithImpl<$Res, SaveData>;
+}
+
+/// @nodoc
+class _$SaveDataCopyWithImpl<$Res, $Val extends SaveData>
+    implements $SaveDataCopyWith<$Res> {
+  _$SaveDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$_SaveDataInitialCopyWith<$Res> {
+  factory _$$_SaveDataInitialCopyWith(
+          _$_SaveDataInitial value, $Res Function(_$_SaveDataInitial) then) =
+      __$$_SaveDataInitialCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_SaveDataInitialCopyWithImpl<$Res>
+    extends _$SaveDataCopyWithImpl<$Res, _$_SaveDataInitial>
+    implements _$$_SaveDataInitialCopyWith<$Res> {
+  __$$_SaveDataInitialCopyWithImpl(
+      _$_SaveDataInitial _value, $Res Function(_$_SaveDataInitial) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_SaveDataInitial implements _SaveDataInitial {
+  const _$_SaveDataInitial();
+
+  @override
+  String toString() {
+    return 'SaveData.initial()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_SaveDataInitial);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() inProgress,
+    required TResult Function(String success) success,
+    required TResult Function(String failed) failed,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function(String success)? success,
+    TResult? Function(String failed)? failed,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? inProgress,
+    TResult Function(String success)? success,
+    TResult Function(String failed)? failed,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SaveDataInitial value) initial,
+    required TResult Function(_SaveDatainProgress value) inProgress,
+    required TResult Function(_SaveDataSuccess value) success,
+    required TResult Function(_SaveDataFailed value) failed,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SaveDataInitial value)? initial,
+    TResult? Function(_SaveDatainProgress value)? inProgress,
+    TResult? Function(_SaveDataSuccess value)? success,
+    TResult? Function(_SaveDataFailed value)? failed,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SaveDataInitial value)? initial,
+    TResult Function(_SaveDatainProgress value)? inProgress,
+    TResult Function(_SaveDataSuccess value)? success,
+    TResult Function(_SaveDataFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SaveDataInitial implements SaveData {
+  const factory _SaveDataInitial() = _$_SaveDataInitial;
+}
+
+/// @nodoc
+abstract class _$$_SaveDatainProgressCopyWith<$Res> {
+  factory _$$_SaveDatainProgressCopyWith(_$_SaveDatainProgress value,
+          $Res Function(_$_SaveDatainProgress) then) =
+      __$$_SaveDatainProgressCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_SaveDatainProgressCopyWithImpl<$Res>
+    extends _$SaveDataCopyWithImpl<$Res, _$_SaveDatainProgress>
+    implements _$$_SaveDatainProgressCopyWith<$Res> {
+  __$$_SaveDatainProgressCopyWithImpl(
+      _$_SaveDatainProgress _value, $Res Function(_$_SaveDatainProgress) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_SaveDatainProgress implements _SaveDatainProgress {
+  const _$_SaveDatainProgress();
+
+  @override
+  String toString() {
+    return 'SaveData.inProgress()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_SaveDatainProgress);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() inProgress,
+    required TResult Function(String success) success,
+    required TResult Function(String failed) failed,
+  }) {
+    return inProgress();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function(String success)? success,
+    TResult? Function(String failed)? failed,
+  }) {
+    return inProgress?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? inProgress,
+    TResult Function(String success)? success,
+    TResult Function(String failed)? failed,
+    required TResult orElse(),
+  }) {
+    if (inProgress != null) {
+      return inProgress();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SaveDataInitial value) initial,
+    required TResult Function(_SaveDatainProgress value) inProgress,
+    required TResult Function(_SaveDataSuccess value) success,
+    required TResult Function(_SaveDataFailed value) failed,
+  }) {
+    return inProgress(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SaveDataInitial value)? initial,
+    TResult? Function(_SaveDatainProgress value)? inProgress,
+    TResult? Function(_SaveDataSuccess value)? success,
+    TResult? Function(_SaveDataFailed value)? failed,
+  }) {
+    return inProgress?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SaveDataInitial value)? initial,
+    TResult Function(_SaveDatainProgress value)? inProgress,
+    TResult Function(_SaveDataSuccess value)? success,
+    TResult Function(_SaveDataFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (inProgress != null) {
+      return inProgress(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SaveDatainProgress implements SaveData {
+  const factory _SaveDatainProgress() = _$_SaveDatainProgress;
+}
+
+/// @nodoc
+abstract class _$$_SaveDataSuccessCopyWith<$Res> {
+  factory _$$_SaveDataSuccessCopyWith(
+          _$_SaveDataSuccess value, $Res Function(_$_SaveDataSuccess) then) =
+      __$$_SaveDataSuccessCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String success});
+}
+
+/// @nodoc
+class __$$_SaveDataSuccessCopyWithImpl<$Res>
+    extends _$SaveDataCopyWithImpl<$Res, _$_SaveDataSuccess>
+    implements _$$_SaveDataSuccessCopyWith<$Res> {
+  __$$_SaveDataSuccessCopyWithImpl(
+      _$_SaveDataSuccess _value, $Res Function(_$_SaveDataSuccess) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+  }) {
+    return _then(_$_SaveDataSuccess(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SaveDataSuccess implements _SaveDataSuccess {
+  const _$_SaveDataSuccess({required this.success});
+
+  @override
+  final String success;
+
+  @override
+  String toString() {
+    return 'SaveData.success(success: $success)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SaveDataSuccess &&
+            (identical(other.success, success) || other.success == success));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, success);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SaveDataSuccessCopyWith<_$_SaveDataSuccess> get copyWith =>
+      __$$_SaveDataSuccessCopyWithImpl<_$_SaveDataSuccess>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() inProgress,
+    required TResult Function(String success) success,
+    required TResult Function(String failed) failed,
+  }) {
+    return success(this.success);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function(String success)? success,
+    TResult? Function(String failed)? failed,
+  }) {
+    return success?.call(this.success);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? inProgress,
+    TResult Function(String success)? success,
+    TResult Function(String failed)? failed,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(this.success);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SaveDataInitial value) initial,
+    required TResult Function(_SaveDatainProgress value) inProgress,
+    required TResult Function(_SaveDataSuccess value) success,
+    required TResult Function(_SaveDataFailed value) failed,
+  }) {
+    return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SaveDataInitial value)? initial,
+    TResult? Function(_SaveDatainProgress value)? inProgress,
+    TResult? Function(_SaveDataSuccess value)? success,
+    TResult? Function(_SaveDataFailed value)? failed,
+  }) {
+    return success?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SaveDataInitial value)? initial,
+    TResult Function(_SaveDatainProgress value)? inProgress,
+    TResult Function(_SaveDataSuccess value)? success,
+    TResult Function(_SaveDataFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SaveDataSuccess implements SaveData {
+  const factory _SaveDataSuccess({required final String success}) =
+      _$_SaveDataSuccess;
+
+  String get success;
+  @JsonKey(ignore: true)
+  _$$_SaveDataSuccessCopyWith<_$_SaveDataSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_SaveDataFailedCopyWith<$Res> {
+  factory _$$_SaveDataFailedCopyWith(
+          _$_SaveDataFailed value, $Res Function(_$_SaveDataFailed) then) =
+      __$$_SaveDataFailedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String failed});
+}
+
+/// @nodoc
+class __$$_SaveDataFailedCopyWithImpl<$Res>
+    extends _$SaveDataCopyWithImpl<$Res, _$_SaveDataFailed>
+    implements _$$_SaveDataFailedCopyWith<$Res> {
+  __$$_SaveDataFailedCopyWithImpl(
+      _$_SaveDataFailed _value, $Res Function(_$_SaveDataFailed) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? failed = null,
+  }) {
+    return _then(_$_SaveDataFailed(
+      failed: null == failed
+          ? _value.failed
+          : failed // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SaveDataFailed implements _SaveDataFailed {
+  const _$_SaveDataFailed({required this.failed});
+
+  @override
+  final String failed;
+
+  @override
+  String toString() {
+    return 'SaveData.failed(failed: $failed)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SaveDataFailed &&
+            (identical(other.failed, failed) || other.failed == failed));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, failed);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SaveDataFailedCopyWith<_$_SaveDataFailed> get copyWith =>
+      __$$_SaveDataFailedCopyWithImpl<_$_SaveDataFailed>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() inProgress,
+    required TResult Function(String success) success,
+    required TResult Function(String failed) failed,
+  }) {
+    return failed(this.failed);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function(String success)? success,
+    TResult? Function(String failed)? failed,
+  }) {
+    return failed?.call(this.failed);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? inProgress,
+    TResult Function(String success)? success,
+    TResult Function(String failed)? failed,
+    required TResult orElse(),
+  }) {
+    if (failed != null) {
+      return failed(this.failed);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SaveDataInitial value) initial,
+    required TResult Function(_SaveDatainProgress value) inProgress,
+    required TResult Function(_SaveDataSuccess value) success,
+    required TResult Function(_SaveDataFailed value) failed,
+  }) {
+    return failed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SaveDataInitial value)? initial,
+    TResult? Function(_SaveDatainProgress value)? inProgress,
+    TResult? Function(_SaveDataSuccess value)? success,
+    TResult? Function(_SaveDataFailed value)? failed,
+  }) {
+    return failed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SaveDataInitial value)? initial,
+    TResult Function(_SaveDatainProgress value)? inProgress,
+    TResult Function(_SaveDataSuccess value)? success,
+    TResult Function(_SaveDataFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (failed != null) {
+      return failed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SaveDataFailed implements SaveData {
+  const factory _SaveDataFailed({required final String failed}) =
+      _$_SaveDataFailed;
+
+  String get failed;
+  @JsonKey(ignore: true)
+  _$$_SaveDataFailedCopyWith<_$_SaveDataFailed> get copyWith =>
       throw _privateConstructorUsedError;
 }

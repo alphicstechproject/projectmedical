@@ -1,5 +1,7 @@
 import 'package:application_1/model/add_screening/employee.dart';
+import 'package:application_1/presentation/widgets/add_screening/four_screening_widget.dart';
 import 'package:application_1/presentation/widgets/add_screening/second_screening_widget.dart';
+import 'package:application_1/presentation/widgets/add_screening/third_screening_widget.dart';
 import 'package:application_1/presentation/widgets/common/loader.dart';
 import 'package:application_1/presentation/widgets/common/radio_button.dart';
 import 'package:application_1/utils/responsive/responsiveness.dart';
@@ -95,6 +97,34 @@ class AddScreeningWidget extends StatelessWidget {
     required String height,
   }) heightFieldChnage;
   final double bmi;
+// ------ 3 ------//
+  final List<Map<String, dynamic>> ifa;
+  final Function({
+    required int selectedIndex,
+  }) ifaOnChange;
+  final List<Map<String, dynamic>> ancCheckup;
+  final Function({
+    required int selectedIndex,
+  }) ancCheckupOnChange;
+  final List<String> serviceDiscontinue;
+  final String selectedserviceDiscontinue;
+  final Function({
+    required String serviceDiscontinue,
+  }) serviceDiscontinueFieldChnage;
+// ------ 4 ------//
+  final TextEditingController hbField;
+  final Function({
+    required String hb,
+  }) hbFieldChnage;
+  final String selectedRespondentType;
+  final List<Map<String, dynamic>> sickelCell;
+  final Function({
+    required int selectedIndex,
+  }) sickelCellOnChange;
+  final List<Map<String, dynamic>> malaria;
+  final Function({
+    required int selectedIndex,
+  }) malariaOnChange;
 
   const AddScreeningWidget({
     Key? key,
@@ -144,6 +174,20 @@ class AddScreeningWidget extends StatelessWidget {
     required this.weightField,
     required this.weightFieldChnage,
     required this.bmi,
+    required this.ifa,
+    required this.ifaOnChange,
+    required this.ancCheckup,
+    required this.ancCheckupOnChange,
+    required this.selectedserviceDiscontinue,
+    required this.serviceDiscontinue,
+    required this.serviceDiscontinueFieldChnage,
+    required this.hbField,
+    required this.hbFieldChnage,
+    required this.selectedRespondentType,
+    required this.malaria,
+    required this.malariaOnChange,
+    required this.sickelCell,
+    required this.sickelCellOnChange,
   }) : super(key: key);
 
   @override
@@ -1033,6 +1077,31 @@ class AddScreeningWidget extends StatelessWidget {
             weightField: weightField,
             weightFieldChnage: weightFieldChnage,
             bmi: bmi,
+          ),
+        ),
+        Visibility(
+          visible: pageNo == 3,
+          child: ThirdScreeningWidget(
+            ifa: ifa,
+            ifaOnChange: ifaOnChange,
+            ancCheckupShow: gestAgeShow,
+            ancCheckup: ancCheckup,
+            ancCheckupOnChange: ancCheckupOnChange,
+            selectedserviceDiscontinue: selectedserviceDiscontinue,
+            serviceDiscontinue: serviceDiscontinue,
+            serviceDiscontinueFieldChnage: serviceDiscontinueFieldChnage,
+          ),
+        ),
+        Visibility(
+          visible: pageNo == 4,
+          child: FourScreeningWidget(
+            hbField: hbField,
+            hbFieldChnage: hbFieldChnage,
+            respondentType: selectedRespondentType,
+            malaria: malaria,
+            malariaOnChange: malariaOnChange,
+            sickelCell: sickelCell,
+            sickelCellOnChange: sickelCellOnChange,
           ),
         ),
         Positioned(

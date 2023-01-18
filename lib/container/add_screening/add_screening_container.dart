@@ -1,5 +1,6 @@
 import 'package:application_1/cubit/add_screening/add_screening_cubit.dart';
 import 'package:application_1/presentation/widgets/add_screening/add_screening_widget.dart';
+import 'package:application_1/presentation/widgets/common/toast.dart';
 import 'package:application_1/utils/responsive/responsiveness.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,12 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
   ///--------------------- 2 -------------------///
   late TextEditingController weightField;
   late TextEditingController heightField;
+
+  ///--------------------- 3 -------------------///
+  late List<String> serviceDiscontinue = [];
+
+  ///--------------------- 4 -------------------///
+  late TextEditingController hbLevelField;
 
   @override
   void initState() {
@@ -54,11 +61,40 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
     ///--------------------- 2 -------------------///
     weightField = TextEditingController();
     heightField = TextEditingController();
+
+    ///--------------------- 3 -------------------///
+    serviceDiscontinue.add('Side effects');
+    serviceDiscontinue.add('Bad taste');
+    serviceDiscontinue.add('Not provided by anybody');
+    serviceDiscontinue.add('No time to Take');
+
+    ///--------------------- 4 -------------------///
+    hbLevelField = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddScreeningCubit, AddScreeningState>(
+    return BlocConsumer<AddScreeningCubit, AddScreeningState>(
+      listenWhen: (previous, current) => previous.saveData != current.saveData,
+      listener: (context, state) async {
+        state.saveData.maybeWhen(
+          orElse: () => Container(),
+          inProgress: () => Container(),
+          initial: () => Container(),
+          failed: (error) => showCustomToast(
+            context,
+            status: ToastStatus.error,
+            message: error,
+          ),
+          success: (success) => {
+            showCustomToast(
+              context,
+              status: ToastStatus.success,
+              message: success,
+            ),
+          },
+        );
+      },
       builder: (context, state) {
         final addScreeningCubit = BlocProvider.of<AddScreeningCubit>(context);
         return Scaffold(
@@ -139,6 +175,22 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
               weightFieldChnage: addScreeningCubit.weightOnchange,
               heightField: heightField,
               heightFieldChnage: addScreeningCubit.heightOnchange,
+              bmi: state.bmi,
+              ifa: state.ifa,
+              ifaOnChange: addScreeningCubit.ifaOnchange,
+              ancCheckup: state.ancCheckup,
+              ancCheckupOnChange: addScreeningCubit.ancCheckupOnChange,
+              serviceDiscontinue: serviceDiscontinue,
+              selectedserviceDiscontinue: state.serviceDiscontinue,
+              serviceDiscontinueFieldChnage:
+                  addScreeningCubit.serviceDiscontinueOnchange,
+              hbField: hbLevelField,
+              hbFieldChnage: addScreeningCubit.hbOnchange,
+              selectedRespondentType: state.selectedRespondantType,
+              sickelCell: state.sickelCell,
+              sickelCellOnChange: addScreeningCubit.sickelCellOnChange,
+              malaria: state.malaria,
+              malariaOnChange: addScreeningCubit.malariaOnChange,
             ),
           ),
         );

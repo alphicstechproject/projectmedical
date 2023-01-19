@@ -37,6 +37,9 @@ const getAdviceById = async (req, res) => {
         if (!findAdviceIdInDb) {
             return res.status(400).send({ status: false, message: "THIS ADVICE IS NOT PRESENT IN THE DATABASE" })
         }
+        if (findAdviceIdInDb.isDeleted == true) {
+            return res.status(400).send({ status: false, message: " THIS ADVICE IS ALREADY DELETED PLEASE CREATE A NEW ONE" })
+        }
         return res.status(200).send({ status: true, message: "ADVICE PROFILE DETAILS", data: findAdviceIdInDb })
     } catch (error) {
         return res.status(500).send({ msg: error.message, status: false })
@@ -64,7 +67,42 @@ const updateAdvice = async function (req, res) {
         return res.status(500).send({ msg: error.message, status: false })
     }
 }
+const deleteAdvice = async function (req, res) {
+    try {
+        const AdviceId = req.params.AdviceId;
+        if (!mongoose.Types.ObjectId.isValid(AdviceId)) {
+            return res
+                .status(400)
+                .send({ status: false, message: "Invalid Advice id" });
+        }
+
+        const AdviceById = await AdviceModel.findOne({
+            _id: AdviceId,
+            isDeleted: false,
+            deletedAt: null,
+        });
+
+        if (!AdviceById) {
+            return res.status(404).send({
+                status: false,
+                message: "No Advice found by this Advice id",
+            });
+        }
+
+        await AdviceModel.findOneAndUpdate(
+            { _id: AdviceId },
+            { $set: { isDeleted: true, deletedAt: Date.now() } },
+            { new: true }
+        );
+
+        return res
+            .status(200)
+            .send({ status: true, message: "Advice successfully deleted" });
+    } catch (error) {
+        return res.status(500).send({ status: false, error: error.message });
+    }
+}
 
 
 
-module.exports = { createAdvice, getAdvice, getAdviceById, updateAdvice }
+module.exports = { createAdvice, getAdvice, getAdviceById, updateAdvice, deleteAdvice }

@@ -38,6 +38,9 @@ const getRespondentById = async (req, res) => {
         if (!findRespondentIdInDb) {
             return res.status(400).send({ status: false, message: "THIS RESPONDENT IS NOT PRESENT IN THE DATABASE" })
         }
+        if (findRespondentIdInDb.isDeleted == true) {
+            return res.status(400).send({ status: false, message: " THIS RESPONDENT IS ALREADY DELETED PLEASE CREATE A NEW ONE" })
+        }
         return res.status(200).send({ status: true, message: "RESPONDENT PROFILE DETAILS", data: findRespondentIdInDb })
     } catch (error) {
         return res.status(500).send({ msg: error.message, status: false })
@@ -72,6 +75,42 @@ const updateRespondent = async function (req, res) {
     }
 }
 
+const deleteRespondent = async function (req, res) {
+    try {
+        const respondentId = req.params.respondentId;
+        if (!mongoose.Types.ObjectId.isValid(respondentId)) {
+            return res
+                .status(400)
+                .send({ status: false, message: "Invalid respondent id" });
+        }
+
+        const respondentById = await respondentModel.findOne({
+            _id: respondentId,
+            isDeleted: false,
+            deletedAt: null,
+        });
+
+        if (!respondentById) {
+            return res.status(404).send({
+                status: false,
+                message: "No respondent found by this respondent id",
+            });
+        }
+
+        await respondentModel.findOneAndUpdate(
+            { _id: respondentId },
+            { $set: { isDeleted: true, deletedAt: Date.now() } },
+            { new: true }
+        );
+
+        return res
+            .status(200)
+            .send({ status: true, message: "Respondent successfully deleted" });
+    } catch (error) {
+        return res.status(500).send({ status: false, error: error.message });
+    }
+}
 
 
-module.exports = { createRespondent, getRespondent, getRespondentById, updateRespondent }
+
+module.exports = { createRespondent, getRespondent, getRespondentById, updateRespondent, deleteRespondent }

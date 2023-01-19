@@ -17,17 +17,30 @@ const createBloodTranfer = async function (req, res) {
     }
 };
 
+const getBloodTranferData = async (req, res) => {
+    try {
+        let filter = { isDeleted: false }
+        let allData = await bloodTranferModel.find(filter)
+        return res.status(200).send({ status: true, message: "BLOODTRANFER DETAILS", data: allData })
+    } catch (error) {
+        return res.status(500).send({ msg: error.message, status: false })
+    }
+};
+
 const getBloodTranferDataById = async (req, res) => {
     try {
-        const bloodTranferId = req.params.bloodTranferId;
-        if (!mongoose.Types.ObjectId.isValid(bloodTranferId)) {
-            return res.status(400).send({ status: false, message: " PLEASE ENTER CORRECT BLOODTRANFER ID" })
+        const screeningId = req.params.bloodTranferId;
+        if (!mongoose.Types.ObjectId.isValid(screeningId)) {
+            return res.status(400).send({ status: false, message: " PLEASE ENTER CORRECT SCREENING ID" })
         }
-        const findBloodTranferIdInDb = await bloodTranferModel.findById(bloodTranferId)
+        const findBloodTranferIdInDb = await bloodTranferModel.find({screening_id:screeningId})
         if (!findBloodTranferIdInDb) {
-            return res.status(400).send({ status: false, message: "THIS BLOODTRANFER IS NOT PRESENT IN THE DATABASE" })
+            return res.status(400).send({ status: false, message: "THIS SCREENING IS NOT PRESENT IN THE DATABASE" })
         }
-        return res.status(200).send({ status: true, message: "BLOODTRANFER PROFILE DETAILS", data: findBloodTranferIdInDb })
+        if (findBloodTranferIdInDb.isDeleted == true) {
+            return res.status(400).send({ status: false, message: " THIS SCREENING IS ALREADY DELETED PLEASE CREATE A NEW ONE" })
+        }
+        return res.status(200).send({ status: true, message: "SCREENING PROFILE DETAILS", data: findBloodTranferIdInDb })
     } catch (error) {
         return res.status(500).send({ msg: error.message, status: false })
     }
@@ -66,6 +79,42 @@ const updateBloodTranfer = async function (req, res) {
     }
 }
 
+const deleteBloodTranfer = async function (req, res) {
+    try {
+        const bloodTranferId = req.params.bloodTranferId;
+        if (!mongoose.Types.ObjectId.isValid(bloodTranferId)) {
+            return res
+                .status(400)
+                .send({ status: false, message: "Invalid bloodTranfer id" });
+        }
+
+        const bloodTranferById = await bloodTranferModel.findOne({
+            _id: bloodTranferId,
+            isDeleted: false,
+            deletedAt: null,
+        });
+
+        if (!bloodTranferById) {
+            return res.status(404).send({
+                status: false,
+                message: "No bloodTranfer found by this bloodTranfer id",
+            });
+        }
+
+        await bloodTranferModel.findOneAndUpdate(
+            { _id: bloodTranferId },
+            { $set: { isDeleted: true, deletedAt: Date.now() } },
+            { new: true }
+        );
+
+        return res
+            .status(200)
+            .send({ status: true, message: "BloodTranfer successfully deleted" });
+    } catch (error) {
+        return res.status(500).send({ status: false, error: error.message });
+    }
+}
 
 
-module.exports = { createBloodTranfer, getBloodTranferDataById, updateBloodTranfer }
+
+module.exports = { createBloodTranfer, getBloodTranferData, getBloodTranferDataById, updateBloodTranfer, deleteBloodTranfer }

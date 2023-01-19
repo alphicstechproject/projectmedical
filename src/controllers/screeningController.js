@@ -1,3 +1,4 @@
+const bloodTranferModel = require("../models/bloodTranferModel");
 const screeningModel = require("../models/screeningModel");
 const mongoose = require('mongoose');
 const moment = require('moment');
@@ -16,54 +17,7 @@ const createScreening = async function (req, res) {
 
 const getScreeningData = async (req, res) => {
     try {
-        let { block, village, status_question_two, type_of_respondent } = req.query;
         let filter = { isDeleted: false }
-        
-        if (block) {
-            filter = { isDeleted: false, block: block }
-        }
-        if (village) {
-            filter = { isDeleted: false, village: village }
-        }
-        if (status_question_two) {
-            filter = { isDeleted: false, status_question_two: status_question_two }
-        }
-        if (type_of_respondent) {
-            filter = { isDeleted: false, type_of_respondent: type_of_respondent }
-        }
-        if (block && village) {
-            filter = { isDeleted: false, block: block, village: village }
-        }
-        if (block && status_question_two) {
-            filter = { isDeleted: false, block: block, status_question_two: status_question_two }
-        }
-        if (block && type_of_respondent) {
-            filter = { isDeleted: false, block: block, type_of_respondent: type_of_respondent }
-        }
-        if (village && status_question_two) {
-            filter = { isDeleted: false, village: village, status_question_two: status_question_two }
-        }
-        if (village && type_of_respondent) {
-            filter = { isDeleted: false, village: village, type_of_respondent: type_of_respondent }
-        }
-        if (status_question_two && type_of_respondent) {
-            filter = { isDeleted: false, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
-        }
-        if (block && village && status_question_two) {
-            filter = { isDeleted: false, block: block, village: village, status_question_two: status_question_two }
-        }
-        if (block && village && type_of_respondent) {
-            filter = { isDeleted: false, block: block, village: village, type_of_respondent: type_of_respondent }
-        }
-        if (block && status_question_two && type_of_respondent) {
-            filter = { isDeleted: false, block: block, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
-        }
-        if (village && status_question_two && type_of_respondent) {
-            filter = { isDeleted: false, village: village, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
-        }
-        if (block && village && status_question_two && type_of_respondent) {
-            filter = { isDeleted: false, block: block, village: village, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
-        }
         let allData = await screeningModel.find(filter)
 
         return res.status(200).send({ status: true, message: "SCREENING DETAILS", data: allData })
@@ -81,6 +35,9 @@ const getScreeningDataById = async (req, res) => {
         const findScreeningIdInDb = await screeningModel.findById(screeningId)
         if (!findScreeningIdInDb) {
             return res.status(400).send({ status: false, message: "THIS SCREENING IS NOT PRESENT IN THE DATABASE" })
+        }
+        if (findEmployeeidInDb.isDeleted == true) {
+            return res.status(400).send({ status: false, message: " THIS SCREENING IS ALREADY DELETED PLEASE CREATE A NEW ONE" })
         }
         return res.status(200).send({ status: true, message: "SCREENING DETAILS", data: findScreeningIdInDb })
     } catch (error) {
@@ -143,12 +100,50 @@ const updateScreening = async function (req, res) {
     }
 }
 
+const deleteScreening = async function (req, res) {
+    try {
+        const screeningId = req.params.screeningId;
+        if (!mongoose.Types.ObjectId.isValid(screeningId)) {
+            return res
+                .status(400)
+                .send({ status: false, message: "Invalid screening id" });
+        }
+
+        const screeningById = await screeningModel.findOne({
+            _id: screeningId,
+            isDeleted: false,
+            deletedAt: null,
+        });
+
+        if (!screeningById) {
+            return res.status(404).send({
+                status: false,
+                message: "No screening found by this screening id",
+            });
+        }
+
+        await screeningModel.findOneAndUpdate(
+            { _id: screeningId },
+            { $set: { isDeleted: true, deletedAt: Date.now() } },
+            { new: true }
+        );
+
+        return res
+            .status(200)
+            .send({ status: true, message: "Screening successfully deleted" });
+    } catch (error) {
+        return res.status(500).send({ status: false, error: error.message });
+    }
+}
+
 const dashboard = async (req, res) => {
     try {
-        let totalScreening = screeningModel.length;
+        let totalScreening = (await screeningModel.find({ isDeleted: false })).length;
         let notAnemia = (await screeningModel.find({ isDeleted: false, status_question_two: 'No Anemia' })).length;
+        let anemia = (await screeningModel.find({ isDeleted: false, status_question_two: 'Anemia' })).length;
+        let severeAnemia;
         let anemiaRate = Math.round(((totalScreening - notAnemia) / totalScreening) * 100);
-        console.log('anemiaRate:', anemiaRate, typeof (anemiaRate))
+
         let last14Days = [];
         if (last14Days.length < 14) {
             last14Days.push()
@@ -170,18 +165,97 @@ const dashboard = async (req, res) => {
             lastYear.shift();
             lastYear.push()
         }
-        let recentScreening = [];
-        // if (recentScreening.length < 7) {
-        //     recentScreening.push(createdata)
-        // } else {
-        //     recentScreening.shift();
-        //     recentScreening.push(createdata)
-        // }
-    } catch {
 
+        let recentScreening = [];
+        const findAllData = await screeningModel.find({ isDeleted: false })
+        const length = findAllData.length
+        if (length <= 7) {
+            recentScreening = findAllData;
+        } else {
+            recentScreening.push(findAllData[length - 1])
+            recentScreening.push(findAllData[length - 2])
+            recentScreening.push(findAllData[length - 3])
+            recentScreening.push(findAllData[length - 4])
+            recentScreening.push(findAllData[length - 5])
+            recentScreening.push(findAllData[length - 6])
+            recentScreening.push(findAllData[length - 7])
+        }
+        notAnemia = Math.round(notAnemia / totalScreening * 100);
+        anemia = Math.round(anemia / totalScreening * 100);
+        severeAnemia = 100 - notAnemia - anemia;
+        let allData = {};
+        anemia = anemia
+        allData.totalScreening = totalScreening;
+        allData.anemiaRate = anemiaRate;
+        allData.noAnemia = notAnemia;
+        allData.anemia = anemia;
+        allData.severeAnemia = severeAnemia;
+        allData.recentScreening = recentScreening;
+
+        return res.status(200).send({ status: true, message: "Dashboard data", data: allData });
+    } catch (error) {
+        return res.status(500).send({ status: false, error: error.message });
     }
 }
 
+const filter = async (req, res) => {
+    try {
+        let { block, village, status_question_two, type_of_respondent } = req.query;
+        let filter = { isDeleted: false }
+
+        if (block) {
+            filter = { isDeleted: false, block: block }
+        }
+        if (village) {
+            filter = { isDeleted: false, village: village }
+        }
+        if (status_question_two) {
+            filter = { isDeleted: false, status_question_two: status_question_two }
+        }
+        if (type_of_respondent) {
+            filter = { isDeleted: false, type_of_respondent: type_of_respondent }
+        }
+        if (block && village) {
+            filter = { isDeleted: false, block: block, village: village }
+        }
+        if (block && status_question_two) {
+            filter = { isDeleted: false, block: block, status_question_two: status_question_two }
+        }
+        if (block && type_of_respondent) {
+            filter = { isDeleted: false, block: block, type_of_respondent: type_of_respondent }
+        }
+        if (village && status_question_two) {
+            filter = { isDeleted: false, village: village, status_question_two: status_question_two }
+        }
+        if (village && type_of_respondent) {
+            filter = { isDeleted: false, village: village, type_of_respondent: type_of_respondent }
+        }
+        if (status_question_two && type_of_respondent) {
+            filter = { isDeleted: false, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
+        }
+        if (block && village && status_question_two) {
+            filter = { isDeleted: false, block: block, village: village, status_question_two: status_question_two }
+        }
+        if (block && village && type_of_respondent) {
+            filter = { isDeleted: false, block: block, village: village, type_of_respondent: type_of_respondent }
+        }
+        if (block && status_question_two && type_of_respondent) {
+            filter = { isDeleted: false, block: block, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
+        }
+        if (village && status_question_two && type_of_respondent) {
+            filter = { isDeleted: false, village: village, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
+        }
+        if (block && village && status_question_two && type_of_respondent) {
+            filter = { isDeleted: false, block: block, village: village, status_question_two: status_question_two, type_of_respondent: type_of_respondent }
+        }
+        let allData = await screeningModel.find(filter)
+
+        return res.status(200).send({ status: true, message: "SCREENING DETAILS", data: allData })
+    } catch (error) {
+        return res.status(500).send({ msg: error.message, status: false })
+    }
+};
 
 
-module.exports = { createScreening, getScreeningData, getScreeningDataById, updateScreening }
+
+module.exports = { createScreening, getScreeningData, getScreeningDataById, updateScreening, deleteScreening, dashboard, filter }

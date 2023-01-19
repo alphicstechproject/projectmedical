@@ -5,12 +5,17 @@ const { authentication, authorization } = require('../middlewares/auth')
 const { getAnganwadiById } = require('../controllers/anganwadiController');
 const { getSubCenter } = require('../controllers/subCenterController');
 const { getBlock } = require('../controllers/blockController');
-const { createScreening, getScreeningData, getScreeningDataById, updateScreening, deleteScreening } = require('../controllers/screeningController');
+const { createScreening, getScreeningData, getScreeningDataById, updateScreening, deleteScreening, dashboard, filter } = require('../controllers/screeningController');
 const { createAdvice, getAdvice, getAdviceById, updateAdvice, deleteAdvice } = require('../controllers/adviceController');
 const { createRespondent, getRespondent, getRespondentById, updateRespondent, deleteRespondent } = require('../controllers/respondentController');
-const { createBloodTranfer, getBloodTranferDataById, updateBloodTranfer, deleteBloodTranfer } = require('../controllers/bloodTranferController');
+const { createBloodTranfer, getBloodTranferData, getBloodTranferDataById, updateBloodTranfer, deleteBloodTranfer } = require('../controllers/bloodTranferController');
 
 /** anganwadi * subcenter * block*/
+
+
+// -------------------------------- Dashboard ----------------------------------------
+router.get('/api/dashboard', dashboard)
+
 
 // -------------------------------- Login ----------------------------------------
 router.post('/api/login', employeeLogin)
@@ -20,7 +25,7 @@ router.post('/api/employee', createEmployee)
 router.get('/api/employee', getEmployee)
 router.get('/api/employee/:employeeId', authentication, authorization, getEmployeeById)
 router.put('/api/employee/:employeeId', authentication, authorization, updateEmployee)
-// router.delete('/api/employee/:employeeId', authentication, authorization, deleteEmployee)
+router.delete('/api/employee/:employeeId', authentication, authorization, deleteEmployee)
 
 // -------------------------------- Anganwadi ---------------------------------------
 // router.get('/api/anganwadi', getAnganwadi)
@@ -37,28 +42,29 @@ router.post('/api/screening', createScreening)
 router.get('/api/screening', getScreeningData)
 router.get('/api/screening/:screeningId', getScreeningDataById)
 router.put('/api/screening/:screeningId', updateScreening)
-// router.delete('/api/screening/:screeningId', deleteScreening)
+router.delete('/api/screening/:screeningId', deleteScreening)
+router.get('/api/screening-filter', filter)
 
 // -------------------------------- Advice ------------------------------------------
 router.post('/api/advice', createAdvice)
 router.get('/api/advice', getAdvice)
 router.get('/api/advice/:adviceId', getAdviceById)
 router.put('/api/advice/:adviceId', updateAdvice)
-// router.delete('/api/advice/:adviceId', deleteAdvice)
+router.delete('/api/advice/:adviceId', deleteAdvice)
 
 // -------------------------------- Respondent --------------------------------------
 router.post('/api/respondent', createRespondent)
 router.get('/api/respondent', getRespondent)
 router.get('/api/respondent/:respondentId', getRespondentById)
 router.put('/api/respondent/:respondentId', updateRespondent)
-// router.delete('/api/respondent/:respondentId', deleteRespondent)
+router.delete('/api/respondent/:respondentId', deleteRespondent)
 
 // -------------------------------- BloodTranfer ------------------------------------
 router.post('/api/blood-transfusion', createBloodTranfer)
-// router.get('/api/blood-transfusion', getBloodTranferData)
+router.get('/api/blood-transfusion', getBloodTranferData)
 router.get('/api/blood-transfusion/:bloodTranferId', getBloodTranferDataById)
 router.put('/api/blood-transfusion/:bloodTranferId', updateBloodTranfer)
-// router.delete('/api/blood-transfusion/:bloodTranferId', deleteBloodTranfer)
+router.delete('/api/blood-transfusion/:bloodTranferId', deleteBloodTranfer)
 
 // -------------------------------- Blocks_Sc ------------------------------------
 const { createBlocks_Sc } = require('../controllers/blockAndScController');

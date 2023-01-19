@@ -67,11 +67,11 @@ const employeeLogin = async function (req, res) {
         return res.status(500).send({ msg: error.message, status: false })
     }
 }
+
 const getEmployee = async (req, res) => {
     try {
         let filter = { isDeleted: false }
         let allData = await employeeModel.find(filter)
-        console.log(employeeModel)
         return res.status(200).send({ status: true, message: "EMPLOYEE DETAILS", data: allData })
     } catch (error) {
         return res.status(500).send({ msg: error.message, status: false })
@@ -88,6 +88,9 @@ const getEmployeeById = async function (req, res) {
         const findEmployeeidInDb = await employeeModel.findById(employeeId)
         if (!findEmployeeidInDb) {
             return res.status(400).send({ status: false, message: "THIS EMPLOYEE IS NOT PRESENT IN OUR MONGODB" })
+        }
+        if (findEmployeeidInDb.isDeleted == true){
+            return res.status(400).send({ status: false, message: " THIS EMPLOYEE IS ALREADY DELETED PLEASE CREATE A NEW ONE" })
         }
         return res.status(200).send({ status: true, message: "EMPLOYEE PROFILE DETAILS", data: findEmployeeidInDb })
 
@@ -137,5 +140,40 @@ const updateEmployee = async function (req, res) {
         return res.status(500).send({ msg: error.message, status: false })
     }
 }
+const deleteEmployee = async function (req, res) {
+    try {
+        const employeeId = req.params.employeeId;
+        if (!mongoose.Types.ObjectId.isValid(employeeId)) {
+            return res
+                .status(400)
+                .send({ status: false, message: "Invalid employee id" });
+        }
 
-module.exports = { createEmployee, employeeLogin, getEmployee, getEmployeeById, updateEmployee }
+        const employeeById = await employeeModel.findOne({
+            _id: employeeId,
+            isDeleted: false,
+            deletedAt: null,
+        });
+
+        if (!employeeById) {
+            return res.status(404).send({
+                status: false,
+                message: "No employee found by this employee id",
+            });
+        }
+
+        await employeeModel.findOneAndUpdate(
+            { _id: employeeId },
+            { $set: { isDeleted: true, deletedAt: Date.now() } },
+            { new: true }
+        );
+
+        return res
+            .status(200)
+            .send({ status: true, message: "Employee successfully deleted" });
+    } catch (error) {
+        return res.status(500).send({ status: false, error: error.message });
+    }
+}
+
+module.exports = { createEmployee, employeeLogin, getEmployee, getEmployeeById, updateEmployee, deleteEmployee }

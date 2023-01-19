@@ -23,6 +23,7 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
   late List<String> years = [];
   late List<String> gestAge = [];
   late List<String> education = [];
+  late TextEditingController schoolNameField;
 
   ///--------------------- 2 -------------------///
   late TextEditingController weightField;
@@ -34,6 +35,9 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
   ///--------------------- 4 -------------------///
   late TextEditingController hbLevelField;
 
+  ///--------------------- Advised -------------------///
+  late TextEditingController addOtherAdviseField;
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +47,7 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
     respondent = TextEditingController();
     fatherField = TextEditingController();
     anganwadiCenterField = TextEditingController();
+    schoolNameField = TextEditingController();
     villageField = TextEditingController();
     ashaWorkerField = TextEditingController();
     for (int i = 1900; i > 1899 && i <= DateTime.now().year; i++) {
@@ -70,13 +75,26 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
 
     ///--------------------- 4 -------------------///
     hbLevelField = TextEditingController();
+
+    addOtherAdviseField = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddScreeningCubit, AddScreeningState>(
-      listenWhen: (previous, current) => previous.saveData != current.saveData,
+      listenWhen: (previous, current) {
+        return previous.saveData != current.saveData ||
+            previous.firstError != current.firstError ||
+            previous.secondError != current.secondError;
+      },
       listener: (context, state) async {
+        if (state.firstError || state.secondError) {
+          showCustomToast(
+            context,
+            status: ToastStatus.error,
+            message: 'Please fill all data',
+          );
+        }
         state.saveData.maybeWhen(
           orElse: () => Container(),
           inProgress: () => Container(),
@@ -129,6 +147,11 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
                     orElse: () => false,
                     inProgress: () => true,
                     success: (_) => false,
+                  ) ||
+                  state.getAdvised.maybeWhen(
+                    orElse: () => false,
+                    inProgress: () => true,
+                    success: (_) => false,
                   )),
               dateSelect: addScreeningCubit.dateSelect,
               aadharcardField: aadharcardField,
@@ -164,6 +187,13 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
                   addScreeningCubit.anganwadiCenterOnchange,
               villageField: villageField,
               villageFieldChnage: addScreeningCubit.villageOnchange,
+              schoolNameField: schoolNameField,
+              schoolNameFieldChnage: addScreeningCubit.schoolNameFieldChnage,
+              schoolData: state.schoolData,
+              schoolOnchange: addScreeningCubit.schoolOnchange,
+              currentSchool: state.currentSchool,
+              currentSchoolFieldChnage:
+                  addScreeningCubit.currentSchoolFieldChnage,
               ashaWorkerField: ashaWorkerField,
               ashaWorkerFieldChnage: addScreeningCubit.ashaWorkerOnchange,
               pageChnage: addScreeningCubit.pageChange,
@@ -191,6 +221,12 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
               sickelCellOnChange: addScreeningCubit.sickelCellOnChange,
               malaria: state.malaria,
               malariaOnChange: addScreeningCubit.malariaOnChange,
+              advisedData: state.advisedDescription,
+              referHospitalOnchange: addScreeningCubit.referHospitalOnchange,
+              selectedreferHospital: state.referHospital,
+              addOtherAdviseField: addOtherAdviseField,
+              addOtherAdviseOnchange: addScreeningCubit.addOtherAdviseOnchange,
+              showSchoolDetails: state.schoolDetailsShow,
             ),
           ),
         );

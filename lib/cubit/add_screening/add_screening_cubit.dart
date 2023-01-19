@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:application_1/model/add_screening/employee.dart';
+import 'package:application_1/model/advised/advised.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
@@ -151,6 +152,7 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
         respondentType: data,
         selectedRespondantType: selctedData,
         gestAgeShow: selctedData == 'Pregnant Women',
+        schoolDetailsShow: selctedData == 'Adolescents girls (Tribal School)',
       ),
     );
   }
@@ -171,6 +173,46 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
     emit(
       state.copyWith(
         education: education,
+      ),
+    );
+  }
+
+  void currentSchoolFieldChnage({
+    required int selectedIndex,
+  }) async {
+    List<Map<String, dynamic>> data = [];
+    final selctedData = state.currentSchool[selectedIndex]['type'];
+    for (dynamic currentSchoolModel in state.currentSchool) {
+      data.add({
+        'type': currentSchoolModel['type'],
+        'selected': selctedData == currentSchoolModel['type'] ? true : false,
+      });
+    }
+
+    emit(
+      state.copyWith(
+        currentSchool: data,
+        selectedcurrentSchool: selctedData,
+      ),
+    );
+  }
+
+  void schoolOnchange({
+    required int selectedIndex,
+  }) async {
+    List<Map<String, dynamic>> data = [];
+    final selctedData = state.schoolData[selectedIndex]['type'];
+    for (dynamic schoolDataModel in state.schoolData) {
+      data.add({
+        'type': schoolDataModel['type'],
+        'selected': selctedData == schoolDataModel['type'] ? true : false,
+      });
+    }
+
+    emit(
+      state.copyWith(
+        schoolData: data,
+        typeSchool: selctedData,
       ),
     );
   }
@@ -256,6 +298,16 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
     emit(
       state.copyWith(
         village: village,
+      ),
+    );
+  }
+
+  void schoolNameFieldChnage({
+    required String schoolName,
+  }) async {
+    emit(
+      state.copyWith(
+        schoolName: schoolName,
       ),
     );
   }
@@ -356,12 +408,112 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
   // } else {}
 
   void pageChange() async {
-    emit(
-      state.copyWith(
-        pageNo: state.pageNo + 1,
-      ),
-    );
-    if (state.pageNo == 5) {
+    if (state.pageNo == 1) {
+      if (state.dateScreening.isNotEmpty &&
+          state.aadharcard.isNotEmpty &&
+          state.mobileNo.isNotEmpty &&
+          state.respondent.isNotEmpty &&
+          state.father.isNotEmpty &&
+          state.age.isNotEmpty &&
+          state.cast.where((element) => element['selected']).first.isNotEmpty &&
+          state.selectedRespondantType.isNotEmpty &&
+          state.education.isNotEmpty &&
+          state.selectedBlock.isNotEmpty &&
+          state.selectedCenter.isNotEmpty &&
+          state.anganwadiCenter.isNotEmpty &&
+          state.village.isNotEmpty &&
+          // state.selectedAnm.isNotEmpty &&
+          state.ashaWorker.isNotEmpty) {
+        emit(
+          state.copyWith(
+            pageNo: state.pageNo + 1,
+            firstError: false,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            firstError: true,
+          ),
+        );
+        emit(
+          state.copyWith(
+            firstError: false,
+          ),
+        );
+      }
+    } else if (state.pageNo == 2) {
+      if (state.weight.isNotEmpty && state.height.isNotEmpty) {
+        emit(
+          state.copyWith(
+            pageNo: state.pageNo + 1,
+            secondError: false,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            secondError: true,
+          ),
+        );
+        emit(
+          state.copyWith(
+            secondError: false,
+          ),
+        );
+      }
+    } else if (state.pageNo == 3) {
+      if (state.ifa.where((element) => element['selected']).first.isNotEmpty &&
+          state.serviceDiscontinue.isNotEmpty) {
+        emit(
+          state.copyWith(
+            pageNo: state.pageNo + 1,
+            thirdError: false,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            thirdError: true,
+          ),
+        );
+        emit(
+          state.copyWith(
+            thirdError: false,
+          ),
+        );
+      }
+    } else if (state.pageNo == 4) {
+      if (state.hb.isNotEmpty &&
+          state.statusAnaemia.isNotEmpty &&
+          state.malaria
+              .where((element) => element['selected'])
+              .first
+              .isNotEmpty &&
+          state.sickelCell
+              .where((element) => element['selected'])
+              .first
+              .isNotEmpty) {
+        emit(
+          state.copyWith(
+            pageNo: state.pageNo + 1,
+            fourError: false,
+          ),
+        );
+        getAdvised();
+      } else {
+        emit(
+          state.copyWith(
+            fourError: true,
+          ),
+        );
+        emit(
+          state.copyWith(
+            fourError: false,
+          ),
+        );
+      }
+    } else {
       try {
         emit(
           state.copyWith(
@@ -405,9 +557,9 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
                   .first['cast'],
               "gest_age": state.gestAge,
               //////
-              "school_status": "High School",
-              "type_of_school": "Govt",
-              "school_name": "Town High School",
+              "school_status": state.currentSchool,
+              "type_of_school": state.typeSchool,
+              "school_name": state.schoolName,
               //////
               "block": state.selectedBlock,
               "village": state.village,
@@ -419,19 +571,19 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
               "height": state.height,
 
               "bmi": state.bmi,
-              "service_question_one": state.ifa
+              "service_question_one": 'no',
+              "service_question_two": state.ifa
                   .where((element) => element['selected'])
                   .first['type'],
-              "service_question_two": state.serviceDiscontinue,
-              "service_question_three": state.ancCheckup
+              "service_question_three": state.serviceDiscontinue,
+              "service_question_four": state.ancCheckup
                   .where((element) => element['selected'])
                   .first['type'],
-              //////
-              "service_question_four": 'Yes',
+
               //////
               "status_question_one": state.hb,
               //////
-              "status_hblevel": "no animia",
+              "status_hblevel": state.statusAnaemia,
               //////
               "status_question_three": state.malaria
                   .where((element) => element['selected'])
@@ -440,13 +592,16 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
                   .where((element) => element['selected'])
                   .first['type'],
               //////
-              "advices_description": '',
-              "blood_transfusion_center": "",
-              "blood_transfusion_date": '',
-              "screening_person_name": '',
-              "screening_person_desgination": "",
-              "screening_no": '',
-              "extra_note": '',
+              "advices_description": state.advisedDescription.length > 0
+                  ? state.advisedDescription[0]
+                  : 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
+              "blood_transfusion_center": "bhawanipatna",
+              "blood_transfusion_date": '13-12-2022',
+              "screening_person_name": 'mohit lal',
+              "screening_person_desgination": "medical supervisor",
+              "screening_no": '21',
+              "extra_note":
+                  state.otherAdvise.isNotEmpty ? state.otherAdvise : 'nothing',
               //////
             },
           ),
@@ -479,6 +634,53 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
           ),
         );
       }
+    }
+  }
+
+  //--------------------------------- adVISED -----------------------//
+
+  Future<void> getAdvised() async {
+    try {
+      emit(
+        state.copyWith(
+          getAdvised: const GetAdvised.inProgress(),
+        ),
+      );
+      final response = await http.get(
+        Uri.parse("https://projectmedical.onrender.com/api/advice"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      final result = jsonDecode(response.body);
+      final employeeData = (result['data'] as List)
+          .map(
+            (reports) => AdvisedData.fromJson(reports),
+          )
+          .toList();
+      final data = employeeData
+          .where((element) =>
+              element.respondentTitle == state.respondentType &&
+              element.anemiaStage == state.statusAnaemia)
+          .map((e) => e.description!)
+          .toList();
+
+      emit(
+        state.copyWith(
+          advisedDescription: data,
+          getAdvised: GetAdvised.success(
+            success: result['message'],
+          ),
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          getAdvised: const GetAdvised.failed(
+            failed: 'Error',
+          ),
+        ),
+      );
     }
   }
 
@@ -579,7 +781,42 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
   }) async {
     emit(
       state.copyWith(
-        ashaWorker: hb,
+        hb: hb,
+        statusAnaemia: hb.isNotEmpty
+            ? double.parse(hb) > 12 &&
+                    (state.respondentType ==
+                            'Adolescents girls (Tribal School)' ||
+                        state.respondentType ==
+                            'Adolescents girls (Non School going)')
+                ? 'No Anemia'
+                : (double.parse(hb) >= 11.0 && double.parse(hb) <= 11.9) &&
+                        (state.respondentType ==
+                                'Adolescents girls (Tribal School)' ||
+                            state.respondentType ==
+                                'Adolescents girls (Non School going)')
+                    ? 'Mild Anemia'
+                    : (double.parse(hb) >= 8.0 && double.parse(hb) <= 8.9) &&
+                            (state.respondentType ==
+                                    'Adolescents girls (Tribal School)' ||
+                                state.respondentType ==
+                                    'Adolescents girls (Non School going)')
+                        ? 'Moderate Anemia'
+                        : (double.parse(hb) >= 0.0 &&
+                                    double.parse(hb) <= 8.0) &&
+                                (state.respondentType ==
+                                        'Adolescents girls (Tribal School)' ||
+                                    state.respondentType ==
+                                        'Adolescents girls (Non School going)')
+                            ? 'Severe Anemia'
+                            : double.parse(hb) > 11 &&
+                                    state.respondentType == 'Pregnant Women'
+                                ? 'No Anemia'
+                                : (double.parse(hb) >= 10.0 &&
+                                            double.parse(hb) <= 10.9) &&
+                                        state.respondentType == 'Pregnant Women'
+                                    ? 'Mild Anemia'
+                                    : 'Not Anaemic'
+            : 'Status',
       ),
     );
   }
@@ -618,6 +855,26 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
     emit(
       state.copyWith(
         malaria: data,
+      ),
+    );
+  }
+
+  void referHospitalOnchange({
+    required String referHospital,
+  }) async {
+    emit(
+      state.copyWith(
+        referHospital: referHospital,
+      ),
+    );
+  }
+
+  void addOtherAdviseOnchange({
+    required String otherAdvise,
+  }) async {
+    emit(
+      state.copyWith(
+        otherAdvise: otherAdvise,
       ),
     );
   }

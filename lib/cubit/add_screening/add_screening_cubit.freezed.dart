@@ -50,10 +50,27 @@ mixin _$AddScreeningState {
   String get serviceDiscontinue => throw _privateConstructorUsedError;
   String get hb => throw _privateConstructorUsedError;
   String get selectedRespondantType => throw _privateConstructorUsedError;
+  String get statusAnaemia => throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get malaria => throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get sickelCell =>
       throw _privateConstructorUsedError;
   SaveData get saveData => throw _privateConstructorUsedError;
+  bool get firstError => throw _privateConstructorUsedError;
+  bool get secondError => throw _privateConstructorUsedError;
+  bool get thirdError => throw _privateConstructorUsedError;
+  bool get fourError => throw _privateConstructorUsedError;
+  GetAdvised get getAdvised => throw _privateConstructorUsedError;
+  List<String> get advisedDescription => throw _privateConstructorUsedError;
+  String get referHospital => throw _privateConstructorUsedError;
+  String get otherAdvise => throw _privateConstructorUsedError;
+  String get schoolName => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>> get schoolData =>
+      throw _privateConstructorUsedError;
+  List<Map<String, dynamic>> get currentSchool =>
+      throw _privateConstructorUsedError;
+  String get selectedcurrentSchool => throw _privateConstructorUsedError;
+  String get typeSchool => throw _privateConstructorUsedError;
+  bool get schoolDetailsShow => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddScreeningStateCopyWith<AddScreeningState> get copyWith =>
@@ -99,14 +116,30 @@ abstract class $AddScreeningStateCopyWith<$Res> {
       String serviceDiscontinue,
       String hb,
       String selectedRespondantType,
+      String statusAnaemia,
       List<Map<String, dynamic>> malaria,
       List<Map<String, dynamic>> sickelCell,
-      SaveData saveData});
+      SaveData saveData,
+      bool firstError,
+      bool secondError,
+      bool thirdError,
+      bool fourError,
+      GetAdvised getAdvised,
+      List<String> advisedDescription,
+      String referHospital,
+      String otherAdvise,
+      String schoolName,
+      List<Map<String, dynamic>> schoolData,
+      List<Map<String, dynamic>> currentSchool,
+      String selectedcurrentSchool,
+      String typeSchool,
+      bool schoolDetailsShow});
 
   $GetBlockCopyWith<$Res> get getBlock;
   $GetCenterCopyWith<$Res> get getCenter;
   $GetAnmCopyWith<$Res> get getAnm;
   $SaveDataCopyWith<$Res> get saveData;
+  $GetAdvisedCopyWith<$Res> get getAdvised;
 }
 
 /// @nodoc
@@ -154,9 +187,24 @@ class _$AddScreeningStateCopyWithImpl<$Res, $Val extends AddScreeningState>
     Object? serviceDiscontinue = null,
     Object? hb = null,
     Object? selectedRespondantType = null,
+    Object? statusAnaemia = null,
     Object? malaria = null,
     Object? sickelCell = null,
     Object? saveData = null,
+    Object? firstError = null,
+    Object? secondError = null,
+    Object? thirdError = null,
+    Object? fourError = null,
+    Object? getAdvised = null,
+    Object? advisedDescription = null,
+    Object? referHospital = null,
+    Object? otherAdvise = null,
+    Object? schoolName = null,
+    Object? schoolData = null,
+    Object? currentSchool = null,
+    Object? selectedcurrentSchool = null,
+    Object? typeSchool = null,
+    Object? schoolDetailsShow = null,
   }) {
     return _then(_value.copyWith(
       dateScreening: null == dateScreening
@@ -287,6 +335,10 @@ class _$AddScreeningStateCopyWithImpl<$Res, $Val extends AddScreeningState>
           ? _value.selectedRespondantType
           : selectedRespondantType // ignore: cast_nullable_to_non_nullable
               as String,
+      statusAnaemia: null == statusAnaemia
+          ? _value.statusAnaemia
+          : statusAnaemia // ignore: cast_nullable_to_non_nullable
+              as String,
       malaria: null == malaria
           ? _value.malaria
           : malaria // ignore: cast_nullable_to_non_nullable
@@ -299,6 +351,62 @@ class _$AddScreeningStateCopyWithImpl<$Res, $Val extends AddScreeningState>
           ? _value.saveData
           : saveData // ignore: cast_nullable_to_non_nullable
               as SaveData,
+      firstError: null == firstError
+          ? _value.firstError
+          : firstError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      secondError: null == secondError
+          ? _value.secondError
+          : secondError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      thirdError: null == thirdError
+          ? _value.thirdError
+          : thirdError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      fourError: null == fourError
+          ? _value.fourError
+          : fourError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      getAdvised: null == getAdvised
+          ? _value.getAdvised
+          : getAdvised // ignore: cast_nullable_to_non_nullable
+              as GetAdvised,
+      advisedDescription: null == advisedDescription
+          ? _value.advisedDescription
+          : advisedDescription // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      referHospital: null == referHospital
+          ? _value.referHospital
+          : referHospital // ignore: cast_nullable_to_non_nullable
+              as String,
+      otherAdvise: null == otherAdvise
+          ? _value.otherAdvise
+          : otherAdvise // ignore: cast_nullable_to_non_nullable
+              as String,
+      schoolName: null == schoolName
+          ? _value.schoolName
+          : schoolName // ignore: cast_nullable_to_non_nullable
+              as String,
+      schoolData: null == schoolData
+          ? _value.schoolData
+          : schoolData // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      currentSchool: null == currentSchool
+          ? _value.currentSchool
+          : currentSchool // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      selectedcurrentSchool: null == selectedcurrentSchool
+          ? _value.selectedcurrentSchool
+          : selectedcurrentSchool // ignore: cast_nullable_to_non_nullable
+              as String,
+      typeSchool: null == typeSchool
+          ? _value.typeSchool
+          : typeSchool // ignore: cast_nullable_to_non_nullable
+              as String,
+      schoolDetailsShow: null == schoolDetailsShow
+          ? _value.schoolDetailsShow
+          : schoolDetailsShow // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -331,6 +439,14 @@ class _$AddScreeningStateCopyWithImpl<$Res, $Val extends AddScreeningState>
   $SaveDataCopyWith<$Res> get saveData {
     return $SaveDataCopyWith<$Res>(_value.saveData, (value) {
       return _then(_value.copyWith(saveData: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GetAdvisedCopyWith<$Res> get getAdvised {
+    return $GetAdvisedCopyWith<$Res>(_value.getAdvised, (value) {
+      return _then(_value.copyWith(getAdvised: value) as $Val);
     });
   }
 }
@@ -376,9 +492,24 @@ abstract class _$$_AddScreeningStateCopyWith<$Res>
       String serviceDiscontinue,
       String hb,
       String selectedRespondantType,
+      String statusAnaemia,
       List<Map<String, dynamic>> malaria,
       List<Map<String, dynamic>> sickelCell,
-      SaveData saveData});
+      SaveData saveData,
+      bool firstError,
+      bool secondError,
+      bool thirdError,
+      bool fourError,
+      GetAdvised getAdvised,
+      List<String> advisedDescription,
+      String referHospital,
+      String otherAdvise,
+      String schoolName,
+      List<Map<String, dynamic>> schoolData,
+      List<Map<String, dynamic>> currentSchool,
+      String selectedcurrentSchool,
+      String typeSchool,
+      bool schoolDetailsShow});
 
   @override
   $GetBlockCopyWith<$Res> get getBlock;
@@ -388,6 +519,8 @@ abstract class _$$_AddScreeningStateCopyWith<$Res>
   $GetAnmCopyWith<$Res> get getAnm;
   @override
   $SaveDataCopyWith<$Res> get saveData;
+  @override
+  $GetAdvisedCopyWith<$Res> get getAdvised;
 }
 
 /// @nodoc
@@ -433,9 +566,24 @@ class __$$_AddScreeningStateCopyWithImpl<$Res>
     Object? serviceDiscontinue = null,
     Object? hb = null,
     Object? selectedRespondantType = null,
+    Object? statusAnaemia = null,
     Object? malaria = null,
     Object? sickelCell = null,
     Object? saveData = null,
+    Object? firstError = null,
+    Object? secondError = null,
+    Object? thirdError = null,
+    Object? fourError = null,
+    Object? getAdvised = null,
+    Object? advisedDescription = null,
+    Object? referHospital = null,
+    Object? otherAdvise = null,
+    Object? schoolName = null,
+    Object? schoolData = null,
+    Object? currentSchool = null,
+    Object? selectedcurrentSchool = null,
+    Object? typeSchool = null,
+    Object? schoolDetailsShow = null,
   }) {
     return _then(_$_AddScreeningState(
       dateScreening: null == dateScreening
@@ -566,6 +714,10 @@ class __$$_AddScreeningStateCopyWithImpl<$Res>
           ? _value.selectedRespondantType
           : selectedRespondantType // ignore: cast_nullable_to_non_nullable
               as String,
+      statusAnaemia: null == statusAnaemia
+          ? _value.statusAnaemia
+          : statusAnaemia // ignore: cast_nullable_to_non_nullable
+              as String,
       malaria: null == malaria
           ? _value._malaria
           : malaria // ignore: cast_nullable_to_non_nullable
@@ -578,6 +730,62 @@ class __$$_AddScreeningStateCopyWithImpl<$Res>
           ? _value.saveData
           : saveData // ignore: cast_nullable_to_non_nullable
               as SaveData,
+      firstError: null == firstError
+          ? _value.firstError
+          : firstError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      secondError: null == secondError
+          ? _value.secondError
+          : secondError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      thirdError: null == thirdError
+          ? _value.thirdError
+          : thirdError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      fourError: null == fourError
+          ? _value.fourError
+          : fourError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      getAdvised: null == getAdvised
+          ? _value.getAdvised
+          : getAdvised // ignore: cast_nullable_to_non_nullable
+              as GetAdvised,
+      advisedDescription: null == advisedDescription
+          ? _value._advisedDescription
+          : advisedDescription // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      referHospital: null == referHospital
+          ? _value.referHospital
+          : referHospital // ignore: cast_nullable_to_non_nullable
+              as String,
+      otherAdvise: null == otherAdvise
+          ? _value.otherAdvise
+          : otherAdvise // ignore: cast_nullable_to_non_nullable
+              as String,
+      schoolName: null == schoolName
+          ? _value.schoolName
+          : schoolName // ignore: cast_nullable_to_non_nullable
+              as String,
+      schoolData: null == schoolData
+          ? _value._schoolData
+          : schoolData // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      currentSchool: null == currentSchool
+          ? _value._currentSchool
+          : currentSchool // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      selectedcurrentSchool: null == selectedcurrentSchool
+          ? _value.selectedcurrentSchool
+          : selectedcurrentSchool // ignore: cast_nullable_to_non_nullable
+              as String,
+      typeSchool: null == typeSchool
+          ? _value.typeSchool
+          : typeSchool // ignore: cast_nullable_to_non_nullable
+              as String,
+      schoolDetailsShow: null == schoolDetailsShow
+          ? _value.schoolDetailsShow
+          : schoolDetailsShow // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -618,9 +826,24 @@ class _$_AddScreeningState implements _AddScreeningState {
       required this.serviceDiscontinue,
       required this.hb,
       required this.selectedRespondantType,
+      required this.statusAnaemia,
       required final List<Map<String, dynamic>> malaria,
       required final List<Map<String, dynamic>> sickelCell,
-      required this.saveData})
+      required this.saveData,
+      required this.firstError,
+      required this.secondError,
+      required this.thirdError,
+      required this.fourError,
+      required this.getAdvised,
+      required final List<String> advisedDescription,
+      required this.referHospital,
+      required this.otherAdvise,
+      required this.schoolName,
+      required final List<Map<String, dynamic>> schoolData,
+      required final List<Map<String, dynamic>> currentSchool,
+      required this.selectedcurrentSchool,
+      required this.typeSchool,
+      required this.schoolDetailsShow})
       : _cast = cast,
         _respondentType = respondentType,
         _block = block,
@@ -629,7 +852,10 @@ class _$_AddScreeningState implements _AddScreeningState {
         _ifa = ifa,
         _ancCheckup = ancCheckup,
         _malaria = malaria,
-        _sickelCell = sickelCell;
+        _sickelCell = sickelCell,
+        _advisedDescription = advisedDescription,
+        _schoolData = schoolData,
+        _currentSchool = currentSchool;
 
   @override
   final String dateScreening;
@@ -737,6 +963,8 @@ class _$_AddScreeningState implements _AddScreeningState {
   final String hb;
   @override
   final String selectedRespondantType;
+  @override
+  final String statusAnaemia;
   final List<Map<String, dynamic>> _malaria;
   @override
   List<Map<String, dynamic>> get malaria {
@@ -755,10 +983,57 @@ class _$_AddScreeningState implements _AddScreeningState {
 
   @override
   final SaveData saveData;
+  @override
+  final bool firstError;
+  @override
+  final bool secondError;
+  @override
+  final bool thirdError;
+  @override
+  final bool fourError;
+  @override
+  final GetAdvised getAdvised;
+  final List<String> _advisedDescription;
+  @override
+  List<String> get advisedDescription {
+    if (_advisedDescription is EqualUnmodifiableListView)
+      return _advisedDescription;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_advisedDescription);
+  }
+
+  @override
+  final String referHospital;
+  @override
+  final String otherAdvise;
+  @override
+  final String schoolName;
+  final List<Map<String, dynamic>> _schoolData;
+  @override
+  List<Map<String, dynamic>> get schoolData {
+    if (_schoolData is EqualUnmodifiableListView) return _schoolData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_schoolData);
+  }
+
+  final List<Map<String, dynamic>> _currentSchool;
+  @override
+  List<Map<String, dynamic>> get currentSchool {
+    if (_currentSchool is EqualUnmodifiableListView) return _currentSchool;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_currentSchool);
+  }
+
+  @override
+  final String selectedcurrentSchool;
+  @override
+  final String typeSchool;
+  @override
+  final bool schoolDetailsShow;
 
   @override
   String toString() {
-    return 'AddScreeningState(dateScreening: $dateScreening, aadharcard: $aadharcard, mobileNo: $mobileNo, respondent: $respondent, father: $father, age: $age, cast: $cast, respondentType: $respondentType, gestAge: $gestAge, gestAgeShow: $gestAgeShow, getBlock: $getBlock, block: $block, education: $education, selectedBlock: $selectedBlock, getCenter: $getCenter, center: $center, selectedCenter: $selectedCenter, anganwadiCenter: $anganwadiCenter, village: $village, ashaWorker: $ashaWorker, pageNo: $pageNo, getAnm: $getAnm, employeeData: $employeeData, selectedAnm: $selectedAnm, weight: $weight, height: $height, bmi: $bmi, ifa: $ifa, ancCheckup: $ancCheckup, serviceDiscontinue: $serviceDiscontinue, hb: $hb, selectedRespondantType: $selectedRespondantType, malaria: $malaria, sickelCell: $sickelCell, saveData: $saveData)';
+    return 'AddScreeningState(dateScreening: $dateScreening, aadharcard: $aadharcard, mobileNo: $mobileNo, respondent: $respondent, father: $father, age: $age, cast: $cast, respondentType: $respondentType, gestAge: $gestAge, gestAgeShow: $gestAgeShow, getBlock: $getBlock, block: $block, education: $education, selectedBlock: $selectedBlock, getCenter: $getCenter, center: $center, selectedCenter: $selectedCenter, anganwadiCenter: $anganwadiCenter, village: $village, ashaWorker: $ashaWorker, pageNo: $pageNo, getAnm: $getAnm, employeeData: $employeeData, selectedAnm: $selectedAnm, weight: $weight, height: $height, bmi: $bmi, ifa: $ifa, ancCheckup: $ancCheckup, serviceDiscontinue: $serviceDiscontinue, hb: $hb, selectedRespondantType: $selectedRespondantType, statusAnaemia: $statusAnaemia, malaria: $malaria, sickelCell: $sickelCell, saveData: $saveData, firstError: $firstError, secondError: $secondError, thirdError: $thirdError, fourError: $fourError, getAdvised: $getAdvised, advisedDescription: $advisedDescription, referHospital: $referHospital, otherAdvise: $otherAdvise, schoolName: $schoolName, schoolData: $schoolData, currentSchool: $currentSchool, selectedcurrentSchool: $selectedcurrentSchool, typeSchool: $typeSchool, schoolDetailsShow: $schoolDetailsShow)';
   }
 
   @override
@@ -816,11 +1091,41 @@ class _$_AddScreeningState implements _AddScreeningState {
             (identical(other.hb, hb) || other.hb == hb) &&
             (identical(other.selectedRespondantType, selectedRespondantType) ||
                 other.selectedRespondantType == selectedRespondantType) &&
+            (identical(other.statusAnaemia, statusAnaemia) ||
+                other.statusAnaemia == statusAnaemia) &&
             const DeepCollectionEquality().equals(other._malaria, _malaria) &&
             const DeepCollectionEquality()
                 .equals(other._sickelCell, _sickelCell) &&
             (identical(other.saveData, saveData) ||
-                other.saveData == saveData));
+                other.saveData == saveData) &&
+            (identical(other.firstError, firstError) ||
+                other.firstError == firstError) &&
+            (identical(other.secondError, secondError) ||
+                other.secondError == secondError) &&
+            (identical(other.thirdError, thirdError) ||
+                other.thirdError == thirdError) &&
+            (identical(other.fourError, fourError) ||
+                other.fourError == fourError) &&
+            (identical(other.getAdvised, getAdvised) ||
+                other.getAdvised == getAdvised) &&
+            const DeepCollectionEquality()
+                .equals(other._advisedDescription, _advisedDescription) &&
+            (identical(other.referHospital, referHospital) ||
+                other.referHospital == referHospital) &&
+            (identical(other.otherAdvise, otherAdvise) ||
+                other.otherAdvise == otherAdvise) &&
+            (identical(other.schoolName, schoolName) ||
+                other.schoolName == schoolName) &&
+            const DeepCollectionEquality()
+                .equals(other._schoolData, _schoolData) &&
+            const DeepCollectionEquality()
+                .equals(other._currentSchool, _currentSchool) &&
+            (identical(other.selectedcurrentSchool, selectedcurrentSchool) ||
+                other.selectedcurrentSchool == selectedcurrentSchool) &&
+            (identical(other.typeSchool, typeSchool) ||
+                other.typeSchool == typeSchool) &&
+            (identical(other.schoolDetailsShow, schoolDetailsShow) ||
+                other.schoolDetailsShow == schoolDetailsShow));
   }
 
   @override
@@ -858,9 +1163,24 @@ class _$_AddScreeningState implements _AddScreeningState {
         serviceDiscontinue,
         hb,
         selectedRespondantType,
+        statusAnaemia,
         const DeepCollectionEquality().hash(_malaria),
         const DeepCollectionEquality().hash(_sickelCell),
-        saveData
+        saveData,
+        firstError,
+        secondError,
+        thirdError,
+        fourError,
+        getAdvised,
+        const DeepCollectionEquality().hash(_advisedDescription),
+        referHospital,
+        otherAdvise,
+        schoolName,
+        const DeepCollectionEquality().hash(_schoolData),
+        const DeepCollectionEquality().hash(_currentSchool),
+        selectedcurrentSchool,
+        typeSchool,
+        schoolDetailsShow
       ]);
 
   @JsonKey(ignore: true)
@@ -905,9 +1225,24 @@ abstract class _AddScreeningState implements AddScreeningState {
       required final String serviceDiscontinue,
       required final String hb,
       required final String selectedRespondantType,
+      required final String statusAnaemia,
       required final List<Map<String, dynamic>> malaria,
       required final List<Map<String, dynamic>> sickelCell,
-      required final SaveData saveData}) = _$_AddScreeningState;
+      required final SaveData saveData,
+      required final bool firstError,
+      required final bool secondError,
+      required final bool thirdError,
+      required final bool fourError,
+      required final GetAdvised getAdvised,
+      required final List<String> advisedDescription,
+      required final String referHospital,
+      required final String otherAdvise,
+      required final String schoolName,
+      required final List<Map<String, dynamic>> schoolData,
+      required final List<Map<String, dynamic>> currentSchool,
+      required final String selectedcurrentSchool,
+      required final String typeSchool,
+      required final bool schoolDetailsShow}) = _$_AddScreeningState;
 
   @override
   String get dateScreening;
@@ -974,11 +1309,41 @@ abstract class _AddScreeningState implements AddScreeningState {
   @override
   String get selectedRespondantType;
   @override
+  String get statusAnaemia;
+  @override
   List<Map<String, dynamic>> get malaria;
   @override
   List<Map<String, dynamic>> get sickelCell;
   @override
   SaveData get saveData;
+  @override
+  bool get firstError;
+  @override
+  bool get secondError;
+  @override
+  bool get thirdError;
+  @override
+  bool get fourError;
+  @override
+  GetAdvised get getAdvised;
+  @override
+  List<String> get advisedDescription;
+  @override
+  String get referHospital;
+  @override
+  String get otherAdvise;
+  @override
+  String get schoolName;
+  @override
+  List<Map<String, dynamic>> get schoolData;
+  @override
+  List<Map<String, dynamic>> get currentSchool;
+  @override
+  String get selectedcurrentSchool;
+  @override
+  String get typeSchool;
+  @override
+  bool get schoolDetailsShow;
   @override
   @JsonKey(ignore: true)
   _$$_AddScreeningStateCopyWith<_$_AddScreeningState> get copyWith =>
@@ -2754,6 +3119,599 @@ abstract class _GetAnmFailed implements GetAnm {
   String get failed;
   @JsonKey(ignore: true)
   _$$_GetAnmFailedCopyWith<_$_GetAnmFailed> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$GetAdvised {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() inProgress,
+    required TResult Function(String success) success,
+    required TResult Function(String failed) failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function(String success)? success,
+    TResult? Function(String failed)? failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? inProgress,
+    TResult Function(String success)? success,
+    TResult Function(String failed)? failed,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetAdvisedInitial value) initial,
+    required TResult Function(_GetAdvisedinProgress value) inProgress,
+    required TResult Function(_GetAdvisedSuccess value) success,
+    required TResult Function(_GetAdvisedFailed value) failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetAdvisedInitial value)? initial,
+    TResult? Function(_GetAdvisedinProgress value)? inProgress,
+    TResult? Function(_GetAdvisedSuccess value)? success,
+    TResult? Function(_GetAdvisedFailed value)? failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetAdvisedInitial value)? initial,
+    TResult Function(_GetAdvisedinProgress value)? inProgress,
+    TResult Function(_GetAdvisedSuccess value)? success,
+    TResult Function(_GetAdvisedFailed value)? failed,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GetAdvisedCopyWith<$Res> {
+  factory $GetAdvisedCopyWith(
+          GetAdvised value, $Res Function(GetAdvised) then) =
+      _$GetAdvisedCopyWithImpl<$Res, GetAdvised>;
+}
+
+/// @nodoc
+class _$GetAdvisedCopyWithImpl<$Res, $Val extends GetAdvised>
+    implements $GetAdvisedCopyWith<$Res> {
+  _$GetAdvisedCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$_GetAdvisedInitialCopyWith<$Res> {
+  factory _$$_GetAdvisedInitialCopyWith(_$_GetAdvisedInitial value,
+          $Res Function(_$_GetAdvisedInitial) then) =
+      __$$_GetAdvisedInitialCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_GetAdvisedInitialCopyWithImpl<$Res>
+    extends _$GetAdvisedCopyWithImpl<$Res, _$_GetAdvisedInitial>
+    implements _$$_GetAdvisedInitialCopyWith<$Res> {
+  __$$_GetAdvisedInitialCopyWithImpl(
+      _$_GetAdvisedInitial _value, $Res Function(_$_GetAdvisedInitial) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_GetAdvisedInitial implements _GetAdvisedInitial {
+  const _$_GetAdvisedInitial();
+
+  @override
+  String toString() {
+    return 'GetAdvised.initial()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_GetAdvisedInitial);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() inProgress,
+    required TResult Function(String success) success,
+    required TResult Function(String failed) failed,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function(String success)? success,
+    TResult? Function(String failed)? failed,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? inProgress,
+    TResult Function(String success)? success,
+    TResult Function(String failed)? failed,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetAdvisedInitial value) initial,
+    required TResult Function(_GetAdvisedinProgress value) inProgress,
+    required TResult Function(_GetAdvisedSuccess value) success,
+    required TResult Function(_GetAdvisedFailed value) failed,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetAdvisedInitial value)? initial,
+    TResult? Function(_GetAdvisedinProgress value)? inProgress,
+    TResult? Function(_GetAdvisedSuccess value)? success,
+    TResult? Function(_GetAdvisedFailed value)? failed,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetAdvisedInitial value)? initial,
+    TResult Function(_GetAdvisedinProgress value)? inProgress,
+    TResult Function(_GetAdvisedSuccess value)? success,
+    TResult Function(_GetAdvisedFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetAdvisedInitial implements GetAdvised {
+  const factory _GetAdvisedInitial() = _$_GetAdvisedInitial;
+}
+
+/// @nodoc
+abstract class _$$_GetAdvisedinProgressCopyWith<$Res> {
+  factory _$$_GetAdvisedinProgressCopyWith(_$_GetAdvisedinProgress value,
+          $Res Function(_$_GetAdvisedinProgress) then) =
+      __$$_GetAdvisedinProgressCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_GetAdvisedinProgressCopyWithImpl<$Res>
+    extends _$GetAdvisedCopyWithImpl<$Res, _$_GetAdvisedinProgress>
+    implements _$$_GetAdvisedinProgressCopyWith<$Res> {
+  __$$_GetAdvisedinProgressCopyWithImpl(_$_GetAdvisedinProgress _value,
+      $Res Function(_$_GetAdvisedinProgress) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_GetAdvisedinProgress implements _GetAdvisedinProgress {
+  const _$_GetAdvisedinProgress();
+
+  @override
+  String toString() {
+    return 'GetAdvised.inProgress()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_GetAdvisedinProgress);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() inProgress,
+    required TResult Function(String success) success,
+    required TResult Function(String failed) failed,
+  }) {
+    return inProgress();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function(String success)? success,
+    TResult? Function(String failed)? failed,
+  }) {
+    return inProgress?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? inProgress,
+    TResult Function(String success)? success,
+    TResult Function(String failed)? failed,
+    required TResult orElse(),
+  }) {
+    if (inProgress != null) {
+      return inProgress();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetAdvisedInitial value) initial,
+    required TResult Function(_GetAdvisedinProgress value) inProgress,
+    required TResult Function(_GetAdvisedSuccess value) success,
+    required TResult Function(_GetAdvisedFailed value) failed,
+  }) {
+    return inProgress(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetAdvisedInitial value)? initial,
+    TResult? Function(_GetAdvisedinProgress value)? inProgress,
+    TResult? Function(_GetAdvisedSuccess value)? success,
+    TResult? Function(_GetAdvisedFailed value)? failed,
+  }) {
+    return inProgress?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetAdvisedInitial value)? initial,
+    TResult Function(_GetAdvisedinProgress value)? inProgress,
+    TResult Function(_GetAdvisedSuccess value)? success,
+    TResult Function(_GetAdvisedFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (inProgress != null) {
+      return inProgress(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetAdvisedinProgress implements GetAdvised {
+  const factory _GetAdvisedinProgress() = _$_GetAdvisedinProgress;
+}
+
+/// @nodoc
+abstract class _$$_GetAdvisedSuccessCopyWith<$Res> {
+  factory _$$_GetAdvisedSuccessCopyWith(_$_GetAdvisedSuccess value,
+          $Res Function(_$_GetAdvisedSuccess) then) =
+      __$$_GetAdvisedSuccessCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String success});
+}
+
+/// @nodoc
+class __$$_GetAdvisedSuccessCopyWithImpl<$Res>
+    extends _$GetAdvisedCopyWithImpl<$Res, _$_GetAdvisedSuccess>
+    implements _$$_GetAdvisedSuccessCopyWith<$Res> {
+  __$$_GetAdvisedSuccessCopyWithImpl(
+      _$_GetAdvisedSuccess _value, $Res Function(_$_GetAdvisedSuccess) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+  }) {
+    return _then(_$_GetAdvisedSuccess(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_GetAdvisedSuccess implements _GetAdvisedSuccess {
+  const _$_GetAdvisedSuccess({required this.success});
+
+  @override
+  final String success;
+
+  @override
+  String toString() {
+    return 'GetAdvised.success(success: $success)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_GetAdvisedSuccess &&
+            (identical(other.success, success) || other.success == success));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, success);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_GetAdvisedSuccessCopyWith<_$_GetAdvisedSuccess> get copyWith =>
+      __$$_GetAdvisedSuccessCopyWithImpl<_$_GetAdvisedSuccess>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() inProgress,
+    required TResult Function(String success) success,
+    required TResult Function(String failed) failed,
+  }) {
+    return success(this.success);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function(String success)? success,
+    TResult? Function(String failed)? failed,
+  }) {
+    return success?.call(this.success);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? inProgress,
+    TResult Function(String success)? success,
+    TResult Function(String failed)? failed,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(this.success);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetAdvisedInitial value) initial,
+    required TResult Function(_GetAdvisedinProgress value) inProgress,
+    required TResult Function(_GetAdvisedSuccess value) success,
+    required TResult Function(_GetAdvisedFailed value) failed,
+  }) {
+    return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetAdvisedInitial value)? initial,
+    TResult? Function(_GetAdvisedinProgress value)? inProgress,
+    TResult? Function(_GetAdvisedSuccess value)? success,
+    TResult? Function(_GetAdvisedFailed value)? failed,
+  }) {
+    return success?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetAdvisedInitial value)? initial,
+    TResult Function(_GetAdvisedinProgress value)? inProgress,
+    TResult Function(_GetAdvisedSuccess value)? success,
+    TResult Function(_GetAdvisedFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetAdvisedSuccess implements GetAdvised {
+  const factory _GetAdvisedSuccess({required final String success}) =
+      _$_GetAdvisedSuccess;
+
+  String get success;
+  @JsonKey(ignore: true)
+  _$$_GetAdvisedSuccessCopyWith<_$_GetAdvisedSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_GetAdvisedFailedCopyWith<$Res> {
+  factory _$$_GetAdvisedFailedCopyWith(
+          _$_GetAdvisedFailed value, $Res Function(_$_GetAdvisedFailed) then) =
+      __$$_GetAdvisedFailedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String failed});
+}
+
+/// @nodoc
+class __$$_GetAdvisedFailedCopyWithImpl<$Res>
+    extends _$GetAdvisedCopyWithImpl<$Res, _$_GetAdvisedFailed>
+    implements _$$_GetAdvisedFailedCopyWith<$Res> {
+  __$$_GetAdvisedFailedCopyWithImpl(
+      _$_GetAdvisedFailed _value, $Res Function(_$_GetAdvisedFailed) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? failed = null,
+  }) {
+    return _then(_$_GetAdvisedFailed(
+      failed: null == failed
+          ? _value.failed
+          : failed // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_GetAdvisedFailed implements _GetAdvisedFailed {
+  const _$_GetAdvisedFailed({required this.failed});
+
+  @override
+  final String failed;
+
+  @override
+  String toString() {
+    return 'GetAdvised.failed(failed: $failed)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_GetAdvisedFailed &&
+            (identical(other.failed, failed) || other.failed == failed));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, failed);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_GetAdvisedFailedCopyWith<_$_GetAdvisedFailed> get copyWith =>
+      __$$_GetAdvisedFailedCopyWithImpl<_$_GetAdvisedFailed>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() inProgress,
+    required TResult Function(String success) success,
+    required TResult Function(String failed) failed,
+  }) {
+    return failed(this.failed);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function(String success)? success,
+    TResult? Function(String failed)? failed,
+  }) {
+    return failed?.call(this.failed);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? inProgress,
+    TResult Function(String success)? success,
+    TResult Function(String failed)? failed,
+    required TResult orElse(),
+  }) {
+    if (failed != null) {
+      return failed(this.failed);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetAdvisedInitial value) initial,
+    required TResult Function(_GetAdvisedinProgress value) inProgress,
+    required TResult Function(_GetAdvisedSuccess value) success,
+    required TResult Function(_GetAdvisedFailed value) failed,
+  }) {
+    return failed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetAdvisedInitial value)? initial,
+    TResult? Function(_GetAdvisedinProgress value)? inProgress,
+    TResult? Function(_GetAdvisedSuccess value)? success,
+    TResult? Function(_GetAdvisedFailed value)? failed,
+  }) {
+    return failed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetAdvisedInitial value)? initial,
+    TResult Function(_GetAdvisedinProgress value)? inProgress,
+    TResult Function(_GetAdvisedSuccess value)? success,
+    TResult Function(_GetAdvisedFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (failed != null) {
+      return failed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetAdvisedFailed implements GetAdvised {
+  const factory _GetAdvisedFailed({required final String failed}) =
+      _$_GetAdvisedFailed;
+
+  String get failed;
+  @JsonKey(ignore: true)
+  _$$_GetAdvisedFailedCopyWith<_$_GetAdvisedFailed> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

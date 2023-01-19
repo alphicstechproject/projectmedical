@@ -35,9 +35,24 @@ class AddScreeningState with _$AddScreeningState {
     required String serviceDiscontinue,
     required String hb,
     required String selectedRespondantType,
+    required String statusAnaemia,
     required List<Map<String, dynamic>> malaria,
     required List<Map<String, dynamic>> sickelCell,
     required SaveData saveData,
+    required bool firstError,
+    required bool secondError,
+    required bool thirdError,
+    required bool fourError,
+    required GetAdvised getAdvised,
+    required List<String> advisedDescription,
+    required String referHospital,
+    required String otherAdvise,
+    required String schoolName,
+    required List<Map<String, dynamic>> schoolData,
+    required List<Map<String, dynamic>> currentSchool,
+    required String selectedcurrentSchool,
+    required String typeSchool,
+    required bool schoolDetailsShow,
   }) = _AddScreeningState;
 
   factory AddScreeningState.initial() => AddScreeningState(
@@ -79,6 +94,7 @@ class AddScreeningState with _$AddScreeningState {
         ],
         gestAge: '',
         gestAgeShow: false,
+        schoolDetailsShow: false,
         getBlock: const GetBlock.initial(),
         block: [],
         education: '',
@@ -88,6 +104,7 @@ class AddScreeningState with _$AddScreeningState {
         selectedCenter: '',
         anganwadiCenter: '',
         village: '',
+        schoolName: '',
         ashaWorker: '',
         pageNo: 1,
         getAnm: const GetAnm.initial(),
@@ -148,6 +165,41 @@ class AddScreeningState with _$AddScreeningState {
           },
         ],
         saveData: const SaveData.initial(),
+        firstError: false,
+        fourError: false,
+        secondError: false,
+        thirdError: false,
+        getAdvised: const GetAdvised.initial(),
+        statusAnaemia: '',
+        advisedDescription: [],
+        referHospital: '',
+        otherAdvise: '',
+        currentSchool: [
+          {
+            'type': 'Yes',
+            'selected': false,
+          },
+          {
+            'type': 'No',
+            'selected': false,
+          },
+        ],
+        schoolData: [
+          {
+            'type': 'Goverment',
+            'selected': false,
+          },
+          {
+            'type': 'Goverment aided',
+            'selected': false,
+          },
+          {
+            'type': 'Private',
+            'selected': false,
+          },
+        ],
+        selectedcurrentSchool: '',
+        typeSchool: '',
       );
 }
 
@@ -185,6 +237,18 @@ class GetAnm with _$GetAnm {
   const factory GetAnm.failed({
     required String failed,
   }) = _GetAnmFailed;
+}
+
+@freezed
+class GetAdvised with _$GetAdvised {
+  const factory GetAdvised.initial() = _GetAdvisedInitial;
+  const factory GetAdvised.inProgress() = _GetAdvisedinProgress;
+  const factory GetAdvised.success({
+    required String success,
+  }) = _GetAdvisedSuccess;
+  const factory GetAdvised.failed({
+    required String failed,
+  }) = _GetAdvisedFailed;
 }
 
 @freezed

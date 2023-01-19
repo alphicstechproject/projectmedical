@@ -1,4 +1,5 @@
 import 'package:application_1/model/add_screening/employee.dart';
+import 'package:application_1/presentation/widgets/add_screening/advised_widget.dart';
 import 'package:application_1/presentation/widgets/add_screening/four_screening_widget.dart';
 import 'package:application_1/presentation/widgets/add_screening/second_screening_widget.dart';
 import 'package:application_1/presentation/widgets/add_screening/third_screening_widget.dart';
@@ -125,6 +126,34 @@ class AddScreeningWidget extends StatelessWidget {
   final Function({
     required int selectedIndex,
   }) malariaOnChange;
+  final List<String> advisedData;
+// ------ Advised ------//
+  final String selectedreferHospital;
+  final Function({
+    required String referHospital,
+  }) referHospitalOnchange;
+
+  final TextEditingController addOtherAdviseField;
+  final Function({
+    required String otherAdvise,
+  }) addOtherAdviseOnchange;
+
+  final List<Map<String, dynamic>> schoolData;
+  final Function({
+    required int selectedIndex,
+  }) schoolOnchange;
+
+  final List<Map<String, dynamic>> currentSchool;
+  final Function({
+    required int selectedIndex,
+  }) currentSchoolFieldChnage;
+
+  final TextEditingController schoolNameField;
+  final Function({
+    required String schoolName,
+  }) schoolNameFieldChnage;
+
+  final bool showSchoolDetails;
 
   const AddScreeningWidget({
     Key? key,
@@ -188,6 +217,18 @@ class AddScreeningWidget extends StatelessWidget {
     required this.malariaOnChange,
     required this.sickelCell,
     required this.sickelCellOnChange,
+    required this.advisedData,
+    required this.referHospitalOnchange,
+    required this.selectedreferHospital,
+    required this.addOtherAdviseField,
+    required this.addOtherAdviseOnchange,
+    required this.currentSchool,
+    required this.currentSchoolFieldChnage,
+    required this.schoolData,
+    required this.schoolOnchange,
+    required this.schoolNameField,
+    required this.schoolNameFieldChnage,
+    required this.showSchoolDetails,
   }) : super(key: key);
 
   @override
@@ -741,6 +782,144 @@ class AddScreeningWidget extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10.h),
+                  Visibility(
+                    visible: showSchoolDetails,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Currently in school / Collage',
+                          style: TextStyle(
+                            fontSize: 14.s,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'Lato-Thin',
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: currentSchool.length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: ((context, index) {
+                            final data = currentSchool[index];
+                            return GestureDetector(
+                              onTap: () => currentSchoolFieldChnage(
+                                selectedIndex: index,
+                              ),
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 15.h),
+                                child: Row(
+                                  children: [
+                                    CustomRadioButton(
+                                      isSelected: data['selected'],
+                                      unSelectedBorderActive: true,
+                                    ),
+                                    SizedBox(width: 30.w),
+                                    Text(
+                                      data['type'],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                        ),
+                        Text(
+                          'Type of School / Collage',
+                          style: TextStyle(
+                            fontSize: 14.s,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'Lato-Thin',
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: schoolData.length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: ((context, index) {
+                            final data = schoolData[index];
+                            return GestureDetector(
+                              onTap: () => schoolOnchange(
+                                selectedIndex: index,
+                              ),
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 15.h),
+                                child: Row(
+                                  children: [
+                                    CustomRadioButton(
+                                      isSelected: data['selected'],
+                                      unSelectedBorderActive: true,
+                                    ),
+                                    SizedBox(width: 30.w),
+                                    Text(
+                                      data['type'],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                        ),
+                        Text(
+                          'Name of School  / Collage',
+                          style: TextStyle(
+                            fontSize: 14.s,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'Lato-Thin',
+                          ),
+                        ),
+                        SizedBox(height: 5.h),
+                        Container(
+                          height: 48.h,
+                          child: TextFormField(
+                            controller: schoolNameField,
+                            decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1.w,
+                                  color: const Color(0xFFC9CCCF),
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1.w,
+                                  color: const Color(0xFFC9CCCF),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1.w,
+                                  color: const Color(0xFFC9CCCF),
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1.w,
+                                  color: const Color(0xFFC9CCCF),
+                                ),
+                              ),
+                              hintText: 'Enter name',
+                              hintStyle: TextStyle(
+                                color: const Color(0xFF616568),
+                                fontSize: 14.f,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            style: TextStyle(
+                              color: const Color(0xFF616568),
+                              fontSize: 14.f,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            cursorColor: const Color(0xFF616568),
+                            onChanged: (value) =>
+                                schoolNameFieldChnage(schoolName: value),
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                      ],
+                    ),
+                  ),
                   Text(
                     'Block',
                     style: TextStyle(
@@ -889,7 +1068,7 @@ class AddScreeningWidget extends StatelessWidget {
                       ),
                       cursorColor: const Color(0xFF616568),
                       onChanged: (value) =>
-                          aadharcardFieldChnage(aadharcard: value),
+                          anganwadiCenterFieldChnage(anganwadiCenter: value),
                       // onChanged: (String? value) {
                       //   // This optional block of code can be used to run
                       //   // code when the user saves the form.
@@ -986,7 +1165,7 @@ class AddScreeningWidget extends StatelessWidget {
                       isExpanded: true,
                       value: selectedAnm.isNotEmpty ? selectedAnm : null,
                       hint: Text(
-                        'Select sub center',
+                        'Select ANM name',
                         style: TextStyle(
                           fontSize: 14.f,
                           fontWeight: FontWeight.w400,
@@ -1102,6 +1281,17 @@ class AddScreeningWidget extends StatelessWidget {
             malariaOnChange: malariaOnChange,
             sickelCell: sickelCell,
             sickelCellOnChange: sickelCellOnChange,
+          ),
+        ),
+        Visibility(
+          visible: pageNo == 5,
+          child: AdvisedWidget(
+            advisedData: advisedData,
+            hospitalList: anm,
+            referHospitalOnchange: referHospitalOnchange,
+            selectedreferHospital: selectedreferHospital,
+            addOtherAdviseField: addOtherAdviseField,
+            addOtherAdviseOnchange: addOtherAdviseOnchange,
           ),
         ),
         Positioned(

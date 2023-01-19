@@ -5,9 +5,11 @@ body, html, #root {
     margin: 0;
     padding: 0;
     font-family: 'Lato';
+    
 }
-
-
+.section{
+    padding-bottom: 50px;
+}
 .login {
     background-color: #6345C3;
     width: 100%;
@@ -31,11 +33,19 @@ body, html, #root {
     margin: 10px;
     padding: 5px;
 }
+.click {
+    cursor: pointer;
+    color: #6345C3;
+}
+.click:hover{
+    text-decoration: underline;
+}
 .submit {
     background-color: #6345C3;
     border: none;
     color: #FFFFFF;
     border-radius: 5px;
+    cursor: pointer;
     font-size: large;
 }
 .rememberMe {
@@ -43,10 +53,14 @@ body, html, #root {
     padding: 20px;
 }
 .footer {
-    background-color: #FFFFFF;
+    background-color: #364954;
     display: flex;
+    width: 98.8vw;
     justify-content: space-between;
-    padding: 0 10px;
+    padding: 5px 10px;
+    color: #FFFFFF;
+    position: fixed;
+    top: 96vh;
 }
 .screenShot {
     margin: 20px 50px;
@@ -100,6 +114,8 @@ body, html, #root {
 }
 .imageButton {
     padding: 0 20px;
+    margin-left: auto;
+    cursor: pointer;
 }
 .menu {
     display: flex;
@@ -140,7 +156,7 @@ body, html, #root {
     justify-content: space-between;
     align-items: baseline;
     color: #FFFFFF;
-    height: 20vh;
+    height: 15vh;
 }
 .screeningNumberInner {
     display: flex;
@@ -162,7 +178,7 @@ body, html, #root {
 }
 .screeningReportSection {
     width: 49vw;
-    margin: 10px 10px 10px 30px;
+    margin: 10px 10px 0 30px;
     border: 2px solid gray;
     padding: 10px;
     border-radius: 10px;
@@ -206,8 +222,8 @@ body, html, #root {
     font-weight: normal;
 }
 table, .recent {
-    border-spacing: 0 15px;
-    margin: 20px;
+    border-spacing: 0 10px;
+    margin: 10px 10px 0 10px;
 }
 .tableItemsDash {
     padding-left: 20px;
@@ -220,20 +236,97 @@ table, .recent {
     color: black;
     height: 70px;
 }
+.userOptions {
+    display: flex;
+}
+.statusOption {
+    border: none;
+    width: fit-content;
+    margin: 0 10px;
+}
+
+.tableHeading {
+    margin-left: 15px;
+}
+#extraBackground {
+    background-color: #F4F4F4;
+}
+.tableSectionUser {
+    width: 97vw;
+    margin-left: 15px;
+    text-align: center;
+}
+.exportButton, .exportButtonSave {
+    margin: 0 10px 0 auto;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background-color: #6345C3;
+    color: #FFFFFF;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+}
+.exportButtonSave {
+    margin: 0;
+}
+.bottomDiv {
+    display: flex;
+    gap: 10px
+}
+.navOption {
+    cursor: pointer;
+}
+.screeningPage {
+    margin-top: 10px;
+}
+.flexRow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: left;
+    padding-left: 100px;
+}
+#excelTable {
+    display: none;
+}
+.addButton {
+    margin-right: 30px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: #6345C3;
+    border: 2px solid #6345C3;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.sortOption {
+    border: none;
+    width: fit-content;
+    margin: 0 10px;
+}
+.sortOption:focus, .statusOption:focus{
+    outline: none;
+}
 .pieChartSection {
-    margin: 40px auto auto 100px;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    align-items: center;
+    width: 45vw;
 }
 .anemiaStatusGreen {
-    background-color: #39B44A;
+    background-color: #39B44A !important;
 
 }
 .doughnutContainer {
     width: 200px;
     height: 200px;
-    margin: 80px auto auto 50px;
+    
 }
 .anemiaStatusRed {
-    background-color: #E34C4C;
+    background-color: #E34C4C !important;
 }
 .colorSection {
     display: flex;
@@ -258,6 +351,151 @@ table, .recent {
     width: 350px;
     margin-left: 20px;
 }
+.searchInput:focus {
+    outline: none;
+}
 .error {
     color: red;
+}
+.activeRow {
+    color: #55C835;
+    background-color: rgba(85, 200, 53, 0.15);
+}
+.inactiveRow {
+    color: #E28406;
+    background-color: rgba(250, 163, 47, 0.15);;
+}
+.formHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#userForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 90vh;
+}
+.adviseFormInputs{
+    width: 60%;
+    margin: 10px 0;
+    background-color: #F4F5F7;
+    border-radius: 5px;
+}
+.filterOption {
+    color: #6345C3;
+}
+.adviseForm {
+    display: flex;
+    flex-direction: column;
+    width: 95vw;
+    margin-left: 20px;
+    margin-bottom: 50px;
+}
+.userInputs {
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 2vw;
+    gap: 5px
+}
+.userFormInputs {
+    padding: 5px 5px;
+    background-color:  #F4F5F7;
+}
+.colorRed {
+    color: #FF1D1D;
+}
+.radioInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.userFormSection1 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 40vh;
+}
+.backIcon {
+    margin: 0 10px;
+    border: 1px solid gray;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.submitUser {
+    margin-right: 40px;
+    cursor: pointer;
+}
+.addField {
+    width: 100px;
+    padding: 5px;
+    background-color: #6345C3;
+    color: #FFFFFF;
+}
+.filterSection{
+    padding: 20px;
+    position: absolute;
+    top: 150px;
+    left: 1160px;
+    padding-bottom: 100px;
+}
+.filterSection, .filterSectionForm {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+}
+.filterHeading {
+    background-color: #364954;
+    width: 300px;
+    padding: 5px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.filterSectionForm {
+    width: 300px;
+    gap: 10px;
+}
+.showFilter {
+    display: flex;
+}
+.hideFilter {
+    display: none;
+}
+.screenDetailSection {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 65vh;
+    
+}
+.design {
+    margin-right: 20px;
+}
+.weighted {
+    font-weight: bold;
+}
+.screenDetailSection > p {
+    width: 10vw;
+    margin: 5px 5px;
+}
+.tableSectionScreenDetails{
+    text-align: center;
+    width: 40vw;
+}
+.referForm {
+    display: flex;
+    width: 42vw;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+.referInput {
+    width: 130px;
+    padding: 7px 5px;
+    border-radius: 5px;
+    border: 1px solid gray;
 }

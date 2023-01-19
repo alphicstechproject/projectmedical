@@ -2,11 +2,13 @@ import { useEffect, useState } from "react"
 import greenArrow from "../images/GreenArrow.png"
 import { Doughnut } from 'react-chartjs-2';
 import {Chart, ArcElement} from 'chart.js'
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
+import Footer from "./Footer";
 Chart.register(ArcElement);
 
-export default function DashBoard({userId, currentUserRole, updateUserRole}){
+export default function DashBoard({userId, currentUserRole, updateUserRole, employeeid}){
     const location = useLocation()
+    const navigate = useNavigate()
     const [currentDate, setCurrentDate] = useState(new Date())
     const months = ["Jan","Feb","March","April","May","June","July","Aug","Sep","Oct","Nov","Dec"];
     const [numOfScreening, setNumOfScreening] = useState(0)
@@ -14,7 +16,7 @@ export default function DashBoard({userId, currentUserRole, updateUserRole}){
     const [percentage, setPercentage] = useState(0)
     const [percentageIncrease, setPercentageIncrease] = useState(0)
     const [sevenScreenings, setSevenScreenings] = useState([])
-    const [screeningReports14, setScreeningReports14] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54])
+    const [screeningReports14, setScreeningReports14] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26])
     const [screeningReports30, setScreeningReports30] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 34, 20])
     const [screeningReports1, setScreeningReports1] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56])
     const [selectedValue, setSelectedValue] = useState("option1");
@@ -54,16 +56,29 @@ export default function DashBoard({userId, currentUserRole, updateUserRole}){
             hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870']
         }]
     });
+
     async function getDashboardData(){
-        // const response = await fetch(`/getDashboardData?userId=${userId}`)
-        // const resJson = await response.json()
+        const response = await fetch(`/getDashboardData?employeeid=${employeeid}`, {
+            headers: {
+                "authorization" : localStorage.getItem(employeeid)
+            }
+        })
+        //const resJson = await response.json()
+        setData({
+            labels: ['Option 1', 'Option 2', 'Option 3'],
+            datasets: [{
+                data: [70, 20, 10],
+                backgroundColor: ['#39B44A', '#FB8256', '#FF1D1D'],
+                hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870']
+            }]
+        })
         const resJson = {
             numOfScreening: 713,
             percentageIncreaseScreening: 25,
             percentage: 60,
             percentageIncreaseAnaemia: 25,
         
-            screeningReports14:[50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54],
+            screeningReports14:[50, 25, 30, 46, 24, 56, 67, 32, 26, 46],
         
              screeningReports30 : [50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 34, 20],
         
@@ -133,13 +148,17 @@ export default function DashBoard({userId, currentUserRole, updateUserRole}){
         setPercentageIncrease(resJson.percentageIncrease)
         setSevenScreenings(resJson.sevenScreenings)
         updateUserRole("Admin")
+
     }
 
     useEffect(() => {
+        if(!localStorage.getItem(employeeid)){
+            navigate("/", {replace: true})
+        }
         getDashboardData()
     }, [])
     return (
-        <section className="dashboard">
+        <section className="dashboard section">
             <div className="screeningNumber">
                 <div className="screeningNumberInner">
                 <p>Total Screening</p>
@@ -262,6 +281,7 @@ export default function DashBoard({userId, currentUserRole, updateUserRole}){
             </div>
             
         </div>
+        <Footer />
         </section>
     )
 }

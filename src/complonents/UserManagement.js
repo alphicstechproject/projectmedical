@@ -1,40 +1,34 @@
 import { useEffect, useState } from "react"
 import searchImage from "../images/Combined-Shape.png"
 import CreateUser from "./CreateUser"
-export default function UserManagement({userId, currentUserRole, updateUserRole}){
+import deleteIcon from "../images/deleteIcon.png"
+import * as XLSX from 'xlsx';
+import exportImage from "../images/export.png"
+import mathPlus from "../images/math-plus.png"
+import userImage from "../images/photo234.png"
+import Footer from "./Footer";
+import { apiUrl } from "../url";
+export default function UserManagement({userId, currentUserRole, updateUserRole,blocks, employeeid}){
     const [search, setSearch] = useState("")
     const [addUser, setAddUser] = useState(false)
-    const [tableData, setTableData] = useState([{
-        userName: "Mili Brown",
-        phoneNum: "+91- 8231-324-123",
-        userRole: "Admin",
-        status: "ACTIVE",
-        createdDate: "02-8-2022,10-21 PM",
-        Action: "figvc"
-    },{
-        userName: "Mili Brown",
-        phoneNum: "+91- 8231-324-123",
-        userRole: "Manager",
-        status: "INACTIVE",
-        createdDate: "02-8-2022,10-21 PM",
-        Action: "figvc"
-    }, {
-        userName: "Mili Brown",
-        phoneNum: "+91- 8231-324-123",
-        userRole: "Screening Team",
-        status: "ACTIVE",
-        createdDate: "02-8-2022,10-21 PM",
-        Action: "figvc"
-    }])
+    const [sortOption, setSortOption] = useState("Sort")
+    const [statusOption, setStatusOption] = useState("Status")
+    const [ masterTable, setMasterTable ] = useState([])
+    
+    const [tableData, setTableData] = useState([])
     function toggleAddUser(){
         setAddUser(prev => {
             return !prev
         })
     }
     function handleSubmit(){
-
+        setTableData(masterTable.filter(row => (row.full_name.toLowerCase() === search.toLowerCase() || row.mobile.toLowerCase() === search.toLowerCase() || row.createdAt.toLowerCase() === search.toLowerCase() || row.status.toLowerCase() === search.toLowerCase() || row.role.toLowerCase() === search.toLowerCase())))
     }
     async function deleteUser(phoneNumber){
+
+        setTableData((prev) => {
+            return prev.filter((row) => row.phoneNum !== phoneNumber)
+        })
         // const response = await fetch("/deleteUser", {
         //     method: 'DELETE',
         //     headers: {
@@ -47,40 +41,57 @@ export default function UserManagement({userId, currentUserRole, updateUserRole}
         // })
         
     }
+    function addUserToList(newUser){
+        setMasterTable(prev => {
+            return [...prev, newUser]
+        })
+        setTableData(prev =>{
+            return [...prev, newUser]
+        })
+    }
     async function fetchUsersData(){
-        // const response = await fetch(`getUserManagementDetails?userId=${userId}`, {
-        //     method: 'GET'
-        // })
-        console.log(userId);
+        
+        const response = await fetch(`${apiUrl}employee`, {
+            method: 'GET',
+            headers: {
+                "authorization" : localStorage.getItem(employeeid)
+            }
+        })
+        const resJson = await response.json()
+        setTableData(resJson.data)
+        setMasterTable(resJson.data)
+        console.log(resJson.data);
+    }
+    function handleSort(sortOption){
+        const newArray = [...tableData].sort((a, b) => (a[sortOption] > b[sortOption]) ? 1 : -1);
+        setTableData(newArray)
+    }
+    function saveAsExcel(){
+        var table = document.getElementById("excelTable");
+        var wb = XLSX.utils.table_to_book(table);
+        XLSX.writeFile(wb, "UsersTable.xlsx");
     }
     useEffect(() => {
         fetchUsersData()
     }, [])
+    useEffect(() => {
+        handleSort(sortOption)
+    }, [sortOption])
+    useEffect(() => {
+        setTableData(masterTable.filter(row => row.status === statusOption || statusOption === "Status"))
+    }, [statusOption])
+    
     return (
         <>
         {
-            addUser ? <CreateUser toggleAddUser={toggleAddUser} userId={userId} /> :
+            addUser ? <CreateUser toggleAddUser={toggleAddUser} userId={userId} employeeid={employeeid} blocks={blocks} addUserToList={addUserToList}/> :
         
-        <section>
+        <section className="section">
             <div>
-                <h1>User Management</h1>
-                <select name="Month" id="cars">
-                    <option value="Month">Month</option>
-                    <option value="volvo">January</option>
-                    <option value="saab">February</option>
-                    <option value="mercedes">March</option>
-                    <option value="audi">April</option>
-                    <option value="volvo">May</option>
-                    <option value="saab">June</option>
-                    <option value="mercedes">July</option>
-                    <option value="audi">August</option>
-                    <option value="volvo">September</option>
-                    <option value="saab">October</option>
-                    <option value="mercedes">November</option>
-                    <option value="audi">December</option>
-                </select>
+                <h1 className="tableHeading">User Management</h1>
+                
             </div>
-            <div>
+            <div className="userOptions">
             <form className="searchForm searchForm2" onSubmit={(e) => {
                 e.preventDefault()
                 handleSubmit()
@@ -88,24 +99,25 @@ export default function UserManagement({userId, currentUserRole, updateUserRole}
                 <input className="searchInput" type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search" />
                 <input className="searchButton" width="18px" height="18px" type="image" src={searchImage} border="0" alt="Submit" />
             </form>
-            <select>
-                <option>Sort</option>
-                <option>User Name</option>
-                <option>Phone Number</option>
-                <option>User Role</option>
-                <option>Status</option>
-                <option>CreatedDate</option>
+            <select className="sortOption" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
+            
+                <option value={"All"}>Sort</option>
+                <option value="full_name">User Name</option>
+                <option value="mobile">Phone Number</option>
+                <option value="role">User Role</option>
+                <option value="status">Status</option>
+                <option value="createdAt">CreatedDate</option>
             </select>
-            <select>
-                <option>Status</option>
-                <option>Active</option>
-                <option>Inactive</option>
+            <select className="statusOption" value={statusOption} onChange= {(e) => setStatusOption(e.target.value)}>
+                <option value="Status">Status</option>
+                <option value="ACTIVE">ACTIVE</option>
+                <option value="INACTIVE">INACTIVE</option>
             </select>
-            <button>Export</button>
-            <button onClick={() => toggleAddUser()}>Add User</button>
+            <button className="exportButton" onClick={saveAsExcel}><img src={exportImage} />Export</button>
+            <button className="addButton" onClick={() => toggleAddUser()}><img src={mathPlus} />Add User</button>
             </div>
             <div>
-            <table className="tableSectionDashboard">
+            <table className="tableSectionUser">
             <thead className="tableHeadDashboard">
                 <tr className="tableHeadDashboard">
                     <th className="dashboardTableHeader">#</th>
@@ -121,13 +133,13 @@ export default function UserManagement({userId, currentUserRole, updateUserRole}
                 {
                     tableData.map((data, index) => {
                       return  <tr key={index}>
-                    <td className="tableItemsDash">{index + 1}</td>
-                    <td className="tableItemsDash">{data.userName}</td>
-                    <td className="tableItemsDash">{data.phoneNum}</td>
-                    <td className="tableItemsDash">{data.userRole}</td>
-                    <td className="tableItemsDash">{data.status}</td>
-                    <td className="tableItemsDash">{data.createdDate}</td>
-                    <td onClick={() => {deleteUser(data.phoneNum)}} className="tableItemsDash">{data.Action}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{index + 1}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash flexRow"><img src={userImage} width="30px" />{data.full_name}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.mobile}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.role}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className={data.status === "ACTIVE" ?"tableItemsDash activeRow" : "tableItemsDash inactiveRow"}>{data.status}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{String(data.createdAt).slice(0,10)}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} onClick={() => {deleteUser(data.phoneNum)}} className="tableItemsDash"><img src={deleteIcon} width="15px" /></td>
                 </tr>
                     })
                 
@@ -135,6 +147,47 @@ export default function UserManagement({userId, currentUserRole, updateUserRole}
             </tbody>
         </table>
             </div>
+            <table id="excelTable" className="tableSectionUser">
+            <thead className="tableHeadDashboard">
+                <tr className="tableHeadDashboard">
+                <th >Sr No.</th>
+                    <th >Fulll Name</th>
+                    <th>Employee Name</th>
+                    <th>District</th>
+                    <th >Mobile Number</th>
+                    <th >Role</th>
+                    <th >Status</th>
+                    <th >Date of creation</th>
+                    <th>Anganwadi center</th>
+                    <th>Block name</th>
+                    <th>subcenter</th>
+                    <th>Village</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    tableData.map((data, index) => {
+                      return  <tr key={index}>
+                    <td >{index + 1}</td>
+                    <td >{data.full_name}</td>
+                    <td>{data.employee_name}</td>
+                    <td>{data.district}</td>
+                    <td >{data.mobile}</td>
+                    <td >{data.role}</td>
+                    <td >{data.status}</td>
+                    <td >{data.createdAt}</td>
+                    <td>{data.anganwadi_center}</td>
+                    <td>{data.block_name}</td>
+                    <td>{data.sub_center}</td>
+                    <td>{data.village_name}</td>
+                </tr>
+                    })
+                
+                }
+            </tbody>
+        </table>
+            <Footer />
         </section>
         }
         </>

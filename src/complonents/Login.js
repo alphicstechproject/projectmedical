@@ -2,6 +2,8 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "../css/global.css"
 import screenshot2023 from "../images/Screenshot_20230111_073157-removebg-preview 4.png"
+import {apiUrl} from "../url"
+import Footer from "./Footer"
 
 export default function Login(){
     const [userid, setUserId] = useState("")
@@ -15,23 +17,31 @@ export default function Login(){
             return !prev
         })
     }
-
+    
+    
     async function handleLogin(){
-        // const response = await fetch("/loginUser", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         userid, password
-        //     }),
-        // })
-        // const resJson = await response.json()
-        const resJson = {
-            status: true
-        }
         
-        resJson.status ? navigate("/DashBoard", { state: { userid } }) : setErrorMessage(true)
+        const response = await fetch(`${apiUrl}login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                employee_name: userid, password
+            }),
+        })
+        const resJson = await response.json()
+        
+        // const resJson = {
+        //     status: true
+        // }
+        if(resJson.status){
+            localStorage.setItem(resJson.data.employeeid, resJson.data.token)
+            navigate("/DashBoard", { state: { userid, employeeid: resJson.data.employeeid } })
+        }
+        else{
+            setErrorMessage(true)
+        }
         
     }
 
@@ -62,10 +72,7 @@ export default function Login(){
                 <input className="submit" value="Login" type="submit" />
             </form>
             
-            <div className="footer">
-            <span className="version">Version: 1.2</span>
-            <span className="design">Design and Develop by Alphics Tech</span>
-            </div>
+            <Footer />
         </section>
     )
 }

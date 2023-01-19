@@ -1,106 +1,110 @@
 import { useEffect, useState } from "react"
 import searchImage from "../images/Combined-Shape.png"
-
+import * as XLSX from 'xlsx';
 import UserDetails from "./UserDetails"
+import deleteIcon from "../images/deleteIcon.png"
+import exportImage from "../images/export.png"
+import cross from "../images/cross.png"
+import Footer from "./Footer";
+import { useLocation } from "react-router-dom";
+import { apiUrl } from "../url";
+export default function ScreeningManagement({userId, blocks, employeeid}){
 
-export default function ScreeningManagement({userId, blocks, villages}){
     const [search, setSearch] = useState("")
-    const [startDate, setStartDate] = useState("All")
-    const [endDate, setEndDate] = useState("All")
+    const [startDate, setStartDate] = useState()
+    const [endDate, setEndDate] = useState()
     const [adharNum, setAdharNum] = useState("")
-    const [block, setBlock] = useState("All")
-    const [village, setVillage] = useState("All")
-    const [status, setStatus] = useState("All")
-    const [bloodR, setBloodR] = useState("All")
+    const [block, setBlock] = useState("")
+    const [village, setVillage] = useState("")
+    const [status, setStatus] = useState("")
+    const [bloodR, setBloodR] = useState("")
+    const [toggleFilter, setToggleFilter] = useState(false)
     const [createForm, setCreateForm] = useState(false)
-    const [userDetails, setUserDetails] = useState(false)
-    const [selectedValue, setSelectedValue] = useState("All");
-    const [screenings, setScreenings] = useState([
-        {
-            adhar: "1111-1578-8545",
-            nameRes: "Miral Tripathi",
-            village: "Madnipur",
-            status: "No Anaemia",
-            numOfScreening: 1,
-            lastUpdate: "02-8-2022"
-        },
-        {
-            adhar: "1111-1578-8547",
-            nameRes: "Miral Tripathi",
-            village: "Madnipur",
-            status: "No Anaemia",
-            numOfScreening: 1,
-            lastUpdate: "02-8-2022"
-        },
-        {
-            adhar: "1111-1578-8549",
-            nameRes: "Miral Tripathi",
-            village: "Madnipur",
-            status: "Anaemia",
-            numOfScreening: 1,
-            lastUpdate: "02-8-2022"
-        }]
-    )
+    const [userDetails, setUserDetails] = useState("")
+    const [selectedValue, setSelectedValue] = useState("");
+    const [masterTable, setMasterTable] = useState([])
+    const [screenings, setScreenings] = useState([])
+    function handleSubmit(){
+    
+        setScreenings(masterTable.filter(row => (row._id.toLowerCase() === search.toLowerCase() || row.updatedAt.toLowerCase() === search.toLowerCase() || row.respondent_name.toLowerCase() === search.toLowerCase() || row.screening_no.toLowerCase() === search.toLowerCase() || row.status_question_two.toLowerCase() === search.toLowerCase() || row.village.toLowerCase() === search.toLowerCase())))
+    }
     function toggleUserDetail(currentAdhar){
         setAdharNum(currentAdhar)
-        setCreateForm(false)
-        setUserDetails(prev => {
-            return !prev
-        })
-        
     }
-    
+    function exit(){
+        setUserDetails("")
+    }
+    useEffect(() => {
+        setUserDetails("render")
+    }, [adharNum])
+    useEffect(() => {
+        setUserDetails("")
+    }, [])
+    function saveAsExcel(){
+        var table = document.getElementById("screeningTable");
+        var wb = XLSX.utils.table_to_book(table);
+        XLSX.writeFile(wb, "ScreeningData.xlsx");
+    }
     function createFormShow(){
         setCreateForm(prev => {
             return !prev
         })
     }
+    
     async function getFilteredData(){
-        const response = await fetch("getScreeningData", {
-            method: "POST",
+        
+        const response = await fetch(`${apiUrl}screening?block=${block}&village=${village}&status_question_two=${status}&type_of_respondent=${selectedValue}`, {
+            headers: {
+                "authorization" : localStorage.getItem(employeeid)
+            },
+        })
+        const resJson = await response.json()
+        
+        setScreenings(resJson.data)
+        setMasterTable(resJson.data)
+    }
+    async function deleteScreening(respondentName){
+
+        setScreenings((prev) => {
+            return prev.filter((row) => row.nameRes !== respondentName)
+        })
+        const response = await fetch("/deleteScreening", {
+            method: 'DELETE',
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                userId,
-                block,
-                village,
-                status,
-                bloodTransfusionReport:bloodR,
-                report: selectedValue,
-                startDate,
-                endDate
+                phoneNumber: respondentName,
+                userId: userId
             }),
         })
+        
     }
     
    
     return (
         <>{ 
-            userDetails ? <UserDetails userId={userId} toggleUserDetail={toggleUserDetail} adharNumProp={adharNum} /> :
-           <section>
-              <div>
-                <h1>Screening Management</h1>
+            userDetails === "render" ? <UserDetails userId={userId} toggleUserDetail={toggleUserDetail} adharNumProp={adharNum} employeeid={employeeid} exit={exit} /> :
+           <section className="section">
+            <h1 className="tableHeading">Screening Management</h1>
+              <div className="userOptions">
+                
                 <form className="searchForm searchForm2" onSubmit={(e) => {
                 e.preventDefault()
-            
+                    handleSubmit()
                 }}>
                 <input className="searchInput" type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search" />
                 <input className="searchButton" width="18px" height="18px" type="image" src={searchImage} border="0" alt="Submit" />
             </form>
-                
+            <select onClick={() => {setToggleFilter(prev => !prev)}} className="sortOption filterOption">Filter
+                <option value="Filter">Filter</option>
+            </select>
+
+            <button className="exportButton" onClick={saveAsExcel}><img src={exportImage} />Export</button>
             </div>
-            <div>
             
-            
-            <button>Export</button>
-            <button onClick={() => {
-                setUserDetails(false)
-                createFormShow()
-            }}>Create Screening</button>
-            </div>
             <div>
-            <table className="tableSectionDashboard">
+            <table id="screeningTable" className="tableSectionUser">
             <thead className="tableHeadDashboard">
                 <tr className="tableHeadDashboard">
                     <th className="dashboardTableHeader">ID and Aadhar card</th>
@@ -116,13 +120,13 @@ export default function ScreeningManagement({userId, blocks, villages}){
                 {
                     screenings.map((data, index) => {
                       return  <tr key={index}>
-                    <td onClick={() => toggleUserDetail(data.adhar)} className="tableItemsDash">{data.adhar}</td>
-                    <td className="tableItemsDash">{data.nameRes}</td>
-                    <td className="tableItemsDash">{data.village}</td>
-                    <td className={data.status === "Anaemia" ? "tableItemsDash anemiaStatusRed" : "tableItemsDash anemiaStatusGreen"}>{data.status}</td>
-                    <td className="tableItemsDash">{data.numOfScreening}</td>
-                    <td className="tableItemsDash">{data.lastUpdate}</td>
-                    <td></td>
+                    <td id = {index % 2 ? "extraBackground" : ""} onClick={() => toggleUserDetail(data._id)} className="tableItemsDash click">{data._id}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.respondent_name}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.village}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className={data.status_question_two.toLowerCase() === "Anaemia" ? "tableItemsDash anemiaStatusRed" : "tableItemsDash anemiaStatusGreen"}>{data.status_question_two}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.screening_no}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.updatedAt.slice(0, 10)}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} onClick={() => {deleteScreening(data.nameRes)}}><img src={deleteIcon} width="15px" /></td>
                 </tr>
                     })
                 
@@ -133,36 +137,29 @@ export default function ScreeningManagement({userId, blocks, villages}){
 
 
             </div>
-            <div>
-                <p>Filter</p>
-                <form onSubmit={(e) => {
+            <div className={toggleFilter ? "filterSection showFilter" : "filterSection hideFilter"}>
+                <p className="filterHeading"><span>Filter</span> <img onClick={() => {setToggleFilter(prev => !prev)}} src={cross} /></p>
+                <form className="filterSectionForm" onSubmit={(e) => {
                     e.preventDefault()
                     getFilteredData()
                 }}>
-                    <label>Block
-                    <select value={block} onChange={(e) => setBlock(e.target.value)} type="text">
-                    <option value="All">Select Block</option>
+                    <span>Block</span>
+                    <select className="userFormInputs" value={block} onChange={(e) => setBlock(e.target.value)} type="text">
+                    <option value="">Select Block</option>
                     
                     {
                         blocks.map((block, index) => {
-                            <option key={index} value={block}>{block}</option>
+                            return <option key={index} value={block}>{block}</option>
                         })
                     }
                     </select>
-                    </label>
-                    <label>Village
-                    <select value={village} onChange={(e) => setVillage(e.target.value)} type="text" >
-                    <option value="All">Select Village</option>
-                    {
-                        villages.map((village, index) => {
-                            <option key={index} value={village}>{village}</option>
-                        })
-                    }
-                    </select>
-                    </label>
-                    <label>Status
-                    <select value={status} onChange={(e) => setStatus(e.target.value)} type="text" >
-                    <option value="All">Status</option>
+                    
+                    <span>Village</span>
+                    <input className="userFormInputs" value={village} onChange={(e) => setVillage(e.target.value)} type="text" />
+                    
+                    <span>Status</span>
+                    <select className="userFormInputs" value={status} onChange={(e) => setStatus(e.target.value)} type="text" >
+                    <option value="">Status</option>
                     <option value="All">All</option>
                     <option value="Moderate Anaemia">Moderate Anaemia</option>
                     <option value="Mild Anaemia">Mild Anaemia</option>
@@ -171,35 +168,38 @@ export default function ScreeningManagement({userId, blocks, villages}){
                     </select>
                 
 
-                    </label>
-                    <label>Blood transfusion Report
-                    <select value={bloodR} onChange={(e) => setBloodR(e.target.value)} type="text">
+                    
+                    <span>Blood transfusion Report</span>
+                    <select className="userFormInputs" value={bloodR} onChange={(e) => setBloodR(e.target.value)} type="text">
                     <option value="All">No needed</option>
                     <option value="All">All</option>
                     <option value="Advise to take Blood">Advise to take Blood</option>
                     <option value="Recently take Blood Report">Recently take Blood Report</option>
                     </select>
-                    </label>
-                    <div>
-                <input
-                type="radio" value="All" checked={selectedValue === "All"} onChange=        {(e) => setSelectedValue(e.target.value)} />
-            All
+                    
+            <div className="radioInputs">
+                <span>Report</span>
+                <span>
+                <input className="userFormInputs"
+                type="radio" value="" checked={selectedValue === ""} onChange=        {(e) => setSelectedValue(e.target.value)} />All</span>
+            <span>
             <input type="radio" value="Pregnant Women" checked={selectedValue === "Pregnant Women"} onChange=     {(e) => setSelectedValue(e.target.value)}
-            />
-            Pregnant Women
+            />Pregnant Women</span>
+            <span>
             <input type="radio" value="Adl. Girls (School Going)" checked={selectedValue === "Adl. Girls (School Going)"} onChange=     {(e) => setSelectedValue(e.target.value)}
-            />
-            Adl. Girls (School Going)
+            />Adl. Girls (School Going)</span>
+            <span>
             <input type="radio" value="Adl. Girls (Non-School Going)" checked={selectedValue === "Adl. Girls (Non-School Going)"} onChange=     {(e) => setSelectedValue(e.target.value)}
-            />
-            Adl. Girls (Non-School Going)
-            </div>
-            <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-            <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+            />Adl. Girls (Non-School Going)</span>
             
-                <input type="submit" value="Apply Filter" />
+            </div>
+            {/* <input className="userFormInputs" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+            <input className="userFormInputs" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} /> */}
+            
+                <input className="exportButton" type="submit" value="Apply Filter" />
             </form>
             </div>
+            <Footer />
         </section>
         }</>
     )

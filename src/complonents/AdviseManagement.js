@@ -1,24 +1,18 @@
 import { useEffect, useState } from "react"
 import searchImage from "../images/Combined-Shape.png"
-import AdviseDetailForm from "./AdviseDetailForm"
+import * as XLSX from 'xlsx';
+import deleteIcon from "../images/deleteIcon.png"
 import CreateNewAdvise from "./CreateNewAdvise"
-export default function AdviseManagement({userId}) {
+import exportImage from "../images/export.png"
+import mathPlus from "../images/math-plus.png"
+import Footer from "./Footer";
+import { apiUrl } from "../url";
+export default function AdviseManagement({userId, employeeid}) {
     const [search, setSearch] = useState("")
     const [adviseForm, setAdviseForm] = useState(false)
-    const [tableData, setTableData] = useState([{
-        RespondentName: "shdhb",
-        Description: "sdgshd",
-        Action: "sdhsjnfd",
-        
-    },{
-        RespondentName: "shdhb",
-        Description: "sdgshd",
-        Action: "sdhsjnfd",
-    }, {
-        RespondentName: "shdhb",
-        Description: "sdgshd",
-        Action: "sdhsjnfd",
-    }])
+    const [sortOption, setSortOption] = useState("Sort")
+    const [masterTable, setMasterTable] = useState([])
+    const [tableData, setTableData] = useState([])
     function toggleAdviseForm(){
         setAdviseForm(prev => {
             return !prev
@@ -28,6 +22,9 @@ export default function AdviseManagement({userId}) {
 
     }
     async function deleteAdvise(respondentName){
+        setTableData((prev) => {
+            return prev.filter((row) => row.RespondentName !== respondentName)
+        })
         const response = await fetch("deleteAdvise", {
             method: 'DELETE',
             headers: {
@@ -41,24 +38,53 @@ export default function AdviseManagement({userId}) {
         
     }
     async function fetchAdviseData(){
-        const response = await fetch(`getAdviseManagementDetails?userId=${userId}`, {
-            method: 'GET'
+        
+        const response = await fetch(`${apiUrl}advice`, {
+            method: 'GET',
+            headers: {
+                "authorization" : localStorage.getItem(employeeid)
+            }
         })
-        console.log(userId);
+        const resJson = await response.json()
+        setTableData(resJson.data)
+        setMasterTable(resJson.data)
     }
+    function handleSort(sortOption){
+        const newArray = [...tableData].sort((a, b) => (a[sortOption] > b[sortOption]) ? 1 : -1);
+        setTableData(newArray)
+    }
+    function saveAsExcel(){
+        var table = document.getElementById("adviseTable");
+        var wb = XLSX.utils.table_to_book(table);
+        XLSX.writeFile(wb, "AdviseTable.xlsx");
+    }
+    function addAdvise(title, des){
+        setMasterTable(prev => {
+            return [...prev, {respondent_title: title, description: des}]
+        })
+        setTableData(prev => {
+            return [...prev, {respondent_title: title, description: des}]
+        })
+    }
+    function handleSubmit(){
+        setTableData(masterTable.filter(row => (row.respondent_title.toLowerCase() === search.toLowerCase() || row.description === search.toLowerCase())))
+    }
+    useEffect(() => {
+        handleSort(sortOption)
+    }, [sortOption])
     useEffect(() => {
         fetchAdviseData()
     }, [])
     return (
         <>
         {
-            adviseForm ? <CreateNewAdvise toggleAdviseForm={toggleAdviseForm} userId={userId} /> :
-        <section>
+            adviseForm ? <CreateNewAdvise toggleAdviseForm={toggleAdviseForm} userId={userId} employeeid={employeeid} addAdvise={addAdvise} /> :
+        <section className="section">
             <div>
-                <h1>Advise Management</h1>
+                <h1 className="tableHeading">Advise Management</h1>
                 
             </div>
-            <div>
+            <div className="userOptions">
             <form className="searchForm searchForm2" onSubmit={(e) => {
                 e.preventDefault()
                 handleSubmit()
@@ -66,19 +92,22 @@ export default function AdviseManagement({userId}) {
                 <input className="searchInput" type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search" />
                 <input className="searchButton" width="18px" height="18px" type="image" src={searchImage} border="0" alt="Submit" />
             </form>
-            <select>
-                <option>Sort</option>
+            <select className="sortOption" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
+                <option value="All">Sort</option>
+                <option value="respodent_title">Respondent Name</option>
+                <option value="description">Descrition</option>
+                
             </select>
             
-            <button>Export</button>
-            <button onClick={() => toggleAdviseForm()}>Add User</button>
+            <button className="exportButton" onClick={saveAsExcel}><img src={exportImage} />Export</button>
+            <button className="addButton" onClick={() => toggleAdviseForm()}><img src={mathPlus} />Add Advise</button>
             </div>
             <div>
-            <table className="tableSectionDashboard">
+            <table id="adviseTable" className="tableSectionUser">
             <thead className="tableHeadDashboard">
                 <tr className="tableHeadDashboard">
                     <th className="dashboardTableHeader">#</th>
-                    <th className="dashboardTableHeader">Respondent name</th>
+                    <th className="dashboardTableHeader">Respondent Type</th>
                     <th className="dashboardTableHeader">Description</th>
                     <th className="dashboardTableHeader">Action</th>
                    
@@ -89,10 +118,10 @@ export default function AdviseManagement({userId}) {
                 {
                     tableData.map((data, index) => {
                       return  <tr key={index}>
-                    <td className="tableItemsDash">{index + 1}</td>
-                    <td className="tableItemsDash">{data.RespondentName}</td>
-                    <td className="tableItemsDash">{data.Description}</td>
-                    <td onClick={() => {deleteAdvise(data.RespondentName)}} className="tableItemsDash">{data.Action}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{index + 1}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.respondent_title}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.description}</td>
+                    <td id = {index % 2 ? "extraBackground" : ""} onClick={() => {deleteAdvise(data.RespondentName)}} className="tableItemsDash"><img src={deleteIcon} width="15px" /></td>
                    
                     
                 </tr>
@@ -102,6 +131,7 @@ export default function AdviseManagement({userId}) {
             </tbody>
         </table>
             </div>
+            <Footer />
         </section>
         }
         </>

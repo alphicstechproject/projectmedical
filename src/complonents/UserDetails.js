@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react"
+import { apiUrl } from "../url"
 
-export default function UserDetails({userId, toggleUserDetail, adharNumProp}){
+import Footer from "./Footer"
+
+export default function UserDetails({userId, toggleUserDetail, adharNumProp, employeeid, exit}){
     const [dateInput, setDateInput] = useState("")
     const [referInput, setReferInput] = useState("")
     const [hospitalInput, setHospitalInput] = useState("")
     const [bloodInput, setBloodInput] = useState("")
-    const [adharNum, setAdharNum] = useState("")
+    const [id, setId] = useState("")
     const [nameOfRes, setNameOfRes] = useState("")
-    const [eduaction, setEduaction] = useState("")
+    const [education, setEducation] = useState("")
     const [center, setCenter] = useState("")
-    const [weigth, setWeigth] = useState("")
+    const [weight, setWeight] = useState("")
     const [takingService, setTakingService] = useState("")
-    const [takenBlood, setTakenBlood] = useState("")
+    const [des, setDes] = useState("")
     const [cellDisease, setCellDisease] = useState("")
     const [dateOfCreation, setDateOfCreation] = useState("")
-    const [husband, setHusband] = useState("")
+
     const [caste, setCaste] = useState("")
     const [subCenter, setSubCenter] = useState("")
     const [heightInC, setHeightInC] = useState("")
@@ -30,11 +33,51 @@ export default function UserDetails({userId, toggleUserDetail, adharNumProp}){
     const [gestAge, setGestAge] = useState("")
     const [anmName, setAnmName] = useState("")
     const [malariaAffected, setMalariaAffected] = useState("")
-    async function getAllDetails(){
-        const response = await fetch(`getAdviseManagementDetails?userId=${userId}&screeningId=${adharNumProp}`, {
-            method: 'GET'
+    async function getBloodDetails(){
+        const response = await fetch(`${apiUrl}blood-transfusion/${adharNumProp}`, {
+            method: 'GET',
+            headers: {
+                "authorization" : localStorage.getItem(employeeid)
+            }
         })
-        console.log(userId);
+        const resJson = await response.json()
+        console.log(resJson);
+    }
+    async function getAllDetails(){
+        const response = await fetch(`${apiUrl}screening/${adharNumProp}`, {
+            method: 'GET',
+            headers: {
+                "authorization" : localStorage.getItem(employeeid)
+            }
+        })
+        const resJson = await response.json()
+        
+        setAge(resJson.data.age)
+        setCaste(resJson.data.caste)
+        setDateOfCreation(resJson.data.createdAt.slice(0,10))
+        setBmi(resJson.data.bmi)
+        setHeightInC(resJson.data.height)
+        setHbLevel(resJson.data.status_hglevel)
+        setWeight(resJson.data.weight)
+        setNameOfRes(resJson.data.respondent_name)
+        setHbLevel(resJson.data.status_hblevel)
+        setEducation(resJson.data.education)
+        setDateOfCreation(resJson.data.screening_date)
+        setCenter(resJson.data.anganwadi_center)
+        setTakingService(resJson.data.service_question_one)
+        setCellDisease(resJson.data.status_question_four)
+        setSubCenter(resJson.data.sub_center)
+        setReason(resJson.data.service_question_two)
+        setBlock(resJson.data.block)
+        setAshaWorker(resJson.data.asha_name)
+        setAttendingVHSND(resJson.data.service_question_three)
+        setAnemiaStatus(resJson.data.status_question_two)
+        setType(resJson.data.type_of_respondent)
+        setGestAge(resJson.data.gest_age)
+        setAnmName(resJson.data.anm_name)
+        setMalariaAffected(resJson.data.status_question_three)
+        setDes(resJson.data.advices_description)
+        setId(resJson.data._id)
     }
     async function sendHospitalInput(){
         const response = await fetch("enterHospitalData", {
@@ -52,68 +95,68 @@ export default function UserDetails({userId, toggleUserDetail, adharNumProp}){
     }
     useEffect(() => {
         getAllDetails()
+        getBloodDetails()
     }, [])
     return (
-        <section>
-            <button onClick={() => toggleUserDetail()}>exit</button>
-            <div>
-                <p>Unique ID / Aadhar card</p>
-                <p>{adharNumProp}</p>
+        <section className="screeningPage section">
+            <button className="exportButton" onClick={() => exit()}>exit</button>
+            <div className="screenDetailSection">
+                <p className="weighted">Unique ID / Aadhar card</p>
+                <p>{id}</p>
                 <h1>General Information</h1>
-                <p>Name of Respondent</p>
+                <p className="weighted">Name of Respondent</p>
                 <p>{nameOfRes}</p>
-                <p>Education Qualification</p>
-                <p>{eduaction}</p>
-                <p>Anganwadi Center</p>
+                <p className="weighted">Education Qualification</p>
+                <p>{education}</p>
+                <p className="weighted">Anganwadi Center</p>
                 <p>{center}</p>
                 <h1>Anthropometry</h1>
-                <p>Weight in KG</p>
-                <p>{weigth}</p>
+                <p className="weighted">Weight in KG</p>
+                <p>{weight}</p>
                 <h1>Taking service</h1>
-                <p>Are you currently consuming IFA</p>
+                <p className="weighted">Are you currently consuming IFA</p>
                 <p>{takingService}</p>
                 <h1>Current Anemia status</h1>
-                <p>Have you taken blood test in last 3 months</p>
-                <p>{takenBlood}</p>
-                <p>Do you have sickle cell disease</p>
+                
+                <p className="weighted">Do you have sickle cell disease</p>
                 <p>{cellDisease}</p>
-                <p>Date of creation</p>
+                <p className="weighted">Date of creation</p>
                 <p>{dateOfCreation}</p>
-                <p>Husband</p>
-                <p>{husband}</p>
-                <p>Caste</p>
+                
+                <p className="weighted">Caste</p>
                 <p>{caste}</p>
-                <p>Sub Center</p>
+                <p className="weighted">Sub Center</p>
                 <p>{subCenter}</p>
-                <p>Height in centimeter</p>
+                <p className="weighted">Height in centimeter</p>
                 <p>{heightInC}</p>
-                <p>Why did you discontinued taking</p>
+                <p className="weighted">Why did you discontinued taking</p>
                 <p>{reason}</p>
-                <p>What is the HB. level</p>
+                <p className="weighted">What is the HB. level</p>
                 <p>{hbLevel}</p>
-                <p>Age( In completed year)</p>
+                <p className="weighted">Age( In completed year)</p>
                 <p>{age}</p>
-                <p>Block</p>
+                <p className="weighted">Block</p>
                 <p>{block}</p>
-                <p>Asha Worker</p>
+                <p className="weighted">Asha Worker</p>
                 <p>{ashaWorker}</p>
-                <p>BMI Calculator</p>
+                <p className="weighted">BMI Calculator</p>
                 <p>{bmi}</p>
-                <p>Are you attending VHSND/Hospital for your ANC checkups</p>
+                <p className="weighted">Are you attending VHSND/Hospital for your ANC checkups</p>
                 <p>{attendingVHSND}</p>
-                <p>Anemia status</p>
+                <p className="weighted">Anemia status</p>
                 <p>{anemiaStatus}</p>
-                <p>Type of respondent</p>
+                <p className="weighted">Type of respondent</p>
                 <p>{type}</p>
-                <p>Gest. age</p>
+                <p className="weighted">Gest. age</p>
                 <p>{gestAge}</p>
-                <p>ANM name</p>
+                <p className="weighted">ANM name</p>
                 <p>{anmName}</p>
-                <p>Have you affected with malaria in last 3 months.</p>
+                <p className="weighted">Have you affected with malaria in last 3 months.</p>
                 <p>{malariaAffected}</p>
             </div>
+            <div className="bottomDiv">
             <div>
-            <table className="tableSectionDashboard">
+            <table className="tableSectionScreenDetails">
             <thead className="tableHeadDashboard">
                 <tr className="tableHeadDashboard">
                     
@@ -138,23 +181,28 @@ export default function UserDetails({userId, toggleUserDetail, adharNumProp}){
             
             </tbody>
         </table>
-        <form onSubmit={(e) => {
+        
+        <form className="referForm" onSubmit={(e) => {
             e.preventDefault()
             sendHospitalInput()
         }}>
-        <input value={dateInput} onChange={(e) => setDateInput(e.target.value)} type="date" placeholder="Enter date" required />
+        <input className="referInput" value={dateInput} onChange={(e) => setDateInput(e.target.value)} type="date" placeholder="Enter date" required />
 
-        <input value={referInput} onChange={(e) => setReferInput(e.target.value)} type="text" placeholder="Enter refer by" required />
+        <input className="referInput" value={referInput} onChange={(e) => setReferInput(e.target.value)} type="text" placeholder="Enter refer by" required />
 
-        <input value={hospitalInput} onChange={(e) => setHospitalInput(e.target.value)} type="text" placeholder="Enter hospital" required />
+        <input className="referInput" value={hospitalInput} onChange={(e) => setHospitalInput(e.target.value)} type="text" placeholder="Enter hospital" required />
 
-        <input value={bloodInput} onChange={(e) => setBloodInput(e.target.value)} type="text" placeholder="Enter unit" required />
+        <input className="referInput" value={bloodInput} onChange={(e) => setBloodInput(e.target.value)} type="text" placeholder="Enter unit" required />
 
-        <input type="submit" value="Save" />
+        <input className="exportButtonSave" type="submit" value="Save" />
         </form>
+        </div>
+        <div>
         <p>More Advise</p>
-        <p>Lorem ipsum dolor sit amet consectetur. Vel scelerisque quis donec enim augue nulla nunc id. Netus sollicitudin iaculis ultricies odio maecenas. Tristique aenean eget dui massa. </p>
-            </div>
+        <p>{des}</p>
+        </div>
+        </div>
+        <Footer />
         </section>
     )
 }

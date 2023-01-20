@@ -40,12 +40,11 @@ export default function Header(){
         setBlocks(resJson.data)
     }
     async function logout(){
-        //const response = await fetch(`/logout?userId=${location.state.userId}`)
+        const response = await fetch(`/logout?userId=${location.state.userId}`)
         localStorage.removeItem(location.state.employeeid)
         navigate("/")
     }
     useState(() => {
-
         getDistrictsBlocks()
     }, [])
     return (<>

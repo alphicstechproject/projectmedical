@@ -9,8 +9,9 @@ const employeeSchema = new mongoose.Schema({
     password: { type: String, required: true, Min: 8, trim: true },
     role: { type: String, required: true, trim: true },
     village_name: { type: String, required: true, trim: true },
-    anganwadi_center: { type: String, required: true, trim: true },
-    sub_center: { type: String, required: true, trim: true },
+    anganwadi_center: { type: String, trim: true },
+    sub_center: { type: String, trim: true },
+    hosptial_name: { type: String, trim: true },
     status: {type: String, default: "INACTIVE"},
     isDeleted: { type: Boolean, default: false }
 }, { timestamps: true })

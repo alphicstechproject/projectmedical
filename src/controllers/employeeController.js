@@ -11,7 +11,7 @@ const createEmployee = async function (req, res) {
         const data = req.body
 
         if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "Please Enter data to Create the Employee" })
-        const { employee_name, full_name, mobile, district, block_name, password, role, village_name, anganwadi_center, sub_center } = data;
+        const { employee_name, full_name, mobile, district, block_name, password, role, village_name, anganwadi_center, sub_center, hosptial_name } = data;
 
         if (!isPresent(employee_name)) return res.status(400).send({ status: false, message: "employee_name is mandatory" })
 

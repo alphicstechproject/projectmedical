@@ -69,35 +69,35 @@ const updateAdvice = async function (req, res) {
 }
 const deleteAdvice = async function (req, res) {
     try {
-        const AdviceId = req.params.AdviceId;
-        if (!mongoose.Types.ObjectId.isValid(AdviceId)) {
+        const adviceId = req.params.adviceId;
+        if (!mongoose.Types.ObjectId.isValid(adviceId)) {
             return res
                 .status(400)
                 .send({ status: false, message: "Invalid Advice id" });
         }
 
-        const AdviceById = await AdviceModel.findOne({
-            _id: AdviceId,
+        const adviceById = await adviceModel.findOne({
+            _id: adviceId,
             isDeleted: false,
             deletedAt: null,
         });
 
-        if (!AdviceById) {
+        if (!adviceById) {
             return res.status(404).send({
                 status: false,
                 message: "No Advice found by this Advice id",
             });
         }
 
-        await AdviceModel.findOneAndUpdate(
-            { _id: AdviceId },
+        await adviceModel.findOneAndUpdate(
+            { _id: adviceId },
             { $set: { isDeleted: true, deletedAt: Date.now() } },
             { new: true }
         );
 
         return res
             .status(200)
-            .send({ status: true, message: "Advice successfully deleted" });
+            .send({ status: true, message: "Advice deleted successfully" });
     } catch (error) {
         return res.status(500).send({ status: false, error: error.message });
     }

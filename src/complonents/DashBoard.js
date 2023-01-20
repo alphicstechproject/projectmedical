@@ -4,6 +4,7 @@ import { Doughnut } from 'react-chartjs-2';
 import {Chart, ArcElement} from 'chart.js'
 import { useLocation, useNavigate } from "react-router-dom"
 import Footer from "./Footer";
+import { apiUrl } from "../url";
 Chart.register(ArcElement);
 
 export default function DashBoard({userId, currentUserRole, updateUserRole, employeeid}){
@@ -16,7 +17,7 @@ export default function DashBoard({userId, currentUserRole, updateUserRole, empl
     const [percentage, setPercentage] = useState(0)
     const [percentageIncrease, setPercentageIncrease] = useState(0)
     const [sevenScreenings, setSevenScreenings] = useState([])
-    const [screeningReports14, setScreeningReports14] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26])
+    const [screeningReports14, setScreeningReports14] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26, 45, 24, 12, 65, 76])
     const [screeningReports30, setScreeningReports30] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 34, 20])
     const [screeningReports1, setScreeningReports1] = useState([50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56])
     const [selectedValue, setSelectedValue] = useState("option1");
@@ -25,28 +26,7 @@ export default function DashBoard({userId, currentUserRole, updateUserRole, empl
         setSelectedValue(event.target.value);
     };
     
-    const [tableData, setTableData] = useState([{
-        idAdhar: "shdhb",
-        nameRes: "sdgshd",
-        village: "sdhsjnfd",
-        status: "dshhfd",
-        numOfSC: "hgjgf",
-        lastUpdate: "figvc"
-    },{
-        idAdhar: "shdhb",
-        nameRes: "sdgshd",
-        village: "sdhsjnfd",
-        status: "dshhfd",
-        numOfSC: "hgjgf",
-        lastUpdate: "figvc"
-    }, {
-        idAdhar: "shdhb",
-        nameRes: "sdgshd",
-        village: "sdhsjnfd",
-        status: "dshhfd",
-        numOfSC: "hgjgf",
-        lastUpdate: "figvc"
-    }])
+    const [tableData, setTableData] = useState([])
     
     const [data, setData] = useState({
         labels: ['Option 1', 'Option 2', 'Option 3'],
@@ -58,93 +38,24 @@ export default function DashBoard({userId, currentUserRole, updateUserRole, empl
     });
 
     async function getDashboardData(){
-        const response = await fetch(`/getDashboardData?employeeid=${employeeid}`, {
+        const response = await fetch(`${apiUrl}dashboard`, {
             headers: {
                 "authorization" : localStorage.getItem(employeeid)
             }
         })
-        //const resJson = await response.json()
+        const resJson = await response.json()
         setData({
-            labels: ['Option 1', 'Option 2', 'Option 3'],
+            labels: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
             datasets: [{
-                data: [70, 20, 10],
-                backgroundColor: ['#39B44A', '#FB8256', '#FF1D1D'],
-                hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870']
+                data: [resJson.data.anemia, resJson.data.noAnemia, resJson.data.severeAnemia, resJson.data.moderateAnemia],
+                backgroundColor: ['#39B44A', '#FB8256', '#FF1D1D', '#356FA2'],
+                hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870', '#AF3241']
             }]
         })
-        const resJson = {
-            numOfScreening: 713,
-            percentageIncreaseScreening: 25,
-            percentage: 60,
-            percentageIncreaseAnaemia: 25,
-        
-            screeningReports14:[50, 25, 30, 46, 24, 56, 67, 32, 26, 46],
-        
-             screeningReports30 : [50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56, 67, 54, 34, 20],
-        
-             screeningReports1 : [50, 25, 30, 46, 24, 56, 67, 32, 26, 46, 23, 56],
-        
-            sevenScreenings: [{
-                adhar: "1111-1578-8545",
-                nameRes: "Miral Tripathi",
-                village: "Madnipur",
-                status: "No Anaemia",
-                numOfScreening: 1,
-                lastUpdate: "02-8-2022"
-            },
-            {
-                adhar: "1111-1578-8545",
-                nameRes: "Miral Tripathi",
-                village: "Madnipur",
-                status: "No Anaemia",
-                numOfScreening: 1,
-                lastUpdate: "02-8-2022"
-            },
-            {
-                adhar: "1111-1578-8545",
-                nameRes: "Miral Tripathi",
-                village: "Madnipur",
-                status: "Anaemia",
-                numOfScreening: 1,
-                lastUpdate: "02-8-2022"
-            },
-            {
-                adhar: "1111-1578-8545",
-                nameRes: "Miral Tripathi",
-                village: "Madnipur",
-                status: "No Anaemia",
-                numOfScreening: 1,
-                lastUpdate: "02-8-2022"
-            },
-            {
-                adhar: "1111-1578-8545",
-                nameRes: "Miral Tripathi",
-                village: "Madnipur",
-                status: "Anaemia",
-                numOfScreening: 1,
-                lastUpdate: "02-8-2022"
-            },
-            {
-                adhar: "1111-1578-8545",
-                nameRes: "Miral Tripathi",
-                village: "Madnipur",
-                status: "No Anaemia",
-                numOfScreening: 1,
-                lastUpdate: "02-8-2022"
-            },
-            {
-                adhar: "1111-1578-8545",
-                nameRes: "Miral Tripathi",
-                village: "Madnipur",
-                status: "No Anaemia",
-                numOfScreening: 1,
-                lastUpdate: "02-8-2022"
-            }
-            ]
-        }
-        setNumOfScreening(resJson.numOfScreening)
+        setTableData(resJson.data.recentScreening)
+        setNumOfScreening(resJson.data.totalScreening)
         setPercentageIncreaseScreening(resJson.percentageIncreaseScreening)
-        setPercentage(resJson.percentage)
+        setPercentage(resJson.data.anemiaRate)
         setPercentageIncrease(resJson.percentageIncrease)
         setSevenScreenings(resJson.sevenScreenings)
         updateUserRole("Admin")
@@ -223,7 +134,7 @@ export default function DashBoard({userId, currentUserRole, updateUserRole, empl
             <table className="tableSectionDashboard">
             <thead className="tableHeadDashboard">
                 <tr className="tableHeadDashboard">
-                    <th className="dashboardTableHeader">ID and Aadhar card</th>
+                    <th className="dashboardTableHeader">Screening Id</th>
                     <th className="dashboardTableHeader">Name od Respondent</th>
                     <th className="dashboardTableHeader">Village</th>
                     <th className="dashboardTableHeader">Status</th>
@@ -233,14 +144,14 @@ export default function DashBoard({userId, currentUserRole, updateUserRole, empl
             </thead>
             <tbody>
                 {
-                    sevenScreenings.map((data, index) => {
+                    tableData.map((data, index) => {
                       return  <tr key={index}>
-                    <td className="tableItemsDash">{data.adhar}</td>
-                    <td className="tableItemsDash">{data.nameRes}</td>
+                    <td className="tableItemsDash">{data._id}</td>
+                    <td className="tableItemsDash">{data.respondent_name}</td>
                     <td className="tableItemsDash">{data.village}</td>
-                    <td className={data.status === "Anaemia" ? "tableItemsDash anemiaStatusRed" : "tableItemsDash anemiaStatusGreen"}>{data.status}</td>
-                    <td className="tableItemsDash">{data.numOfScreening}</td>
-                    <td className="tableItemsDash">{data.lastUpdate}</td>
+                    <td className={data.status_question_two === "no animia" ? "tableItemsDash anemiaStatusGreen" : "tableItemsDash anemiaStatusRed"}>{data.status_question_two}</td>
+                    <td className="tableItemsDash">{data.screening_no}</td>
+                    <td className="tableItemsDash">{data.updatedAt.slice(0, 10)}</td>
                 </tr>
                     })
                 

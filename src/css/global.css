@@ -208,7 +208,7 @@ body, html, #root {
     border-bottom: 1px solid gray;
 }
 .tableSectionDashboard {
-    width: 50vw;
+    width: 55vw;
 }
 .tableHeadDashboard {
     background-color: #364954;
@@ -314,7 +314,10 @@ table, .recent {
     flex-direction: column;
     background-color: #FFFFFF;
     align-items: center;
-    width: 45vw;
+    width: 40vw;
+}
+.tableHover:hover{
+    cursor: pointer;
 }
 .anemiaStatusGreen {
     background-color: #39B44A !important;

@@ -21,19 +21,15 @@ export default function AdviseManagement({userId, employeeid}) {
     function handleSubmit(){
 
     }
-    async function deleteAdvise(respondentName){
+    async function deleteAdvise(id){
         setTableData((prev) => {
-            return prev.filter((row) => row.RespondentName !== respondentName)
+            return prev.filter((row) => row._id !== id)
         })
-        const response = await fetch("deleteAdvise", {
+        const response = await fetch(`${apiUrl}advice/${id}`, {
             method: 'DELETE',
             headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                respondentName : respondentName,
-                userId: userId
-            }),
+                "authorization" : localStorage.getItem(employeeid)
+            }
         })
         
     }
@@ -121,7 +117,7 @@ export default function AdviseManagement({userId, employeeid}) {
                     <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{index + 1}</td>
                     <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.respondent_title}</td>
                     <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.description}</td>
-                    <td id = {index % 2 ? "extraBackground" : ""} onClick={() => {deleteAdvise(data.RespondentName)}} className="tableItemsDash"><img src={deleteIcon} width="15px" /></td>
+                    <td id = {index % 2 ? "extraBackground" : ""} onClick={() => {deleteAdvise(data._id)}} className="tableItemsDash"><img src={deleteIcon} width="15px" /></td>
                    
                     
                 </tr>

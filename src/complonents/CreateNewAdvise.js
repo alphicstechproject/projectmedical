@@ -7,7 +7,7 @@ import Footer from "./Footer";
 import { apiUrl } from "../url";
 import { useNavigate } from "react-router-dom";
 export default function CreateNewAdvise({toggleAdviseForm, userId, employeeid, addAdvise}){
-    const [resName, setResName] = useState("All")
+    const [resName, setResName] = useState("Pregnant Women")
     const [anaemiaStage, setAnaemiaStage] = useState("Severe Anemia")
     const [description, setDescription] = useState("")
     const [message, setMessage] = useState("")
@@ -52,7 +52,7 @@ export default function CreateNewAdvise({toggleAdviseForm, userId, employeeid, a
                 </div>
             <label><div>Respondent Name <span className="colorRed">*</span></div><select className="adviseFormInputs userFormInputs" value={resName} onChange={(e) => setResName(e.target.value)} required>
             
-            <option value="All">All</option>    
+           
             <option value="Pregnant Women">Pregnant Women</option>    
             <option value="Adl. Girls (School Going)">Adl. Girls (School Going)</option>    
             <option value="Adl. Girls (Non-School Going)">Adl. Girls (Non-School Going)</option>    

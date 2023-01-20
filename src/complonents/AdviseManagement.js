@@ -50,9 +50,10 @@ export default function AdviseManagement({userId, employeeid}) {
         setTableData(newArray)
     }
     function saveAsExcel(){
-        var table = document.getElementById("adviseTable");
-        var wb = XLSX.utils.table_to_book(table);
-        XLSX.writeFile(wb, "AdviseTable.xlsx");
+        const ws = XLSX.utils.json_to_sheet(tableData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "UserData");
+        XLSX.writeFile(wb, "AdviseData.xlsx");
     }
     function addAdvise(title, des){
         setMasterTable(prev => {

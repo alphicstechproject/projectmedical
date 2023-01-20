@@ -152,7 +152,7 @@ body, html, #root {
     flex-direction: column;
     margin: 10px;
     border-radius: 10px;
-    width: 20vw;
+    width: 19vw;
     justify-content: space-between;
     align-items: baseline;
     color: #FFFFFF;
@@ -167,7 +167,7 @@ body, html, #root {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 150px;
+    margin-left: 8vw;
     gap: 5px;
 }
 .screeningNumberMargin2 {
@@ -177,7 +177,7 @@ body, html, #root {
     background-color: #6345C3;
 }
 .screeningReportSection {
-    width: 49vw;
+    width: 45vw;
     margin: 10px 10px 0 30px;
     border: 2px solid gray;
     padding: 10px;
@@ -441,7 +441,7 @@ table, .recent {
     padding: 20px;
     position: absolute;
     top: 150px;
-    left: 1160px;
+    right: 10px;
     padding-bottom: 100px;
 }
 .filterSection, .filterSectionForm {

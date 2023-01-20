@@ -63,9 +63,10 @@ export default function UserManagement({userId, currentUserRole, updateUserRole,
         setTableData(newArray)
     }
     function saveAsExcel(){
-        var table = document.getElementById("excelTable");
-        var wb = XLSX.utils.table_to_book(table);
-        XLSX.writeFile(wb, "UsersTable.xlsx");
+        const ws = XLSX.utils.json_to_sheet(masterTable);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "UserData");
+        XLSX.writeFile(wb, "UserData.xlsx");
     }
     useEffect(() => {
         fetchUsersData()
@@ -143,46 +144,7 @@ export default function UserManagement({userId, currentUserRole, updateUserRole,
             </tbody>
         </table>
             </div>
-            <table id="excelTable" className="tableSectionUser">
-            <thead className="tableHeadDashboard">
-                <tr className="tableHeadDashboard">
-                <th >Sr No.</th>
-                    <th >Fulll Name</th>
-                    <th>Employee Name</th>
-                    <th>District</th>
-                    <th >Mobile Number</th>
-                    <th >Role</th>
-                    <th >Status</th>
-                    <th >Date of creation</th>
-                    <th>Anganwadi center</th>
-                    <th>Block name</th>
-                    <th>subcenter</th>
-                    <th>Village</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    tableData.map((data, index) => {
-                      return  <tr key={index}>
-                    <td >{index + 1}</td>
-                    <td >{data.full_name}</td>
-                    <td>{data.employee_name}</td>
-                    <td>{data.district}</td>
-                    <td >{data.mobile}</td>
-                    <td >{data.role}</td>
-                    <td >{data.status}</td>
-                    <td >{data.createdAt}</td>
-                    <td>{data.anganwadi_center}</td>
-                    <td>{data.block_name}</td>
-                    <td>{data.sub_center}</td>
-                    <td>{data.village_name}</td>
-                </tr>
-                    })
-                
-                }
-            </tbody>
-        </table>
+            
             <Footer />
         </section>
         }

@@ -41,8 +41,11 @@ export default function ScreeningManagement({userId, blocks, employeeid}){
         setUserDetails("")
     }, [])
     function saveAsExcel(){
-        var table = document.getElementById("screeningTable");
-        var wb = XLSX.utils.table_to_book(table);
+        
+        
+        const ws = XLSX.utils.json_to_sheet(masterTable);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "ScreeningData");
         XLSX.writeFile(wb, "ScreeningData.xlsx");
     }
     function createFormShow(){

@@ -12,10 +12,10 @@ export default function CreateUser({toggleAddUser, userId, employeeid, blocks, a
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [userRole, setUserRole] = useState("Super Admin")
-    const [villageName, setVillageName] = useState("")
-    const [anan, setAnan] = useState("")
-    const [subcentre, setSubcentre] = useState("")
-    const [hospitalName, setHospitalName] = useState("")
+    const [villageName, setVillageName] = useState(null)
+    const [anan, setAnan] = useState(null)
+    const [subcentre, setSubcentre] = useState(null)
+    const [hospitalName, setHospitalName] = useState(null)
     const [message, setMessage] = useState("")
     
     async function handleSubmit(){
@@ -96,15 +96,15 @@ export default function CreateUser({toggleAddUser, userId, employeeid, blocks, a
                     <option>ANM</option>
                     <option>ASHA worker</option>
                     </select></label>
-
+                    {userRole === "ANM" || userRole === "Hospital" ?  <>
                 <h1 className="userInputs">Other Details</h1>
-                <label className="userInputs">Village Name<input className="userFormInputs" value={villageName} onChange={(e) => setVillageName(e.target.value)} type="text" placeholder="Enter Village name" required/></label>
+                {userRole === "ANM" ? <label className="userInputs">Village Name<input className="userFormInputs" value={villageName} onChange={(e) => setVillageName(e.target.value)} type="text" placeholder="Enter Village name"/></label> : null}
 
-                <label className="userInputs">Anaganbadi Name<input className="userFormInputs" value={anan} onChange={(e) => setAnan(e.target.value)} type="text" placeholder="Enter Anaganbadi name" required/></label>
+                {userRole === "ANM" ? <label className="userInputs">Anaganbadi Name<input className="userFormInputs" value={anan} onChange={(e) => setAnan(e.target.value)} type="text" placeholder="Enter Anaganbadi name"/></label> : null}
 
-                <label className="userInputs">Sub-center name<input className="userFormInputs" value={subcentre} onChange={(e) => setSubcentre(e.target.value)} type="text" placeholder="Enter Sub-center name" required/></label>
+                {userRole === "ANM" ? <label className="userInputs">Sub-center name<input className="userFormInputs" value={subcentre} onChange={(e) => setSubcentre(e.target.value)} type="text" placeholder="Enter Sub-center name"/></label> : null}
 
-                <label className="userInputs">Hospital name<input className="userFormInputs" value={hospitalName} onChange={(e) => setHospitalName(e.target.value)} type="text" placeholder="Enter Hospital name" required/></label>
+                {userRole === "Hospital" ? <label className="userInputs">Hospital name<input className="userFormInputs" value={hospitalName} onChange={(e) => setHospitalName(e.target.value)} type="text" placeholder="Enter Hospital name"/></label> : null}</> : null }
             </form>
             <p>{message}</p>
             <Footer />

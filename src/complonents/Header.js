@@ -48,11 +48,14 @@ export default function Header(){
         const resJson = await response.json()
     }
     async function logout(){
-        const response = await fetch(`/logout?userId=${location.state.userId}`)
+        
         localStorage.removeItem(location.state.employeeid)
         navigate("/")
     }
     useState(() => {
+        if(!localStorage.getItem(location.state.employeeid)){
+            navigate("/", {replace: true})
+        }
         getUserData()
         getDistrictsBlocks()
     }, [])

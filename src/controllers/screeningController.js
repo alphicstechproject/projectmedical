@@ -36,7 +36,7 @@ const getScreeningDataById = async (req, res) => {
         if (!findScreeningIdInDb) {
             return res.status(400).send({ status: false, message: "THIS SCREENING IS NOT PRESENT IN THE DATABASE" })
         }
-        if (findEmployeeidInDb.isDeleted == true) {
+        if (findScreeningIdInDb.isDeleted == true) {
             return res.status(400).send({ status: false, message: " THIS SCREENING IS ALREADY DELETED PLEASE CREATE A NEW ONE" })
         }
         return res.status(200).send({ status: true, message: "SCREENING DETAILS", data: findScreeningIdInDb })

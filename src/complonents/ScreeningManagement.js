@@ -63,20 +63,17 @@ export default function ScreeningManagement({userId, blocks, employeeid}){
         setScreenings(resJson.data)
         setMasterTable(resJson.data)
     }
-    async function deleteScreening(respondentName){
+    async function deleteScreening(id){
 
         setScreenings((prev) => {
-            return prev.filter((row) => row.nameRes !== respondentName)
+            return prev.filter((row) => row._id !== id)
         })
-        const response = await fetch("/deleteScreening", {
+        const response = await fetch(`${apiUrl}screening/${id}`, {
             method: 'DELETE',
             headers: {
-                "Content-Type": "application/json",
+                "authorization" : localStorage.getItem(employeeid)
             },
-            body: JSON.stringify({
-                phoneNumber: respondentName,
-                userId: userId
-            }),
+            
         })
         
     }
@@ -107,7 +104,7 @@ export default function ScreeningManagement({userId, blocks, employeeid}){
             <table id="screeningTable" className="tableSectionUser">
             <thead className="tableHeadDashboard">
                 <tr className="tableHeadDashboard">
-                    <th className="dashboardTableHeader">ID and Aadhar card</th>
+                    <th className="dashboardTableHeader">Screening Id</th>
                     <th className="dashboardTableHeader">Name od Respondent</th>
                     <th className="dashboardTableHeader">Village</th>
                     <th className="dashboardTableHeader">Status</th>
@@ -126,7 +123,7 @@ export default function ScreeningManagement({userId, blocks, employeeid}){
                     <td id = {index % 2 ? "extraBackground" : ""} className={data.status_question_two.toLowerCase() === "Anaemia" ? "tableItemsDash anemiaStatusRed" : "tableItemsDash anemiaStatusGreen"}>{data.status_question_two}</td>
                     <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.screening_no}</td>
                     <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.updatedAt.slice(0, 10)}</td>
-                    <td id = {index % 2 ? "extraBackground" : ""} onClick={() => {deleteScreening(data.nameRes)}}><img src={deleteIcon} width="15px" /></td>
+                    <td id = {index % 2 ? "extraBackground" : ""} onClick={() => {deleteScreening(data._id)}}><img src={deleteIcon} width="15px" /></td>
                 </tr>
                     })
                 

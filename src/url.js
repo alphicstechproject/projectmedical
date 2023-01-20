@@ -1,1 +1,1 @@
-export const apiUrl = "https://projectmedical.onrender.com/api/"
+export const apiUrl = "https://api.anemiamuktakalahandi.in/api/"

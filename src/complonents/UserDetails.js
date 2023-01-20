@@ -17,7 +17,8 @@ export default function UserDetails({userId, toggleUserDetail, adharNumProp, emp
     const [des, setDes] = useState("")
     const [cellDisease, setCellDisease] = useState("")
     const [dateOfCreation, setDateOfCreation] = useState("")
-
+    const [referDetails, setReferDetails] = useState({createdAt: "", hostpital_name
+:"", unit: ""})
     const [caste, setCaste] = useState("")
     const [subCenter, setSubCenter] = useState("")
     const [heightInC, setHeightInC] = useState("")
@@ -41,7 +42,8 @@ export default function UserDetails({userId, toggleUserDetail, adharNumProp, emp
             }
         })
         const resJson = await response.json()
-        console.log(resJson);
+        referDetails(resJson.data[0])
+        console.log(resJson.data[0]);
     }
     async function getAllDetails(){
         const response = await fetch(`${apiUrl}screening/${adharNumProp}`, {
@@ -80,16 +82,17 @@ export default function UserDetails({userId, toggleUserDetail, adharNumProp, emp
         setId(resJson.data._id)
     }
     async function sendHospitalInput(){
-        const response = await fetch("enterHospitalData", {
-            method: "POST",
+        const response = await fetch(`${apiUrl}blood-transfusion`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                "authorization" : localStorage.getItem(employeeid)
             },
             body: JSON.stringify({
-                dateInput,
-                bloodInput,
-                hospitalInput,
-                referInput
+                screening_id: adharNumProp,
+                transfer_date:dateInput,
+                unit:bloodInput,
+                hostpital_name:hospitalInput,
             }),
         })
     }
@@ -170,10 +173,10 @@ export default function UserDetails({userId, toggleUserDetail, adharNumProp, emp
             <tbody>
             
                     <tr>
-                    <td className="tableItemsDash">date value</td>
-                    <td className="tableItemsDash">refer value</td>
-                    <td className="tableItemsDash">hos val</td>
-                    <td className="tableItemsDash">blood val</td>
+                    <td className="tableItemsDash">{referDetails.createdAt}</td>
+                    <td className="tableItemsDash">{ashaWorker}</td>
+                    <td className="tableItemsDash">{referDetails.hostpital_name}</td>
+                    <td className="tableItemsDash">{referDetails.unit}</td>
         
                 </tr>
             

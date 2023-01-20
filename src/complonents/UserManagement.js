@@ -24,21 +24,17 @@ export default function UserManagement({userId, currentUserRole, updateUserRole,
     function handleSubmit(){
         setTableData(masterTable.filter(row => (row.full_name.toLowerCase() === search.toLowerCase() || row.mobile.toLowerCase() === search.toLowerCase() || row.createdAt.toLowerCase() === search.toLowerCase() || row.status.toLowerCase() === search.toLowerCase() || row.role.toLowerCase() === search.toLowerCase())))
     }
-    async function deleteUser(phoneNumber){
+    async function deleteUser(id){
 
         setTableData((prev) => {
-            return prev.filter((row) => row.phoneNum !== phoneNumber)
+            return prev.filter((row) => row._id !== id)
         })
-        // const response = await fetch("/deleteUser", {
-        //     method: 'DELETE',
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         phoneNumber: phoneNumber,
-        //         userId: userId
-        //     }),
-        // })
+        const response = await fetch(`${apiUrl}employee/${id}`, {
+            method: 'DELETE',
+            headers: {
+                "authorization" : localStorage.getItem(employeeid)
+            },
+        })
         
     }
     function addUserToList(newUser){
@@ -139,7 +135,7 @@ export default function UserManagement({userId, currentUserRole, updateUserRole,
                     <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{data.role}</td>
                     <td id = {index % 2 ? "extraBackground" : ""} className={data.status === "ACTIVE" ?"tableItemsDash activeRow" : "tableItemsDash inactiveRow"}>{data.status}</td>
                     <td id = {index % 2 ? "extraBackground" : ""} className="tableItemsDash">{String(data.createdAt).slice(0,10)}</td>
-                    <td id = {index % 2 ? "extraBackground" : ""} onClick={() => {deleteUser(data.phoneNum)}} className="tableItemsDash"><img src={deleteIcon} width="15px" /></td>
+                    <td id = {index % 2 ? "extraBackground" : ""} onClick={() => {deleteUser(data._id)}} className="tableItemsDash tableHover"><img src={deleteIcon} width="15px" /></td>
                 </tr>
                     })
                 

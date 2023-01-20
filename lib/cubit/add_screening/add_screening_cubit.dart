@@ -25,7 +25,7 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
         ),
       );
       final response = await http.get(
-        Uri.parse("https://projectmedical.onrender.com/api/block"),
+        Uri.parse("https://api.anemiamuktakalahandi.in/api/block"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -240,7 +240,7 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
       );
       final response = await http.get(
         Uri.parse(
-            "https://projectmedical.onrender.com/api/subCenter?block=${state.selectedBlock}"),
+            "https://api.anemiamuktakalahandi.in/api/subCenter?block=${state.selectedBlock}"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -321,7 +321,7 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
         ),
       );
       final response = await http.get(
-        Uri.parse("https://projectmedical.onrender.com/api/employee"),
+        Uri.parse("https://api.anemiamuktakalahandi.in/api/employee"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -522,7 +522,7 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
           ),
         );
         final response = await http.post(
-          Uri.parse("https://projectmedical.onrender.com/api/respondent"),
+          Uri.parse("https://api.anemiamuktakalahandi.in/api/respondent"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -539,7 +539,7 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
         final result = jsonDecode(response.body);
 
         final response2 = await http.post(
-          Uri.parse("https://projectmedical.onrender.com/api/screening"),
+          Uri.parse("https://api.anemiamuktakalahandi.in/api/screening"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -756,7 +756,7 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
 
         final response2 = await http.put(
           Uri.parse(
-              "https://projectmedical.onrender.com/api/screening/${screeningData.sId}"),
+              "https://api.anemiamuktakalahandi.in/api/screening/${screeningData.sId}"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -952,7 +952,7 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
         ),
       );
       final response = await http.get(
-        Uri.parse("https://projectmedical.onrender.com/api/advice"),
+        Uri.parse("https://api.anemiamuktakalahandi.in/api/advice"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

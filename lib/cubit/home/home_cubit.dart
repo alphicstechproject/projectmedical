@@ -23,7 +23,7 @@ class HomeCubit extends Cubit<HomeState> {
         ),
       );
       final response = await http.get(
-        Uri.parse("https://projectmedical.onrender.com/api/screening"),
+        Uri.parse("https://api.anemiamuktakalahandi.in/api/screening"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

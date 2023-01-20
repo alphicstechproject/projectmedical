@@ -28,7 +28,7 @@ class LoginCubit extends Cubit<LoginState> {
           ),
         );
         final response = await http.post(
-          Uri.parse("https://projectmedical.onrender.com/api/login"),
+          Uri.parse("https://api.anemiamuktakalahandi.in/api/login"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

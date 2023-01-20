@@ -124,36 +124,35 @@ class FourScreeningWidget extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 hbField.text.isNotEmpty
-                    ? int.parse(hbField.text) > 12 &&
+                    ? double.parse(hbField.text) > 12 &&
                             (respondentType == 'Adolescents girls (Tribal School)' ||
                                 respondentType ==
                                     'Adolescents girls (Non School going)')
                         ? 'No Anemia'
-                        : (int.parse(hbField.text) >= 11.0 &&
-                                    int.parse(hbField.text) <= 11.9) &&
-                                (respondentType ==
-                                        'Adolescents girls (Tribal School)' ||
+                        : (double.parse(hbField.text) >= 11.0 &&
+                                    double.parse(hbField.text) <= 11.9) &&
+                                (respondentType == 'Adolescents girls (Tribal School)' ||
                                     respondentType ==
                                         'Adolescents girls (Non School going)')
                             ? 'Mild Anemia'
-                            : (int.parse(hbField.text) >= 8.0 &&
-                                        int.parse(hbField.text) <= 8.9) &&
-                                    (respondentType ==
-                                            'Adolescents girls (Tribal School)' ||
+                            : (double.parse(hbField.text) >= 8.0 &&
+                                        double.parse(hbField.text) <= 8.9) &&
+                                    (respondentType == 'Adolescents girls (Tribal School)' ||
                                         respondentType ==
                                             'Adolescents girls (Non School going)')
                                 ? 'Moderate Anemia'
-                                : (int.parse(hbField.text) >= 0.0 &&
-                                            int.parse(hbField.text) <= 8.0) &&
+                                : (double.parse(hbField.text) >= 0.0 &&
+                                            double.parse(hbField.text) <=
+                                                8.0) &&
                                         (respondentType ==
                                                 'Adolescents girls (Tribal School)' ||
                                             respondentType ==
                                                 'Adolescents girls (Non School going)')
                                     ? 'Severe Anemia'
-                                    : int.parse(hbField.text) > 11 &&
+                                    : double.parse(hbField.text) > 11 &&
                                             respondentType == 'Pregnant Women'
                                         ? 'No Anemia'
-                                        : (int.parse(hbField.text) >= 10.0 &&
+                                        : (double.parse(hbField.text) >= 10.0 &&
                                                     int.parse(hbField.text) <= 10.9) &&
                                                 respondentType == 'Pregnant Women'
                                             ? 'Mild Anemia'

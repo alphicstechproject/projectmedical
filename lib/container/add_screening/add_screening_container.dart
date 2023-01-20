@@ -1,4 +1,6 @@
 import 'package:application_1/cubit/add_screening/add_screening_cubit.dart';
+import 'package:application_1/cubit/home/home_cubit.dart';
+import 'package:application_1/model/screening/screening_model.dart';
 import 'package:application_1/presentation/widgets/add_screening/add_screening_widget.dart';
 import 'package:application_1/presentation/widgets/common/toast.dart';
 import 'package:application_1/utils/responsive/responsiveness.dart';
@@ -6,7 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddScreeningContainer extends StatefulWidget {
-  const AddScreeningContainer({Key? key}) : super(key: key);
+  final ScreeningModel? screeningData;
+  const AddScreeningContainer({
+    Key? key,
+    this.screeningData,
+  }) : super(key: key);
 
   @override
   State<AddScreeningContainer> createState() => _AddScreeningContainerState();
@@ -42,14 +48,51 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
   void initState() {
     super.initState();
     BlocProvider.of<AddScreeningCubit>(context).getAllBlock();
+
+    /// ------------------------ update --------------------- ///
+    if (widget.screeningData != null) {
+      BlocProvider.of<AddScreeningCubit>(context).setDataScreening(
+        screeningData: widget.screeningData!,
+      );
+      respondent =
+          TextEditingController(text: widget.screeningData!.respondentName);
+      fatherField =
+          TextEditingController(text: widget.screeningData!.supportPersonName);
+      anganwadiCenterField =
+          TextEditingController(text: widget.screeningData!.anganwadiCenter);
+      villageField = TextEditingController(text: widget.screeningData!.village);
+      ashaWorkerField =
+          TextEditingController(text: widget.screeningData!.ashaName);
+      schoolNameField =
+          TextEditingController(text: widget.screeningData!.schoolName);
+      weightField = TextEditingController(text: widget.screeningData!.weight);
+      heightField = TextEditingController(text: widget.screeningData!.height);
+      hbLevelField =
+          TextEditingController(text: widget.screeningData!.statusQuestionOne);
+      addOtherAdviseField =
+          TextEditingController(text: widget.screeningData!.advicesDescription);
+    } else {
+      respondent = TextEditingController();
+      fatherField = TextEditingController();
+      anganwadiCenterField = TextEditingController();
+      villageField = TextEditingController();
+      ashaWorkerField = TextEditingController();
+      schoolNameField = TextEditingController();
+
+      ///--------------------- 2 -------------------///
+      weightField = TextEditingController();
+      heightField = TextEditingController();
+
+      ///--------------------- 4 -------------------///
+      hbLevelField = TextEditingController();
+      addOtherAdviseField = TextEditingController();
+    }
+
+    /// ------------------------ update --------------------- ///
+
     aadharcardField = TextEditingController();
     mobileNoField = TextEditingController();
-    respondent = TextEditingController();
-    fatherField = TextEditingController();
-    anganwadiCenterField = TextEditingController();
-    schoolNameField = TextEditingController();
-    villageField = TextEditingController();
-    ashaWorkerField = TextEditingController();
+
     for (int i = 1900; i > 1899 && i <= DateTime.now().year; i++) {
       years.add(
         i.toString(),
@@ -63,20 +106,11 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
     education.add('8th to 12th');
     education.add('12th Above');
 
-    ///--------------------- 2 -------------------///
-    weightField = TextEditingController();
-    heightField = TextEditingController();
-
     ///--------------------- 3 -------------------///
     serviceDiscontinue.add('Side effects');
     serviceDiscontinue.add('Bad taste');
     serviceDiscontinue.add('Not provided by anybody');
     serviceDiscontinue.add('No time to Take');
-
-    ///--------------------- 4 -------------------///
-    hbLevelField = TextEditingController();
-
-    addOtherAdviseField = TextEditingController();
   }
 
   @override
@@ -85,7 +119,8 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
       listenWhen: (previous, current) {
         return previous.saveData != current.saveData ||
             previous.firstError != current.firstError ||
-            previous.secondError != current.secondError;
+            previous.secondError != current.secondError ||
+            previous.updateData != current.updateData;
       },
       listener: (context, state) async {
         if (state.firstError || state.secondError) {
@@ -110,6 +145,25 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
               status: ToastStatus.success,
               message: success,
             ),
+          },
+        );
+        state.updateData.maybeWhen(
+          orElse: () => Container(),
+          inProgress: () => Container(),
+          initial: () => Container(),
+          failed: (error) => showCustomToast(
+            context,
+            status: ToastStatus.error,
+            message: error,
+          ),
+          success: (success) => {
+            showCustomToast(
+              context,
+              status: ToastStatus.success,
+              message: success,
+            ),
+            Navigator.pop(context),
+            BlocProvider.of<HomeCubit>(context).getAllScreening(),
           },
         );
       },

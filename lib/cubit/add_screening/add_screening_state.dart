@@ -53,6 +53,7 @@ class AddScreeningState with _$AddScreeningState {
     required String selectedcurrentSchool,
     required String typeSchool,
     required bool schoolDetailsShow,
+    required UpdateData updateData,
   }) = _AddScreeningState;
 
   factory AddScreeningState.initial() => AddScreeningState(
@@ -200,6 +201,7 @@ class AddScreeningState with _$AddScreeningState {
         ],
         selectedcurrentSchool: '',
         typeSchool: '',
+        updateData: const UpdateData.initial(),
       );
 }
 
@@ -261,4 +263,16 @@ class SaveData with _$SaveData {
   const factory SaveData.failed({
     required String failed,
   }) = _SaveDataFailed;
+}
+
+@freezed
+class UpdateData with _$UpdateData {
+  const factory UpdateData.initial() = _UpdateDataInitial;
+  const factory UpdateData.inProgress() = _UpdateDatainProgress;
+  const factory UpdateData.success({
+    required String success,
+  }) = _UpdateDataSuccess;
+  const factory UpdateData.failed({
+    required String failed,
+  }) = _UpdateDataFailed;
 }

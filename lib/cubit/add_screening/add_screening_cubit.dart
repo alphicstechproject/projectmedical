@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:application_1/model/add_screening/employee.dart';
 import 'package:application_1/model/advised/advised.dart';
+import 'package:application_1/model/screening/screening_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
@@ -635,6 +636,310 @@ class AddScreeningCubit extends Cubit<AddScreeningState> {
         );
       }
     }
+  }
+
+  void updateScreening({
+    required ScreeningModel screeningData,
+  }) async {
+    if (state.pageNo == 1) {
+      if (state.dateScreening.isNotEmpty &&
+          state.aadharcard.isNotEmpty &&
+          state.mobileNo.isNotEmpty &&
+          state.respondent.isNotEmpty &&
+          state.father.isNotEmpty &&
+          state.age.isNotEmpty &&
+          state.cast.where((element) => element['selected']).first.isNotEmpty &&
+          state.selectedRespondantType.isNotEmpty &&
+          state.education.isNotEmpty &&
+          state.selectedBlock.isNotEmpty &&
+          state.selectedCenter.isNotEmpty &&
+          state.anganwadiCenter.isNotEmpty &&
+          state.village.isNotEmpty &&
+          // state.selectedAnm.isNotEmpty &&
+          state.ashaWorker.isNotEmpty) {
+        emit(
+          state.copyWith(
+            pageNo: state.pageNo + 1,
+            firstError: false,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            firstError: true,
+          ),
+        );
+        emit(
+          state.copyWith(
+            firstError: false,
+          ),
+        );
+      }
+    } else if (state.pageNo == 2) {
+      if (state.weight.isNotEmpty && state.height.isNotEmpty) {
+        emit(
+          state.copyWith(
+            pageNo: state.pageNo + 1,
+            secondError: false,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            secondError: true,
+          ),
+        );
+        emit(
+          state.copyWith(
+            secondError: false,
+          ),
+        );
+      }
+    } else if (state.pageNo == 3) {
+      if (state.ifa.where((element) => element['selected']).first.isNotEmpty &&
+          state.serviceDiscontinue.isNotEmpty) {
+        emit(
+          state.copyWith(
+            pageNo: state.pageNo + 1,
+            thirdError: false,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            thirdError: true,
+          ),
+        );
+        emit(
+          state.copyWith(
+            thirdError: false,
+          ),
+        );
+      }
+    } else if (state.pageNo == 4) {
+      if (state.hb.isNotEmpty &&
+          state.statusAnaemia.isNotEmpty &&
+          state.malaria
+              .where((element) => element['selected'])
+              .first
+              .isNotEmpty &&
+          state.sickelCell
+              .where((element) => element['selected'])
+              .first
+              .isNotEmpty) {
+        emit(
+          state.copyWith(
+            pageNo: state.pageNo + 1,
+            fourError: false,
+          ),
+        );
+        getAdvised();
+      } else {
+        emit(
+          state.copyWith(
+            fourError: true,
+          ),
+        );
+        emit(
+          state.copyWith(
+            fourError: false,
+          ),
+        );
+      }
+    } else {
+      try {
+        emit(
+          state.copyWith(
+            updateData: const UpdateData.inProgress(),
+          ),
+        );
+
+        final response2 = await http.put(
+          Uri.parse(
+              "https://projectmedical.onrender.com/api/screening/${screeningData.sId}"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(
+            {
+              "respondent_name": state.respondent,
+              "screening_date": state.dateScreening,
+              "type_of_respondent": state.selectedRespondantType,
+              //////
+              "support_person_type": 'Father',
+              //////
+              "support_person_name": state.father,
+              "age": state.age,
+              "caste": state.cast
+                  .where((element) => element['selected'])
+                  .first['cast'],
+              "gest_age": state.gestAge,
+              //////
+              "school_status": state.currentSchool,
+              "type_of_school": state.typeSchool,
+              "school_name": state.schoolName,
+              //////
+              "block": state.selectedBlock,
+              "village": state.village,
+              "anganwadi_center": state.anganwadiCenter,
+              "sub_center": state.selectedCenter,
+              "asha_name": state.ashaWorker,
+              "anm_name": state.selectedAnm,
+              "weight": state.weight,
+              "height": state.height,
+
+              "bmi": state.bmi,
+              "service_question_one": 'no',
+              "service_question_two": state.ifa
+                  .where((element) => element['selected'])
+                  .first['type'],
+              "service_question_three": state.serviceDiscontinue,
+              "service_question_four": state.ancCheckup
+                  .where((element) => element['selected'])
+                  .first['type'],
+
+              //////
+              "status_question_one": state.hb,
+              //////
+              "status_hblevel": state.statusAnaemia,
+              //////
+              "status_question_three": state.malaria
+                  .where((element) => element['selected'])
+                  .first['type'],
+              "status_question_four": state.sickelCell
+                  .where((element) => element['selected'])
+                  .first['type'],
+              //////
+              "advices_description": state.advisedDescription.length > 0
+                  ? state.advisedDescription[0]
+                  : 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
+              "blood_transfusion_center": "bhawanipatna",
+              "blood_transfusion_date": '13-12-2022',
+              "screening_person_name": 'mohit lal',
+              "screening_person_desgination": "medical supervisor",
+              "screening_no": '21',
+              "extra_note":
+                  state.otherAdvise.isNotEmpty ? state.otherAdvise : 'nothing',
+              //////
+            },
+          ),
+        );
+
+        final result2 = jsonDecode(response2.body);
+        if (result2['status']) {
+          emit(
+            state.copyWith(
+              updateData: UpdateData.success(
+                success: result2['message'],
+              ),
+            ),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              updateData: UpdateData.failed(
+                failed: result2['message'],
+              ),
+            ),
+          );
+        }
+      } catch (e) {
+        emit(
+          state.copyWith(
+            updateData: const UpdateData.failed(
+              failed: 'Error',
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  void setDataScreening({
+    required ScreeningModel screeningData,
+  }) async {
+    final respondentType = state.respondentType;
+    final respondentTypeIndex = respondentType.indexWhere(
+        (element) => element['type'] == screeningData.typeOfRespondent!);
+    respondentType[respondentTypeIndex]['selected'] = true;
+    final cast = state.cast;
+    final castIndex =
+        cast.indexWhere((element) => element['cast'] == screeningData.caste!);
+    cast[castIndex]['selected'] = true;
+    if (respondentTypeIndex == 1) {
+      final schoolData = state.schoolData;
+      final schoolDataIndex = schoolData.indexWhere(
+          (element) => element['type'] == screeningData.typeOfSchool!);
+      schoolData[schoolDataIndex]['selected'] = true;
+      final currentSchool = state.currentSchool;
+      final currentSchoolIndex = currentSchool.indexWhere(
+          (element) => element['type'] == screeningData.schoolStatus!);
+      currentSchool[currentSchoolIndex]['selected'] = true;
+      emit(
+        state.copyWith(
+          currentSchool: currentSchool,
+          schoolData: schoolData,
+          typeSchool: screeningData.typeOfSchool!,
+          schoolName: screeningData.schoolName!,
+          schoolDetailsShow: respondentTypeIndex == 1,
+        ),
+      );
+    } else if (respondentTypeIndex == 0) {
+      final ancCheckup = state.ancCheckup;
+      final ancCheckupIndex = ancCheckup.indexWhere(
+          (element) => element['type'] == screeningData.serviceQuestionFour!);
+      ancCheckup[ancCheckupIndex]['selected'] = true;
+      emit(
+        state.copyWith(
+          gestAge: screeningData.gestAge!,
+          ancCheckup: ancCheckup,
+        ),
+      );
+    }
+    final ifa = state.ifa;
+    final ifaIndex = ifa.indexWhere(
+        (element) => element['type'] == screeningData.serviceQuestionTwo!);
+    ifa[ifaIndex]['selected'] = true;
+    final malaria = state.malaria;
+    final malariaIndex = malaria.indexWhere(
+        (element) => element['type'] == screeningData.statusQuestionThree!);
+    malaria[malariaIndex]['selected'] = true;
+    final sickelCell = state.sickelCell;
+    final sickelCellIndex = sickelCell.indexWhere(
+        (element) => element['type'] == screeningData.statusQuestionFour!);
+    sickelCell[sickelCellIndex]['selected'] = true;
+
+    emit(
+      state.copyWith(
+        dateScreening: screeningData.screeningDate!,
+        aadharcard: '',
+        mobileNo: '',
+        respondent: screeningData.respondentName!,
+        father: screeningData.supportPersonName!,
+        age: screeningData.age!,
+        cast: cast,
+        respondentType: respondentType,
+        selectedRespondantType: screeningData.typeOfRespondent!,
+        education: screeningData.education!,
+        selectedBlock: screeningData.block!,
+        selectedCenter: screeningData.subCenter!,
+        anganwadiCenter: screeningData.anganwadiCenter!,
+        village: screeningData.village!,
+        ashaWorker: screeningData.ashaName!,
+        gestAgeShow: respondentTypeIndex == 0,
+        weight: screeningData.weight!,
+        height: screeningData.height!,
+        bmi: double.parse(screeningData.bmi!),
+        ifa: ifa,
+        serviceDiscontinue: screeningData.serviceQuestionThree!,
+        hb: screeningData.statusQuestionOne!,
+        statusAnaemia: screeningData.statusHblevel!,
+        malaria: malaria,
+        sickelCell: sickelCell,
+        advisedDescription: [screeningData.advicesDescription!],
+      ),
+    );
+    getAllCenter();
   }
 
   //--------------------------------- adVISED -----------------------//

@@ -226,6 +226,7 @@ class HomeWidget extends StatelessWidget {
                 ListView.builder(
                     itemCount: screeningData.length,
                     shrinkWrap: true,
+                    reverse: true,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       final data = screeningData[index];
@@ -373,24 +374,37 @@ class HomeWidget extends StatelessWidget {
                                             ),
                                           ),
                                           SizedBox(height: 10.h),
-                                          Text(
-                                            'EDIT',
-                                            style: TextStyle(
-                                              color: Colors.transparent,
-                                              decorationColor:
-                                                  const Color(0xFF6345C3),
-                                              fontSize: 12.f,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: 'Lato-Regular',
-                                              letterSpacing: 0.5.s,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                              shadows: const [
-                                                Shadow(
-                                                  offset: Offset(0, -5),
-                                                  color: Color(0xFF6345C3),
-                                                )
-                                              ],
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AddScreening(
+                                                    screeningData: data,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              'EDIT',
+                                              style: TextStyle(
+                                                color: Colors.transparent,
+                                                decorationColor:
+                                                    const Color(0xFF6345C3),
+                                                fontSize: 12.f,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'Lato-Regular',
+                                                letterSpacing: 0.5.s,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                shadows: const [
+                                                  Shadow(
+                                                    offset: Offset(0, -5),
+                                                    color: Color(0xFF6345C3),
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],

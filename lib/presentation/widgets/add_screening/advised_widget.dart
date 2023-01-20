@@ -44,6 +44,7 @@ class AdvisedWidget extends StatelessWidget {
               );
             },
           ),
+          SizedBox(height: 10.h),
           // Text(
           //   'Number of IFA tablet (For six months)',
           //   style: TextStyle(

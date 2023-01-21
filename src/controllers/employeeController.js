@@ -89,7 +89,7 @@ const getEmployeeById = async function (req, res) {
         if (!findEmployeeidInDb) {
             return res.status(400).send({ status: false, message: "THIS EMPLOYEE IS NOT PRESENT IN OUR MONGODB" })
         }
-        if (findEmployeeidInDb.isDeleted == true){
+        if (findEmployeeidInDb.isDeleted == true) {
             return res.status(400).send({ status: false, message: " THIS EMPLOYEE IS ALREADY DELETED PLEASE CREATE A NEW ONE" })
         }
         return res.status(200).send({ status: true, message: "EMPLOYEE PROFILE DETAILS", data: findEmployeeidInDb })

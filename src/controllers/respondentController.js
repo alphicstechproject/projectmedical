@@ -1,6 +1,6 @@
 const respondentModel = require("../models/respondentModel");
 const mongoose = require('mongoose');
-const {isValidMobile} = require("../validations/validation");
+const { isValidMobile } = require("../validations/validation");
 
 
 

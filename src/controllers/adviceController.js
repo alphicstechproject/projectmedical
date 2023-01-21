@@ -55,7 +55,6 @@ const updateAdvice = async function (req, res) {
         if (respondent_title === "") return res.status(400).send({ status: false, message: "you can't update respondent title with empty data" })
         if (anemia_stage === "") return res.status(400).send({ status: false, message: "you can't update anemia stage with empty data" })
         if (description === "") return res.status(400).send({ status: false, message: "you can't update description with empty data" })
-        
 
         let updatedata = await adviceModel.findByIdAndUpdate(
             { _id: req.params.adviceId },

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const respondentSchema = new mongoose.Schema({
-    aadhar_no: { type: String, required: true, Min: 16, Max:16, trim: true },
+    aadhar_no: { type: String, Min: 16, Max: 16, trim: true },
     creation_date: { type: String, required: true, trim: true },
     respondent_name: { type: String, required: true, trim: true },
     mobile: { type: String, required: true, unique: true, trim: true },

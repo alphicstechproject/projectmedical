@@ -33,7 +33,7 @@ const getBloodTranferDataById = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(screeningId)) {
             return res.status(400).send({ status: false, message: " PLEASE ENTER CORRECT SCREENING ID" })
         }
-        const findBloodTranferIdInDb = await bloodTranferModel.find({screening_id:screeningId})
+        const findBloodTranferIdInDb = await bloodTranferModel.find({ screening_id: screeningId })
         if (!findBloodTranferIdInDb) {
             return res.status(400).send({ status: false, message: "THIS SCREENING IS NOT PRESENT IN THE DATABASE" })
         }
@@ -59,7 +59,7 @@ const updateBloodTranfer = async function (req, res) {
         if (unit === "") return res.status(400).send({ status: false, message: "you can't update unit with empty data" })
         if (adviced_id === "") return res.status(400).send({ status: false, message: "you can't update adviced id with empty data" })
         if (status === "") return res.status(400).send({ status: false, message: "you can't update status with empty data" })
-        if(screening_id || adviced_id){
+        if (screening_id || adviced_id) {
             if (!mongoose.Types.ObjectId.isValid(screening_id)) {
                 return res.status(400).send({ status: false, message: "PLEASE ENTER CORRECT SCREENING ID" })
             }

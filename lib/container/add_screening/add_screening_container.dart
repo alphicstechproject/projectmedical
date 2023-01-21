@@ -145,6 +145,8 @@ class _AddScreeningContainerState extends State<AddScreeningContainer> {
               status: ToastStatus.success,
               message: success,
             ),
+            Navigator.pop(context),
+            BlocProvider.of<HomeCubit>(context).getAllScreening(),
           },
         );
         state.updateData.maybeWhen(

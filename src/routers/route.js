@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const employeeModel = require('../models/employeeModel')
 const { createEmployee, employeeLogin, getEmployee, getEmployeeById, updateEmployee, deleteEmployee } = require('../controllers/employeeController');
 const { authentication, authorization } = require('../middlewares/auth')
 const { getAnganwadiById } = require('../controllers/anganwadiController');
@@ -19,6 +20,23 @@ router.get('/api/dashboard', dashboard)
 
 // -------------------------------- Login ----------------------------------------
 router.post('/api/login', employeeLogin)
+
+// -------------------------------- Login ----------------------------------------
+router.get('/api/logout/:employeeId', async (req, res) => {
+    try {
+        const employee = await employeeModel.findOne({ _id: req.params.employeeId })
+        res.clearCookie("jwt");
+        req.headers["authorization"] = [];
+        // console.log('token:', token)
+        // token = token.split(' ')[1]
+        // console.log('token:', token)
+        await employee.save();
+        // res.render("login");
+        return res.status(200).send({ status: true, message: "logout Successfully" })
+    } catch (error) {
+        return res.status(500).send({ status: false, msg: error.message })
+    }
+})
 
 // -------------------------------- Employee ----------------------------------------
 router.post('/api/employee', createEmployee)

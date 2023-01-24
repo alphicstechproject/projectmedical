@@ -43,7 +43,7 @@ router.post('/api/employee', createEmployee)
 router.get('/api/employee', getEmployee)
 router.get('/api/employee/:employeeId', authentication, authorization, getEmployeeById)
 router.put('/api/employee/:employeeId', authentication, authorization, updateEmployee)
-router.delete('/api/employee/:employeeId', authentication, authorization, deleteEmployee)
+router.delete('/api/employee/:employeeId', authentication, deleteEmployee)
 
 // -------------------------------- Anganwadi ---------------------------------------
 // router.get('/api/anganwadi', getAnganwadi)

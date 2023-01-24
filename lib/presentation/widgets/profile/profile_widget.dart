@@ -1,9 +1,17 @@
+import 'package:application_1/model/employee/employee.dart';
 import 'package:application_1/presentation/screens/home/home_screen.dart';
+import 'package:application_1/presentation/widgets/common/loader.dart';
 import 'package:application_1/utils/responsive/responsiveness.dart';
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
-  const ProfileWidget({Key? key}) : super(key: key);
+  final EmployeeData employeeData;
+  final bool isLoading;
+  const ProfileWidget({
+    Key? key,
+    required this.employeeData,
+    this.isLoading = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,7 @@ class ProfileWidget extends StatelessWidget {
                 SizedBox(height: 30.h),
                 Center(
                   child: Text(
-                    'Tulshi Sharma',
+                    employeeData.employeeName!,
                     style: TextStyle(
                       fontSize: 16.s,
                       fontWeight: FontWeight.w700,
@@ -37,7 +45,7 @@ class ProfileWidget extends StatelessWidget {
                 SizedBox(height: 5.h),
                 Center(
                   child: Text(
-                    '9817631341',
+                    employeeData.mobile!,
                     style: TextStyle(
                       fontSize: 14.s,
                       fontWeight: FontWeight.w400,
@@ -60,7 +68,7 @@ class ProfileWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Asha Worker',
+                        employeeData.role!,
                         style: TextStyle(
                           fontSize: 14.s,
                           fontWeight: FontWeight.w600,
@@ -85,7 +93,7 @@ class ProfileWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Dhramgadh',
+                        employeeData.blockName!,
                         style: TextStyle(
                           fontSize: 14.s,
                           fontWeight: FontWeight.w600,
@@ -110,7 +118,7 @@ class ProfileWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Dhaspur',
+                        employeeData.subCenter!,
                         style: TextStyle(
                           fontSize: 14.s,
                           fontWeight: FontWeight.w600,
@@ -135,7 +143,7 @@ class ProfileWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Dhaspur',
+                        employeeData.villageName!,
                         style: TextStyle(
                           fontSize: 14.s,
                           fontWeight: FontWeight.w600,
@@ -197,7 +205,18 @@ class ProfileWidget extends StatelessWidget {
               },
             ),
           ),
-        )
+        ),
+        if (isLoading)
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Colors.black.withOpacity(0.7),
+            child: Center(
+              child: Loader(
+                size: 75.s,
+              ),
+            ),
+          ),
       ],
     );
   }

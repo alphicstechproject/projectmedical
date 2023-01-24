@@ -2,18 +2,16 @@ import 'dart:io';
 
 import 'package:application_1/cubit/login/login_cubit.dart';
 import 'package:application_1/presentation/screens/login/login_screen.dart';
-import 'package:application_1/presentation/widgets/add_screening/advised_widget.dart';
-import 'package:application_1/presentation/widgets/add_screening/four_screening_widget.dart';
-import 'package:application_1/presentation/widgets/add_screening/four_screening_widget.dart';
 import 'package:application_1/utils/responsive/responsiveness.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
-import 'presentation/widgets/add_screening/third_screening_widget.dart';
-
-void main() {
+Future<void> main() async {
   Responsiveness.init();
+
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarIconBrightness:
@@ -95,6 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    storeBox();
     Future.delayed(const Duration(milliseconds: 3500), () async {
       Navigator.push(
         context,
@@ -103,6 +102,12 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       );
     });
+  }
+
+  Future<void> storeBox() async {
+    final appDocumentDir = await getApplicationDocumentsDirectory();
+    Hive.init(appDocumentDir.path);
+    await Hive.openBox('core');
   }
 
   @override

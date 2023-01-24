@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
 part 'login_state.dart';
@@ -41,7 +42,10 @@ class LoginCubit extends Cubit<LoginState> {
         );
 
         final result = jsonDecode(response.body);
+        print(result['data']['employeeid']);
         if (result['status']) {
+          final corebox = Hive.box('core');
+          await corebox.put('employeeID', result['data']['employeeid']);
           emit(
             state.copyWith(
               getAuthenticationState: GetAuthenticationState.success(
